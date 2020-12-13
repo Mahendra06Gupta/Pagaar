@@ -1,0 +1,9 @@
+button {
+
+    &.mat-button, &.mat-icon-button {
+
+        &:focus {
+            outline: 0;
+        }
+    }
+}

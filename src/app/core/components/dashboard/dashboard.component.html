@@ -1,0 +1,12 @@
+<mat-sidenav-container #sideNavContainer fxFlexFill class="dashboard">
+    <mat-sidenav
+            (click)="toggleSidenavMenu()"
+            [mode]="contextMenuService.contextMenuType"
+            [opened]="contextMenuService.isOpen"
+            [position]="contextMenuService.position">
+        <app-navigation-left-menu></app-navigation-left-menu>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

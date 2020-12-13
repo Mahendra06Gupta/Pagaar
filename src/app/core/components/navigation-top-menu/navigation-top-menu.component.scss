@@ -1,0 +1,45 @@
+.navbar{
+
+    .logo-trigger {
+
+        .image {
+            width: 50px;
+        }
+    }
+
+    .account {
+        font-size: 2rem;
+        color: lightskyblue;
+    }
+
+    .dropdown {
+
+        cursor: pointer;
+
+        .username {
+            bottom: 10px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 2;
+
+            a {
+
+                &:hover{
+                    background-color: #ddd
+                }
+            }
+        }
+
+        &:hover {
+
+            .dropdown-content {
+                display: block;
+            }
+        }
+    }
+}

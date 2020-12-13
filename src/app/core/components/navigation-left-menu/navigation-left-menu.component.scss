@@ -1,0 +1,26 @@
+
+.mat-nav-list.left-menu-container {
+    width: 300px;
+    padding-top: 0;
+
+    &.small{
+        width: 200px;
+    }
+
+    a {
+        display: inline-block;
+        height: 48px;
+        width: 100%;
+
+        mat-icon {
+            margin: -2px 0 0 0;
+            vertical-align: middle;
+        }
+
+        span {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 48px;
+        }
+    }
+}

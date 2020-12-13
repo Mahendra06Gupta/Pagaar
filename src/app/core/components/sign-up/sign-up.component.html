@@ -1,0 +1,59 @@
+<div class="login-page">
+    <div class="m-auto position-absolute login-form">
+        <form 
+            class="p-4 form"
+            fxLayout="column"
+            fxLayoutGap="20px" 
+            [formGroup]="signUpForm" 
+            (ngSubmit)="onSubmit()">
+            <div class="title">Create an Account</div>
+            <a class="text-primary text-center font-weight-bold" (click)="goToLogin()">
+                <span>Already Registered? Login to Your Account</span>
+            </a>
+            <div class="position-relative py-sm-3 py-2">
+                <hr class="left-divider d-inline-block position-absolute mb-3 mt-2">
+                    <span class="or-text margin-auto w-100 text-center d-inline-block">or</span>
+                <hr class="right-divider d-inline-block position-absolute mb-3 mt-2">
+            </div>
+            <mat-form-field appearance="outline">
+                <mat-label>User Role</mat-label>
+                <mat-select formControlName="roles" multiple required>
+                    <mat-option *ngFor="let role of roles" [value]="role.roleId.toUpperCase()">{{role.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div fxLayout="row" fxLayoutGap="0.5rem" fxLayoutAlign="space-between">
+                <mat-form-field appearance="outline">
+                    <mat-label>First Name</mat-label>
+                    <input matInput placeholder="First Name" formControlName="firstName" required>
+                    <mat-error class="mt-3" *ngIf="hasError('firstName', 'required')">Please enter your first name</mat-error>
+                    <mat-error class="mt-3" *ngIf="hasError('firstName', 'pattern')">Please enter a valid name, no special character is allowed</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput placeholder="Last Name" formControlName="lastName" required>
+                    <mat-error class="mt-3" *ngIf="hasError('lastName', 'required')">Please enter your last name</mat-error>
+                    <mat-error class="mt-3" *ngIf="hasError('lastName', 'pattern')">Please enter a valid name, no special character is allowed</mat-error>
+                </mat-form-field>
+            </div>
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="email@abc.com" formControlName="email" required>
+                <mat-error class="mt-3" *ngIf="hasError('email', 'required')">Please enter your email address</mat-error>
+                <mat-error class="mt-3" *ngIf="hasError('email', 'pattern')">Please enter a valid email address</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" placeholder="••••••••" required>
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error class="mt-3" *ngIf="hasError('password', 'required')">please enter password associated with your email address</mat-error>
+                <mat-error class="mt-3" *ngIf="hasError('password', 'minlength')">Password must be a minimun of 8 characters</mat-error>
+            </mat-form-field>
+            <mat-checkbox color="primary" (change)="rememberMe($event.checked)" [checked]="rememberMeSelected">
+                Keep me signed in on this device.
+            </mat-checkbox>
+            <button mat-raised-button [disabled]="signUpForm.invalid" class="py-1 px-3 login-button m-0" color="primary">Create Account</button>
+        </form>
+    </div>
+</div>

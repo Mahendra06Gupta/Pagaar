@@ -1,0 +1,56 @@
+<div fxLayout="column" fxLayoutGap="20px">
+    <div class="card" fxLayout="row">
+        <div class="card-body" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutAlign="center center">
+            <mat-icon fxHide.lt-md class="maticon w-auto h-100">video_call</mat-icon>
+            <div fxFlex="column">
+                <h6 class="m-0">{{pageTitle.title}}</h6>
+                <span class="sub-title">{{pageTitle.subTitle}}</span>
+            </div>
+            <button class="book-room text-light w-25" (click)="bookRoom()" mat-raised-button>
+                <mat-icon class="mr-1">add_box</mat-icon>
+                <span>{{pageTitle.newButton}}</span>
+            </button>
+        </div>
+    </div>
+    <ng-container>
+        <mat-card>
+            {{pageTitle.statistics}}
+            <hr class="mt-3">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <div fxHide.lt-md class="border rounded-circle p-3 bg-primary mr-1">
+                        <mat-icon class="icon w-auto h-100 text-light">video_library</mat-icon>
+                    </div>
+                    <div fxLayout="column">
+                        <div>
+                            <span>{{pageTitle.totalTitle}}</span>
+                            <h3 class="m-0">{{count.totalBooking}}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <div fxHide.lt-md class="border rounded-circle p-3 bg-success mr-1">
+                        <mat-icon class="icon w-auto h-100 text-light">video_label</mat-icon>
+                    </div>
+                    <div fxLayout="column">
+                        <div>
+                            <span>{{pageTitle.bookedTitle}}</span>
+                            <h3 class="m-0">{{count.noOfActive}}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <div fxHide.lt-md class="border rounded-circle p-3 bg-danger mr-1">
+                        <mat-icon class="icon w-auto h-100 text-light">videocam_off</mat-icon>
+                    </div>
+                    <div fxLayout="column">
+                        <div>
+                            <span>{{pageTitle.cancelTitle}}</span>
+                            <h3 class="m-0">{{count.noOfCancel}}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+    </ng-container>
+</div>

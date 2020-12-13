@@ -1,0 +1,26 @@
+.form {
+
+    .time-range {
+        .time-slot{
+    
+            .mat-form-field-infix {
+                display: inherit;
+            }
+
+            .mat-form-field-flex {
+                width: 8rem;
+            }
+        }
+    }
+
+    .mat-form-field-flex {
+        width: 15rem;
+    }
+    
+    .mat-select-panel {
+    
+        position: absolute;
+        top: 3rem;
+        left: 1rem
+    }
+}

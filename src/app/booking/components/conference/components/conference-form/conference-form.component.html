@@ -1,0 +1,42 @@
+<div fxLayoutAlign="space-between center" class="m-3">
+    Add new video conference
+    <button class="close-modal" mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
+</div>
+<mat-divider></mat-divider>
+<form 
+    class="mx-3"
+    [formGroup]="conferenceAddingForm" 
+    (ngSubmit)="onSubmit()"
+    >
+    <div fxLayout="column" class="form">
+        <div fxLayout.gt-sm="row" fxLayout="column">
+            <mat-form-field class="m-3" appearance="outline">
+                <mat-label>Name</mat-label>
+                <input readonly matInput placeholder="abcdabcdabcd" formControlName="name" required>
+            </mat-form-field>
+            <mat-form-field class="m-3" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input readonly matInput placeholder="email@abc.com" formControlName="emailId" required>
+            </mat-form-field>
+        </div>
+        <div fxLayout.gt-sm="row" fxLayout="column">
+            <mat-form-field class="m-3" appearance="outline">
+                <mat-label>Room Id</mat-label>
+                <input matInput placeholder="VC_ID_123" formControlName="vcId" required>
+                <mat-error class="mt-3" *ngIf="hasError('vcId', 'required')">Please enter vcId to be added</mat-error>
+            </mat-form-field>
+            <mat-form-field class="m-3" appearance="outline">
+                <mat-label>Date</mat-label>
+                <input readonly matInput placeholder="DD/MM/YYYY" formControlName="date" required>
+            </mat-form-field>
+        </div>
+        <div fxLayout.gt-sm="row" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="2rem">
+            <button class="m-3" mat-raised-button color="primary" [disabled]="conferenceAddingForm.invalid">
+                Add Conference
+            </button>
+            <button class="m-3" mat-raised-button color="warn" mat-dialog-close>
+                Cancel
+            </button>
+        </div>
+    </div>
+</form>

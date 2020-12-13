@@ -1,0 +1,66 @@
+<div fxLayoutAlign="space-between center" class="m-3">
+    Book your Video Conference
+    <button class="close-modal" mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
+</div>
+<mat-divider></mat-divider>
+<form 
+    class="mx-3"
+    [formGroup]="roomBookingForm" 
+    (ngSubmit)="onSubmit()"
+    >
+    <div fxLayout="column" class="form">
+        <div fxLayout.gt-sm="row" fxLayout="column">
+            <mat-form-field class="m-3" appearance="outline">
+                <mat-label>Name</mat-label>
+                <input readonly matInput placeholder="abcdabcdabcd" formControlName="name" required>
+            </mat-form-field>
+            <mat-form-field class="m-3" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input readonly matInput placeholder="email@abc.com" formControlName="emailId" required>
+            </mat-form-field>
+        </div>
+        <div fxLayout.gt-sm="row" fxLayout="column">
+            <mat-form-field class="m-3" appearance="outline">
+                <mat-label>Type</mat-label>
+                <input readonly matInput placeholder="Admin/ Organization" formControlName="type" required>
+            </mat-form-field>
+            <mat-form-field class="m-3 select" appearance="outline">
+                <mat-label>Room Name</mat-label>
+                <mat-select formControlName="vcId" multiple (selectionChange)="changed()" required>
+                  <mat-option *ngFor="let room of conferenceRoomData" [value]="room.roomId">{{room.roomName}}</mat-option>
+                </mat-select>
+                <mat-error class="mt-3" *ngIf="hasError('vcId', 'required')">Please select atleast one vc</mat-error>
+            </mat-form-field>
+        </div>
+        <div fxLayout.gt-sm="row" fxLayout="column">
+            <mat-form-field class="m-3" appearance="outline">
+                <mat-label>Date</mat-label>
+                <input readonly matInput id="date" type="text" name="date" formControlName="date" [matDatepicker]="datepicker" placeholder="Booking Date" [min]="startDate" required>
+                <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                <mat-datepicker #datepicker [startAt]="startDate"></mat-datepicker>
+            </mat-form-field>
+            <div class="time-range">
+                <mat-form-field class="m-3 time-slot" appearance="outline">
+                    <mat-label>From</mat-label>
+                    <input matInput type="time" formControlName="fromTime" required>
+                    <mat-error class="mt-3" *ngIf="hasError('fromTime', 'required')">Please select from time for booking</mat-error>
+                </mat-form-field>
+                <mat-form-field class="m-3 time-slot" appearance="outline">
+                    <mat-label>To</mat-label>
+                    <input matInput type="time" formControlName="toTime" required>
+                    <mat-error class="mt-3" *ngIf="hasError('toTime', 'required')">Please select to time for booking </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div fxLayout.gt-sm="row" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="2rem">
+            <button fxLayout="row" class="m-3 submit" mat-raised-button color="primary" [disabled]="roomBookingForm.invalid">
+                <!-- <mat-spinner *ngIf="isSubmitted" class="d-inline-block mr-1 text-white" [diameter]="20"></mat-spinner> -->
+                <mat-icon *ngIf="isCreating">done</mat-icon>
+                <span>{{submitButton}}</span>
+            </button>
+            <button class="m-3" *ngIf="!isCreating && !isSubmitted" mat-raised-button color="warn" mat-dialog-close>
+                Cancel
+            </button>
+        </div>
+    </div>
+</form>

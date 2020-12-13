@@ -1,0 +1,73 @@
+<mat-accordion displayMode="flat" id="app-booking-list-expandable-tab">
+    <mat-expansion-panel disabled="true" class="header-panel">
+        <mat-expansion-panel-header>
+            <mat-panel-title class="header-panel-title" fxLayout="row">
+                <div fxLayout="row" class="expansion-room-row">
+                    <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="start">
+                        <strong>Room Name</strong>
+                    </div>
+                    <div fxFlex="1 1 33" fxLayout="row" (click)="sortroomsAsPerDate()">
+                        <strong>Date
+                            <mat-icon class="sort-icon" aria-hidden="true">{{isDescendingByDate ? 'arrow_drop_up' : 'arrow_drop_down'}}</mat-icon>
+                        </strong>
+                    </div>
+                    <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="end">
+                        <strong>Status</strong>
+                    </div>
+                </div>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <ng-container *ngFor="let room of bookingsVc">
+        <mat-expansion-panel class="expandable-room-history-body">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div fxLayout="row" class="expansion-room-row">
+                        <div fxFlex="1 1 33" fxLayout="row"
+                                fxLayoutAlign="start">{{room.roomName}}</div>
+                        <div fxFlex="1 1 33" class="room-history-type">{{room.date | date : 'dd MMM yyyy'}}</div>
+                        <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="end">{{room.status}}</div>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+                <app-booking-list-expandable-tab-entry
+                    label="Room Id"
+                    [value]=" room.roomId">
+                </app-booking-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+
+            <div>
+                <app-booking-list-expandable-tab-entry
+                    label="Booking Id"
+                    [value]="room.bookingId">
+                </app-booking-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+
+            <div>
+                <app-booking-list-expandable-tab-entry
+                    label="Person"
+                    [value]="room.bookedBy">
+                </app-booking-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+
+            <div>
+                <app-booking-list-expandable-tab-entry
+                    label="Slot"
+                    [value]="room.slot">
+                </app-booking-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+
+            <div *ngIf="showCancel" class="cancel float-right">
+                <a *ngIf="room.status !== 'Cancelled'" (click)="cancelRoom(room.bookingId)" class="d-flex align-items-center">
+                    <mat-icon class="mr-2">cancel</mat-icon>
+                    <span>Cancel</span>
+                </a>
+            </div>
+        </mat-expansion-panel>
+    </ng-container>
+</mat-accordion>

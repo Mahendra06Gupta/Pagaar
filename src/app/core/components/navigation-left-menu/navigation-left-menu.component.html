@@ -1,0 +1,12 @@
+<mat-nav-list [ngClass.lt-md]="{'small': true}" class="left-menu-container bg-light h-100 pt-0">
+    <ng-container *ngFor="let menuItems of sidenavMenu">
+        <mat-list-item [fxHide.gt-sm]="menuItems.name === 'Logout'" tabindex="0" (click)="triggerAction(menuItems.action, menuItems.actionDescription)">
+            <a *hasPermission=menuItems.permissions class="d-inline-block w-100 active">
+                <mat-icon aria-hidden="true" mat-list-icon>{{menuItems.icon}}</mat-icon>
+                <span>
+                    {{menuItems.name}}
+                </span>
+            </a>
+        </mat-list-item>
+    </ng-container>
+</mat-nav-list>

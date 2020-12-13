@@ -1,0 +1,135 @@
+html {
+    box-sizing: border-box;
+    height: 100%;
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-weight: 300;
+    -webkit-print-color-adjust: exact;
+    height: 100%;
+    overflow: hidden;
+}
+
+a {
+    cursor: pointer;
+    text-decoration: none;
+
+    // Gets rid of tap active state
+    -webkit-tap-highlight-color: transparent;
+}
+
+.divider {
+    height: 1px;
+    overflow: hidden;
+    background-color: #616161;
+}
+
+.cdk-overlay-pane .mat-menu-item {
+
+    line-height: 24px;
+    font-size: calculateRem(13px);
+
+    &:focus {
+        background-color: inherit;
+    }
+
+    &:hover {
+        background-color: rgba(0, 0, 0, .04);
+    }
+
+    &.disabled {
+        text-decoration: underline;
+        pointer-events: none;
+        cursor: default;
+    }
+}
+
+.small {
+
+    .boxed-content {
+        background-color: #fff;
+        padding: .5rem 1rem 1rem;
+        margin: 1rem;
+    }
+
+    .bordered {
+        border: 1px solid #e7ebee;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    :host {
+
+        .content {
+            padding: .75em;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: bold;
+            line-height: 3.5rem;
+            margin-top: 0;
+        }
+
+        .phones-list,
+        .address-list {
+            margin-bottom: .75em;
+
+            & + div i {
+                text-align: center;
+            }
+        }
+
+        .cdk-overlay-pane {
+            min-width: calc(320px - 5vw);
+
+            .mat-dialog-content {
+                padding: 0;
+                margin: 0;
+            }
+        }
+
+    }
+}
+
+.large {
+
+    :host {
+
+        .page-footer {
+            max-width: unset;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    }
+}
+
+@media print {
+
+    .printing-excluded {
+        display: none;
+    }
+
+    .small {
+
+        :host {
+
+            .content {
+                padding: 0;
+            }
+        }
+    }
+}

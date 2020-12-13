@@ -1,0 +1,46 @@
+<mat-accordion displayMode="flat" id="app-booking-list-expandable-tab">
+    <mat-expansion-panel disabled="true" class="header-panel">
+        <mat-expansion-panel-header>
+            <mat-panel-title class="header-panel-title" fxLayout="row">
+                <div fxLayout="row" class="expansion-room-row">
+                    <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="start">
+                        <strong>Room Name</strong>
+                    </div>
+                    <div fxFlex="1 1 33" fxLayout="row" (click)="sortVcsAsPerDate()">
+                        <strong>Date
+                            <mat-icon class="sort-icon" aria-hidden="true">{{isDescendingByDate ? 'arrow_drop_up' : 'arrow_drop_down'}}</mat-icon>
+                        </strong>
+                    </div>
+                </div>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <ng-container *ngFor="let room of createdVc">
+        <mat-expansion-panel class="expandable-room-history-body">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div fxLayout="row" class="expansion-room-row">
+                        <div fxFlex="1 1 50" fxLayout="row"
+                                fxLayoutAlign="start">{{room.roomName}}</div>
+                        <div fxFlex="1 1 50" class="room-history-type">{{room.roomAddedOn | date : 'dd MMM yyyy'}}</div>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+                <app-vcid-list-expandable-tab-entry
+                    label="Room Id"
+                    [value]=" room.roomId">
+                </app-vcid-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+
+            <div>
+                <app-vcid-list-expandable-tab-entry
+                    label="Created"
+                    [value]="room.createdBy">
+                </app-vcid-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+        </mat-expansion-panel>
+    </ng-container>
+</mat-accordion>

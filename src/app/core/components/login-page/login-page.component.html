@@ -1,0 +1,40 @@
+<div class="login-page">
+  <div class="m-auto position-absolute login-form">
+    <form 
+      class="p-4 form"
+      fxLayout="column"
+      fxLayoutGap="20px" 
+      [formGroup]="loginForm" 
+      (ngSubmit)="onSubmit()">
+      <div class="title">Log In</div>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="email@abc.com" formControlName="email" required>
+        <mat-error class="mt-3" *ngIf="hasError('email', 'required')">Please enter your email address</mat-error>
+        <mat-error class="mt-3" *ngIf="hasError('email', 'pattern')">please enter a valid email address</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" placeholder="••••••••" required>
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error class="mt-3" *ngIf="hasError('password', 'required')">please enter password associated with your email address</mat-error>
+        <!-- <mat-error class="mt-3" *ngIf="hasError('password', 'minlength')">Password must be a minimun of 8 characters</mat-error> -->
+      </mat-form-field>
+      <mat-checkbox color="primary" (change)="rememberMe($event.checked)" [checked]="rememberMeSelected">
+        Keep me signed in on this device.
+      </mat-checkbox>
+      <button mat-raised-button [disabled]="loginForm.invalid" class="py-1 px-3 login-button m-0" color="primary">Log In</button>
+      <div class="position-relative py-sm-3 py-2">
+        <hr class="left-divider d-inline-block position-absolute mb-3 mt-2">
+          <span class="or-text margin-auto w-100 text-center d-inline-block">or</span>
+        <hr class="right-divider d-inline-block position-absolute mb-3 mt-2">
+      </div>
+      <a class="text-primary text-center font-weight-bold" (click)="goToCreateAccount()">
+        <span>New to Pagaar? Create an account</span>
+      </a>
+    </form>
+    <a class="text-center mt-4 text-primary d-block">Forgot Your Password?</a>
+  </div>
+</div>
