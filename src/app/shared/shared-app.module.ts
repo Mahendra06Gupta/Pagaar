@@ -41,8 +41,8 @@ import { PageTitleComponent } from './components/page-title/page-title.component
 import { BookingListTabComponent } from './components/booking-list-tab/booking-list-tab.component';
 import { BookingListExpandableTabComponent } from './components/booking-list-expandable-tab/booking-list-expandable-tab.component';
 import { BookingListExpandableTabEntryComponent } from './components/booking-list-expandable-tab/booking-list-expandable-tab-entry.component';
-import { ConferenceFormComponent } from '@app/booking/components/conference/components/conference-form/conference-form.component';
-import { BookingFormComponent } from '@app/booking/components/booking-form/booking-form.component';
+import { ConferenceFormComponent } from '@app/dashboard/components/conference/components/conference-form/conference-form.component';
+import { DashboardSearchFormComponent } from '@app/dashboard/components/dashboard-search-form/dashboard-search-form.component';
 import { HasPermissionDirective } from './directives/has-permission.directive';
 
 
@@ -88,7 +88,7 @@ const angularMaterialModules = [
         BookingListTabComponent,
         BookingListExpandableTabComponent,
         BookingListExpandableTabEntryComponent,
-        BookingFormComponent,
+        DashboardSearchFormComponent,
         ConferenceFormComponent,
         HasPermissionDirective
     ],
@@ -119,14 +119,14 @@ const angularMaterialModules = [
         BookingListTabComponent,
         BookingListExpandableTabComponent,
         BookingListExpandableTabEntryComponent,
-        BookingFormComponent,
+        DashboardSearchFormComponent,
         ConferenceFormComponent,
         HasPermissionDirective
     ],
     entryComponents: [
         DialogComponent,
         ActionModalComponent,
-        BookingFormComponent,
+        DashboardSearchFormComponent,
         ConferenceFormComponent
     ]
 })

@@ -1,4 +1,13 @@
 .navbar{
+    padding: 0px;
+
+    &.navbar-bottom-border {
+        border-bottom: 1px solid rgba(0,0,0,.12);
+    }
+
+    .login {
+        opacity: 1;
+    }
 
     .logo-trigger {
 
@@ -7,39 +16,11 @@
         }
     }
 
-    .account {
-        font-size: 2rem;
-        color: lightskyblue;
+    .mat-tab-link {
+        min-width: 80px;
     }
 
-    .dropdown {
-
-        cursor: pointer;
-
-        .username {
-            bottom: 10px;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f1f1f1;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 2;
-
-            a {
-
-                &:hover{
-                    background-color: #ddd
-                }
-            }
-        }
-
-        &:hover {
-
-            .dropdown-content {
-                display: block;
-            }
-        }
+    .login-small {
+        border-radius: 4.25rem;
     }
 }

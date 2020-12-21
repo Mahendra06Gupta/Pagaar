@@ -1,0 +1,31 @@
+.link {
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.popular-search-section {
+    width: 65%;
+}
+
+.popular {
+    padding: 10px 0.75rem;
+    margin: 0.25rem;
+    background-color: #e4e2e0;
+    border-color: #e4e2e0;
+    color: #2d2d2d;
+    border-radius: 0.5rem;
+
+    mat-icon, span {
+        font-size: 14px;
+    }
+
+    mat-icon {
+        top: 0.125rem;
+    }
+}
+
+.arrow {
+    opacity: 0.5;
+}

@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 
-import { IndividualRoomOverviewModel } from '@app/booking/models/room-overview/individual-room-overview.model';
+import { IndividualRoomOverviewModel } from '@app/dashboard/models/room-overview/individual-room-overview.model';
 import { RootState } from '@app/store/models/root-state.model';
 import { ActionModalComponent } from '@app/shared/components/action-modal';
 import { DialogService } from '@app/core/services/dialog-service/dialog.service';

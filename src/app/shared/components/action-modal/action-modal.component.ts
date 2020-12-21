@@ -2,8 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RootState, LoggedOutSuccessfully, GoToBaseRoute } from '@app/store';
 import { DialogService } from '@app/core/services/dialog-service/dialog.service';
-import { UpdateIndividualBookingVcStatus } from '@app/booking/store';
-import { UpdateConferenceStatus } from '@app/booking/store/conference-room/conference-room.actions';
+import { UpdateIndividualBookingVcStatus } from '@app/dashboard/store';
+import { UpdateConferenceStatus } from '@app/dashboard/store/conference-room/conference-room.actions';
 
 @Component({
   templateUrl: './action-modal.component.html',

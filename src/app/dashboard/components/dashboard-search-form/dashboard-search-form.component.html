@@ -1,0 +1,21 @@
+<form fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="center center" fxLayout.lt-md="column" class="p-4 form"[formGroup]="searchForm" (ngSubmit)="onSubmit()">
+    <div class="search-form" ngClass.lt-md="w-100">
+        <h5 class="mb-0">What</h5>
+        <span class="title">Company, job title, or keywords</span>
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-icon matSuffix>search</mat-icon>
+            <input matInput formControlName="jobTitle" placeholder="Pagaar">
+        </mat-form-field>
+    </div>
+    <div class="search-form" ngClass.lt-md="w-100">
+        <h5 class="mb-0">Where</h5>
+        <span class="title">State, city, or pin code</span>
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-icon matSuffix>location_on</mat-icon>
+            <input matInput formControlName="location" placeholder="123456">
+        </mat-form-field>
+    </div>
+    <button ngClass.lt-md="w-100" class="search-button position-relative" mat-raised-button color="primary">
+        Search Jobs
+    </button>
+</form>

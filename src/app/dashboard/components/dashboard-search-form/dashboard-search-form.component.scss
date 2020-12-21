@@ -1,0 +1,48 @@
+.search-form {
+
+    width: 30%;
+
+    .title {
+        font-size: 10px;
+    }
+
+    .mat-form-field-appearance-outline {
+
+        .mat-form-field-infix {
+            border: 0;
+            left: 0.5rem;
+        }
+
+        .mat-form-field-label {
+            top: 1rem;
+        }
+    }
+
+    .mat-form-field-label-wrapper {
+        top: 0.5rem;
+        padding: 0;
+    }
+
+
+    .mat-form-field-appearance-outline .mat-form-field-suffix {
+        top: 0.5rem;
+    }
+
+    .mat-form-field-suffix .mat-icon {
+        font-size: 120%;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-outline-start {
+        border-radius: 10px 0 0 10px;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-outline-end {
+        border-radius: 0 10px 10px 0;
+    }
+
+}
+
+.search-button {
+    height: 42px;
+    bottom: -1.5rem;
+}

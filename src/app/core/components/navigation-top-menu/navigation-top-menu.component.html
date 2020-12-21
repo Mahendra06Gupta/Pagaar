@@ -1,11 +1,53 @@
-<nav class="px-3 navbar" fxLayout="row" [fxLayoutAlign]="!(isLoginPage$ | async) ? 'space-between center' : 'center'">
-    <div *ngIf="(isLargeDevices$ | async)" [ngClass]="{'mt-4 pt-3 pb-2': (isLoginPage$ | async)}">
-        <a aria-label='Return to homepage' tabindex="0" class="logo-trigger" (click)="goToBooking()">
-            <img class="image" src="https://img.icons8.com/dusk/64/000000/video-conference.png"/>
-        </a>
+<nav class="px-3 navbar" [ngClass]="{'navbar-bottom-border': !(isLoginPage$ | async)}" fxLayout="row" [fxLayoutAlign]="!(isLoginPage$ | async) ? 'space-between center' : 'center'">
+    <div fxLayout="row" fxLayoutGap="1rem">
+        <div [ngClass]="{'mt-4 pt-3 pb-2': (isLoginPage$ | async)}">
+            <a aria-label='Return to homepage' tabindex="0" class="logo-trigger" (click)="goToDashboard()">
+                <img class="image" src="https://img.icons8.com/dusk/64/000000/video-conference.png"/>
+            </a>
+        </div>
+        <div *ngIf="(isLargeDevices$ | async) && !(isLoginPage$ | async)" fxLayout.gt-md="row" fxLayout.lt-lg="column-reverse" fxLayoutAlign.gt-md="space-between end"
+            fxLayoutAlign.lt-lg="space-between start" class="navigation-bar">
+            <nav class="border-0" fxFlex="1 1 auto" mat-tab-nav-bar role="navigation" aria-label="Tab Links">
+                <a mat-tab-link id="dashboard-landing" class="dashboard-landing-tab" routerLink="{{dashboardTab.DASHBOARD_LANDING}}"
+                    routerLinkActive #dashboardLandingActive="routerLinkActive" [active]="dashboardLandingActive.isActive">
+                    <span fxHide.lt-sm="true" class="tab-text">Find jobs</span>
+                </a>
+                <a mat-tab-link id="dashboard-company-review" class="dashboard-company-review-tab" routerLink="{{dashboardTab.DASHBOARD_COMPANY_REVIEWS}}"
+                    routerLinkActive #dashboardCompanyReviewActive="routerLinkActive" [active]="dashboardCompanyReviewActive.isActive">
+                    <span fxHide.lt-sm="true" class="tab-text">Company Reviews</span>
+                </a>
+                <a mat-tab-link id="dashboard-find-salaries" class="dashboard-find-salaries-tab" routerLink="{{dashboardTab.DASHBOARD_FIND_SALARIES}}"
+                    routerLinkActive #dashboardFindSalaries="routerLinkActive" [active]="dashboardFindSalaries.isActive">
+                    <span fxHide.lt-sm="true" class="tab-text">Find Salaries</span>
+                </a>
+            </nav>
+        </div>
     </div>
 
-    <div class="position-relative mx-0 my-auto" [ngClass]="(isLargeDevices$ | async) ? 'w-auto' : 'w-100'">
+    <ng-container *ngIf="!(isLoginPage$ | async)">
+        <div *ngIf="(isLargeDevices$ | async) else showLoginButton" fxLayout="row" fxLayoutGap="1.5rem">
+            <nav class="border-0" fxFlex="1 1 auto" mat-tab-nav-bar role="navigation" aria-label="Tab Links">
+                <a mat-tab-link id="upload-your-resume" class="upload-your-resume" (click)="goToSignUp()">
+                    <span fxHide.lt-sm="true" class="tab-text">Upload your Resume</span>
+                </a>
+                <a mat-tab-link id="login" class="login" (click)="goToLogin()">
+                    <span fxHide.lt-sm="true" class="tab-text text-primary font-weight-bold">Login</span>
+                </a>
+                <a mat-tab-link id="todays-deals" class="todays-deals-tab bold"
+                    routerLinkActive #todaysDealsActive="routerLinkActive" [active]="todaysDealsActive.isActive">
+                    <span fxHide.lt-sm="true" class="tab-text">Post Jobs/ Are you Employers?</span>
+                </a> <!-- routerLink="{{pendingDealsTab.TODAYS_DEALS}}"-->
+            </nav>
+        </div>
+    </ng-container>
+
+    <ng-template #showLoginButton>
+        <button mat-raised-button color="primary" class="login-small">
+            Login
+        </button>
+    </ng-template>
+
+    <!-- <div class="position-relative mx-0 my-auto" [ngClass]="(isLargeDevices$ | async) ? 'w-auto' : 'w-100'">
         <div fxLayout="row" fxLayoutAlign="space-between center">
             <ng-content *ngIf="isSignedIn$ | async" select="button"></ng-content>
             <ng-container *ngIf="!(isLoginPage$ | async)">
@@ -36,5 +78,5 @@
                 </a>
             </div>
         </div>
-    </div>
+    </div> -->
 </nav>

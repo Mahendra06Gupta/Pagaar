@@ -1,0 +1,37 @@
+<app-dashboard-search-form></app-dashboard-search-form>
+<div fxLayout="column" fxLayoutAlign="center center" fxLayoutAlign.lt-md="start" fxLayoutGap.gt-sm="1rem">
+    <div *ngIf="(isLargeDevices$ | async)" class="w-100 text-center" ngClass.gt-sm="border-bottom">
+        <div class="my-3">
+            <a class="link font-weight-bold text-primary">Upload your resume</a>
+            <span> - It only takes your few seconds</span>
+        </div>
+        <div class="my-3">
+            <a class="link font-weight-bold text-primary">Are you Employers? Post a job</a>
+            <span> – Your next hire is here</span>
+        </div>
+    </div>
+    <div class="popular-search px-4 pt-4">
+        <h5>Popular searches</h5>
+    </div>
+    <div class="px-4 pb-4" [ngClass.gt-sm]="'text-center popular-search-section popular-line-height'">
+        <div class="popular d-inline-block" *ngFor="let popularSearch1 of popularSearchLine1">
+            <mat-icon class="position-relative text-center">search</mat-icon>&nbsp;
+            <span>{{popularSearch1}}</span>
+        </div>
+    </div>
+    <div *ngIf="!(isLargeDevices$ | async)" class="px-2 pb-4" fxLayout="row" fxLayoutAlign="space-between">
+        <h5 class="font-weight-bold">Create your profile</h5>
+        <mat-icon class="arrow">keyboard_arrow_right</mat-icon>
+    </div>
+    <div *ngIf="(isLargeDevices$ | async) else forEmployer" class="w-100 text-center bg-light p-4">
+        <h5>Let employers find you</h5>
+        <button mat-raised-button color="primary" class="mt-2">Upload your resume</button>
+    </div>
+    <ng-template #forEmployer>
+        <div class="w-100 text-center bg-light p-4">
+            <h5>For employers</h5>
+            <h5>Your next hire is here</h5>
+            <button mat-raised-button color="primary" class="mt-2 w-100">Post a job</button>
+        </div>
+    </ng-template>
+</div>

@@ -19,8 +19,7 @@ export class SignUpComponent implements OnInit {
   public rememberMeSelected = true;
   public roles: Role[] = [
     { roleId: RoleType.EMPLOYEE, name: RoleType.EMPLOYEE },
-    { roleId: RoleType.EMPLOYER, name: RoleType.EMPLOYER },
-    { roleId: RoleType.ADMIN, name: RoleType.ADMIN }
+    { roleId: RoleType.EMPLOYER, name: RoleType.EMPLOYER }
   ];
 
   constructor(

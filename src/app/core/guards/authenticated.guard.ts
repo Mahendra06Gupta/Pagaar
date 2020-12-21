@@ -3,7 +3,7 @@ import { CanActivate, CanActivateChild } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { RootState, fromUserSelector, GoToLogin } from '@app/store';
+import { RootState, fromUserSelector, GoToLogin, GoToDashboard } from '@app/store';
 import { tap, map } from 'rxjs/operators';
 
 @Injectable({
@@ -26,7 +26,8 @@ export class AuthenticatedGuard implements CanActivate, CanActivateChild {
 
   private redirectToLoginPageIfNotAuthenticated = (isAuthenticated: boolean) => {
     if (!isAuthenticated) {
-      this.store$.dispatch(new GoToLogin());
+      console.log('isme jaata hai kya');
+      this.store$.dispatch(new GoToDashboard());
     }
   }
 }

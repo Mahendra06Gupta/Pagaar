@@ -5,10 +5,10 @@ import { first } from 'rxjs/operators';
 
 import { ToastrService } from 'ngx-toastr';
 import { RootState } from '@app/store';
-import { UpdateSelectedBookingDate } from '@app/booking/store/conference-room/conference-room.actions';
-import { fromBookingsSelectors } from '@app/booking/store/store';
-import { ConferenceRoomOverviewModel } from '@app/booking/models/conference-overview/conference-room-overview.model';
-import { VcIdOverlapModel, VcOverlap } from '@app/booking/models/room-overview/individual-room-overview.model';
+import { UpdateSelectedBookingDate } from '@app/dashboard/store/conference-room/conference-room.actions';
+import { fromBookingsSelectors } from '@app/dashboard/store/store';
+import { ConferenceRoomOverviewModel } from '@app/dashboard/models/conference-overview/conference-room-overview.model';
+import { VcIdOverlapModel, VcOverlap } from '@app/dashboard/models/room-overview/individual-room-overview.model';
 
 
 @Injectable({

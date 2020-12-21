@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DialogService } from '@app/core/services/dialog-service/dialog.service';
-import { BookingFormComponent } from '../../../booking/components/booking-form/booking-form.component';
-import { ConferenceFormComponent } from '@app/booking/components/conference/components/conference-form/conference-form.component';
+import { DashboardSearchFormComponent } from '../../../dashboard/components/dashboard-search-form/dashboard-search-form.component';
+import { ConferenceFormComponent } from '@app/dashboard/components/conference/components/conference-form/conference-form.component';
 
 @Component({
   selector: 'app-page-title',
@@ -29,7 +29,7 @@ export class PageTitleComponent implements OnInit {
   }
 
   public bookRoom(): void {
-    this.createRoom ? this.dialogService.openDialog(BookingFormComponent, {}) : this.dialogService.openDialog(ConferenceFormComponent, {});
+    this.createRoom ? this.dialogService.openDialog(DashboardSearchFormComponent, {}) : this.dialogService.openDialog(ConferenceFormComponent, {});
   }
 
 }

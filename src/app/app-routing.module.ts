@@ -12,7 +12,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'login',
+        redirectTo: 'dashboard',
         pathMatch: 'full',
       },
       {
@@ -23,29 +23,29 @@ const routes: Routes = [
         path: 'create-account',
         component: SignUpComponent,
       },
-    ]
-  },
-  {
-    path: '',
-    canActivate: [AuthenticatedGuard],
-    canActivateChild: [AuthenticatedGuard],
-    children: [
       {
-        path: '',
-        component: DashboardComponent,
-        children: [
-          {
-            path: 'booking',
-            loadChildren: () => import('./booking/booking.module').then(m => m.BookingModule)
-          },
-          {
-            path: MainRoutes.conference,
-            loadChildren: () => import('@app/booking/components/conference/conference.module').then(m => m.ConferenceModule)
-          },
-        ]
-      }
+        path: 'dashboard',
+        loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+      },
     ]
   },
+  // {
+  //   path: '',
+  //   canActivate: [AuthenticatedGuard],
+  //   canActivateChild: [AuthenticatedGuard],
+  //   children: [
+  //     {
+  //       path: '',
+  //       component: DashboardComponent,
+  //       children: [
+  //         {
+  //           path: MainRoutes.conference,
+  //           loadChildren: () => import('@app/dashboard/components/conference/conference.module').then(m => m.ConferenceModule)
+  //         },
+  //       ]
+  //     }
+  //   ]
+  // },
 ];
 
 @NgModule({

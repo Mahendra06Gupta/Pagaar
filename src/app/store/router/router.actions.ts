@@ -34,7 +34,7 @@ export class GoToCreateAccount extends Go {
     }
 }
 
-export class GoToBooking extends Go {
+export class GoToDashboard extends Go {
     constructor() {
         super({ path: [`/${MainRoutes.booking}`] });
     }
