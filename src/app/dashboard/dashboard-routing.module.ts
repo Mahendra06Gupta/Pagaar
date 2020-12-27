@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MainRoutes } from '@app/app.route-names';
+import { UserProfileRoutingPath } from '@app/user-profile/models/user-profile-routing.path';
+
 import { DashboardLandingComponent } from './components/dashboard-landing/dashboard-landing.component';
 
 const routes: Routes = [
@@ -11,7 +12,7 @@ const routes: Routes = [
       {
         path: '',
         component: DashboardLandingComponent,
-      },
+      }
     ]
   },
 ];

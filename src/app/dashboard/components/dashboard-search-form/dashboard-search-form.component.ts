@@ -9,18 +9,8 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
 import { RootState, GoToLogin } from '@app/store';
-import { UserData } from '@app/models/data.model';
-import * as fromUserDataSelector from '@app/store/user-details/user-details.selectors';
-import { fromBookingsSelectors } from '@app/dashboard/store/store';
-import { ConferenceRoomOverviewModel, VcModel } from '@app/dashboard/models/conference-overview/conference-room-overview.model';
-import { BookIndividualVcRoom } from '@app/dashboard/store';
-import { UpdateBookedConferenceRoom } from '@app/dashboard/store/conference-room/conference-room.actions';
-import { TimeSlotValidationService } from '@app/core/services/time-slot-validation/time-slot-validation.service';
 import { DialogService } from '@app/core/services/dialog-service/dialog.service';
-import { getSavedState, localStorageKey } from '@app/dashboard/store/booking.reducer';
-import { VcOverlap } from '@app/dashboard/models/room-overview/individual-room-overview.model';
-
-declare let Email: any;
+// import { getSavedState, localStorageKey } from '@app/dashboard/store/dashboard.reducer';
 
 export const DATE_FORMATS = {
   parse: {
@@ -63,7 +53,6 @@ export class DashboardSearchFormComponent implements OnInit {
     public readonly fb: FormBuilder,
     private store$: Store<RootState>,
     private toastr: ToastrService,
-    private timeSlotValidationService: TimeSlotValidationService,
     private readonly dialogService: DialogService
   ) { }
 
@@ -78,6 +67,7 @@ export class DashboardSearchFormComponent implements OnInit {
     //   this.conferenceRoomData = conferenceRoomData;
       this.initForm();
     // });
+    // this.authService.
   }
 
   public onSubmit(): void {
@@ -101,21 +91,6 @@ export class DashboardSearchFormComponent implements OnInit {
     //   this.isCreating = false;
     //   this.submitButton = 'Create Room';
     // }
-  }
-
-  private getOverlappedVc(vcId: string[], overlap: VcOverlap[]): string[] {
-    const overlapVcId = [];
-    if ( vcId && overlap && vcId.length !== 0 && overlap.length !== 0) {
-      for (const vc of vcId) {
-        for (const overlapId of overlap) {
-          if (overlapId.vcId === vc) {
-            overlapVcId.push(vc);
-          }
-        }
-      }
-    }
-
-    return overlapVcId;
   }
 
   // private callBookingAction(data, overlap: VcOverlap[]): void {

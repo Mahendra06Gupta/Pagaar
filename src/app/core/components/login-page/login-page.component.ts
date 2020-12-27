@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import { GoToCreateAccount, RootState } from '@app/store';
+import { GoToCreateAccount, GoToDashboard, RootState, UserLogged } from '@app/store';
 import { ToastrService } from 'ngx-toastr';
 import { RememberMeService } from '@app/core/services';
 import { AuthService } from '@app/shared/services/auth.service';
@@ -57,7 +57,14 @@ export class LoginPageComponent implements OnInit {
       this.rememberMeService.remove('rememberme');
     }
     this.authService.login(this.loginForm.value).subscribe(
-      (res) => console.log(res)
+      (res: {username: string, token: string}) => {
+        this.store$.dispatch(new UserLogged([{
+          email: res.username,
+          token: res.token,
+          logged: true
+        }]));
+        this.store$.dispatch(new GoToDashboard());
+      }
     );
   }
 

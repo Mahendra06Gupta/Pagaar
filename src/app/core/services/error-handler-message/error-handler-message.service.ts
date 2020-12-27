@@ -7,7 +7,9 @@ import { ToastrService } from 'ngx-toastr';
 
 export class ErrorHandlerMessageService {
 
-  constructor(private toastr: ToastrService) {}
+  constructor(
+    private readonly toastrService: ToastrService
+  ) {}
 
   public showToastForErrors(err: any): void {
     console.log(err.error);
@@ -43,14 +45,14 @@ export class ErrorHandlerMessageService {
   }
 
   public error(msg: string): void {
-    this.toastr.error(msg);
+    this.toastrService.error(msg);
   }
 
   public info(msg: string): void {
-    this.toastr.success(msg);
+    this.toastrService.success(msg);
   }
 
   public warn(msg: string): void {
-    this.toastr.warning(msg);
+    this.toastrService.warning(msg);
   }
 }

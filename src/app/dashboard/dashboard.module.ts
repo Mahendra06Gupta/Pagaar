@@ -16,8 +16,8 @@ import { DashboardLandingComponent } from './components/dashboard-landing/dashbo
   imports: [
     SharedAppModule,
     DashboardRoutingModule,
-    EffectsModule.forFeature(fromBookingStore.BOOKINGS_EFFECTS),
-    StoreModule.forFeature('booking', fromBookingStore.BOOKINGS_REDUCERS)
+    // EffectsModule.forFeature(fromBookingStore.BOOKINGS_EFFECTS),
+    // StoreModule.forFeature('dashboard', fromBookingStore.BOOKINGS_REDUCERS)
   ]
 })
 export class DashboardModule { }

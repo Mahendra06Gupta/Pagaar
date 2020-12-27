@@ -1,3 +1,2 @@
-export * from './individual-booked-vc-room/individual-booked-vc-room.actions';
-export * from './booking.actions';
+export * from './dashboard.actions';
 export * from './store';

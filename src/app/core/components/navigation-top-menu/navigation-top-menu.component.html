@@ -27,12 +27,27 @@
     <ng-container *ngIf="!(isLoginPage$ | async)">
         <div *ngIf="(isLargeDevices$ | async) else showLoginButton" fxLayout="row" fxLayoutGap="1.5rem">
             <nav class="border-0" fxFlex="1 1 auto" mat-tab-nav-bar role="navigation" aria-label="Tab Links">
-                <a mat-tab-link id="upload-your-resume" class="upload-your-resume" (click)="goToSignUp()">
+                <a *ngIf="!(isUserLoggedIn$ | async)" mat-tab-link id="upload-your-resume" class="upload-your-resume" (click)="goToSignUp()">
                     <span fxHide.lt-sm="true" class="tab-text">Upload your Resume</span>
                 </a>
-                <a mat-tab-link id="login" class="login" (click)="goToLogin()">
-                    <span fxHide.lt-sm="true" class="tab-text text-primary font-weight-bold">Login</span>
-                </a>
+                <ng-container *ngIf="(isUserLoggedIn$ | async) else userNotLoggedIn">
+                    <a mat-tab-link id="login" class="login" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>person</mat-icon>
+                    </a>
+                    <mat-menu #menu="matMenu">
+                        <h6 class="text-center my-3">{{loggedInUserEmail}}</h6>
+                        <button fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let opt of options" mat-menu-item (click)="goToSectionAsPerUserSelect(opt.tab)">
+                            <span>{{opt.tab}}</span>
+                            <mat-icon class="text-dark">{{opt.icon}}</mat-icon>
+                        </button>
+                        <div class="border-top text-center pt-2 mt-2">Logout</div>
+                    </mat-menu>
+                </ng-container>
+                <ng-template #userNotLoggedIn>
+                    <a mat-tab-link id="login" class="login" (click)="goToLogin()">
+                        <span fxHide.lt-sm="true" class="tab-text text-primary font-weight-bold">Login</span>
+                    </a>
+                </ng-template>
                 <a mat-tab-link id="todays-deals" class="todays-deals-tab bold"
                     routerLinkActive #todaysDealsActive="routerLinkActive" [active]="todaysDealsActive.isActive">
                     <span fxHide.lt-sm="true" class="tab-text">Post Jobs/ Are you Employers?</span>

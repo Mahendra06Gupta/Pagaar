@@ -1,24 +1,32 @@
 import { Action } from '@ngrx/store';
+import { RootState } from './models/root-state.model';
+import {merge, pick} from 'lodash-es';
 
-import { CLEAR_STORE_AFTER_LOGOUT } from '@app/store/auth/auth.actions';
-// import { ClearInvestor } from '@app/store/investor/investor.actions';
-// import { ClearProducts } from '@app/store/products/products.actions';
-import { RootState } from '@app/store/models/root-state.model';
-// import * as fromInvestorReducer from '@app/store/investor/investor.reducer';
-// import * as fromProductsReducer from '@app/store/products/products.reducer';
+function setSavedState(state: any, localStoreKey: string) {
+    localStorage.setItem(localStoreKey, JSON.stringify(state));
+}
+
+function getSavedState(localStoreKey: string): any {
+    return JSON.parse(localStorage.getItem(localStoreKey));
+}
+
+const stateKeys = ['user', 'dashboard'];
+const localStorageKey = '__app_storage__';
 
 export function rootStoreMetaReducer(reducer): (state, action: Action) => RootState {
+    let onInit = true;
     return function crossRootStoreReducer(state, action: Action): RootState {
         switch (action.type) {
-            case CLEAR_STORE_AFTER_LOGOUT: {
-                // return {
-                //     ...state,
-                //     investor: fromInvestorReducer.investorReducer(state.investor, new ClearInvestor()),
-                //     products: fromProductsReducer.productsReducer(state.products, new ClearProducts()),
-                // };
-            }
             default: {
-                return reducer(state, action);
+                const nextState = reducer(state, action);
+                if (onInit) {
+                    onInit = false;
+                    const savedState = getSavedState(localStorageKey);
+                    return merge(nextState, savedState);
+                }
+                const stateToSave = pick(nextState, stateKeys);
+                setSavedState(stateToSave, localStorageKey);
+                return nextState;
             }
         }
     };

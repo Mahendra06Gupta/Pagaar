@@ -1,9 +1,9 @@
 export interface UserData {
-    name: string;
-    id: string;
+    name?: string;
+    id?: string;
     email: string;
-    password: string;
-    type: string;
+    token: string;
+    type?: string;
     logged: boolean;
 }
 

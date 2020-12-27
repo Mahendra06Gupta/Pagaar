@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, Action } from '@ngrx/store';
-import { RootState, GoToDashboard, GoToConference, LogOut } from '@app/store';
+import { RootState, GoToDashboard, LogOut } from '@app/store';
 import { map } from 'rxjs/operators';
 import { DeviceScreenSizeService } from '@app/core/services/device-screen-size/device-screen-size.service';
 import { Observable } from 'rxjs';
@@ -17,7 +17,6 @@ export class NavigationLeftMenuComponent implements OnInit {
   public isLargeDevices$: Observable<boolean>;
   public sidenavMenu = [
     { name: 'Individual VC', icon: 'video_label', action: new GoToDashboard(), actionDescription: 'GoToBooking', permissions: []},
-    { name: 'Add Conference', icon: 'meeting_room', action: new GoToConference(), actionDescription: 'GoToConference', permissions: ['admin']},
     { name: 'Logout', icon: 'power_settings_new', action: new LogOut(), actionDescription: 'Logout', permissions: []}
   ];
 

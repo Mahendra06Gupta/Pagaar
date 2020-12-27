@@ -6,17 +6,17 @@ export const USER_LOGIN = '[USER_DETAILS] USER_LOGIN';
 export const LOGIN_SUCCESSFULLY = '[USER_DETAILS] LOGIN_SUCCESSFULLY';
 export const LOGOUT_SUCCESSFULLY = '[USER_DETAILS] LOGOUT_SUCCESSFULLY';
 
-export class LoadUserRegistered implements Action {
-    public readonly type = LOAD_USER;
+// export class LoadUserRegistered implements Action {
+//     public readonly type = LOAD_USER;
 
-    constructor(public readonly payload: {userDetails: UserData[] }) {
-    }
-}
+//     constructor(public readonly payload: {userDetails: UserData[] }) {
+//     }
+// }
 
 export class UserLogged implements Action {
     public readonly type = USER_LOGIN;
 
-    constructor(public readonly payload: {id: string, logged: boolean}) {
+    constructor(public readonly payload: {email: string, token: string, logged: boolean}[]) {
     }
 }
 
@@ -35,7 +35,7 @@ export class LoggedOutSuccessfully implements Action {
 }
 
 export type UserDetailsActions =
-    LoadUserRegistered |
+    // LoadUserRegistered |
     UserLogged |
     LoggedInSuccessfully |
     LoggedOutSuccessfully;

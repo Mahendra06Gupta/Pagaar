@@ -3,16 +3,30 @@ import { MainRoutes } from '@app/app.route-names';
 
 
 export const GO = '[Router] Go';
+export const GO_USING_ACTIVE_USER_ID = '[Router] GO_USING_ACTIVE_USER_ID';
 
 export class Go implements Action {
     public readonly type = GO;
 
-    constructor(public payload: GoNavigationDetails) {
+    public constructor(public payload: GoNavigationDetails) {
     }
 }
 
 export interface GoNavigationDetails {
     path: string[];
+    query?: object;
+}
+
+export class GoUsingActiveUserId implements Action {
+    public readonly type = GO_USING_ACTIVE_USER_ID;
+
+    public constructor(public payload: GoUsingActiveUserIdNavigationDetails) {
+    }
+}
+
+export interface GoUsingActiveUserIdNavigationDetails {
+    pathSupplier: (userId: string) => string[];
+    userId?: string;
     query?: object;
 }
 
@@ -36,13 +50,7 @@ export class GoToCreateAccount extends Go {
 
 export class GoToDashboard extends Go {
     constructor() {
-        super({ path: [`/${MainRoutes.booking}`] });
-    }
-}
-
-export class GoToConference extends Go {
-    constructor() {
-        super({ path: [`/${MainRoutes.conference}`] });
+        super({ path: [`/${MainRoutes.dashboard}`] });
     }
 }
 

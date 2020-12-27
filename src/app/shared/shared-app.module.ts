@@ -31,6 +31,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { FooterComponent } from './components/footer/footer.component';
 import { LoaderComponent } from './components/loader/loader.component';
@@ -38,10 +39,6 @@ import { ListLoaderComponent } from './components/list-loader/list-loader.compon
 import { ActionModalComponent } from './components/action-modal/action-modal.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { PageTitleComponent } from './components/page-title/page-title.component';
-import { BookingListTabComponent } from './components/booking-list-tab/booking-list-tab.component';
-import { BookingListExpandableTabComponent } from './components/booking-list-expandable-tab/booking-list-expandable-tab.component';
-import { BookingListExpandableTabEntryComponent } from './components/booking-list-expandable-tab/booking-list-expandable-tab-entry.component';
-import { ConferenceFormComponent } from '@app/dashboard/components/conference/components/conference-form/conference-form.component';
 import { DashboardSearchFormComponent } from '@app/dashboard/components/dashboard-search-form/dashboard-search-form.component';
 import { HasPermissionDirective } from './directives/has-permission.directive';
 
@@ -74,7 +71,8 @@ const angularMaterialModules = [
     MatListModule,
     MatCheckboxModule,
     MatCardModule,
-    MatDialogModule
+    MatDialogModule,
+    MatChipsModule
 ];
 
 @NgModule({
@@ -85,11 +83,7 @@ const angularMaterialModules = [
         ActionModalComponent,
         DialogComponent,
         PageTitleComponent,
-        BookingListTabComponent,
-        BookingListExpandableTabComponent,
-        BookingListExpandableTabEntryComponent,
         DashboardSearchFormComponent,
-        ConferenceFormComponent,
         HasPermissionDirective
     ],
     imports: [
@@ -116,18 +110,13 @@ const angularMaterialModules = [
         ListLoaderComponent,
         ActionModalComponent,
         PageTitleComponent,
-        BookingListTabComponent,
-        BookingListExpandableTabComponent,
-        BookingListExpandableTabEntryComponent,
         DashboardSearchFormComponent,
-        ConferenceFormComponent,
         HasPermissionDirective
     ],
     entryComponents: [
         DialogComponent,
         ActionModalComponent,
         DashboardSearchFormComponent,
-        ConferenceFormComponent
     ]
 })
 export class SharedAppModule {

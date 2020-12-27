@@ -5,7 +5,8 @@
     "paths": {
       "@app/*": ["app/*"],
       "@core/*": ["app/core/*"],
-      "@interceptors/*": ["app/core/interceptors/*"]
+      "@interceptors/*": ["app/core/interceptors/*"],
+      "@shared/*": ["app/shared/*"]
     },
     "downlevelIteration": true,
     "outDir": "./dist/out-tsc",

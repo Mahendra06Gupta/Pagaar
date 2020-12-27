@@ -21,14 +21,14 @@ export const getUserDetails = createSelector(
     (state: UserDetailsState) => state && state.entities
 );
 
-export const isUserLoggedIn = createSelector(
-    getUserDetailsState,
-    (state: UserDetailsState) => state && state.loggedIn
-);
-
 export const getLoggedInUserData = createSelector(
     getUserEntities,
     (user: fromUserModel.UserData[]) => user && fromUserModel.getUser(user)
+);
+
+export const isUserLoggedIn = createSelector(
+    getLoggedInUserData,
+    (user: fromUserModel.UserData) => user?.logged
 );
 
 export const getUserLoggedInName = createSelector(
@@ -49,4 +49,9 @@ export const getUserLoggedInId = createSelector(
 export const getUserLoggedInEmail = createSelector(
     getLoggedInUserData,
     (state: fromUserModel.UserData) => state && state.email
+);
+
+export const getLoggedUSerToken = createSelector(
+    getLoggedInUserData,
+    (state: fromUserModel.UserData) => state && state.token
 );

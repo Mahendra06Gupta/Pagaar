@@ -2,8 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RootState, LoggedOutSuccessfully, GoToBaseRoute } from '@app/store';
 import { DialogService } from '@app/core/services/dialog-service/dialog.service';
-import { UpdateIndividualBookingVcStatus } from '@app/dashboard/store';
-import { UpdateConferenceStatus } from '@app/dashboard/store/conference-room/conference-room.actions';
 
 @Component({
   templateUrl: './action-modal.component.html',
@@ -27,8 +25,6 @@ export class ActionModalComponent implements OnInit {
   }
 
   private triggerCancelBookingAction(bookingId): void {
-    this.store$.dispatch(new UpdateIndividualBookingVcStatus({bookingId}));
-    this.store$.dispatch(new UpdateConferenceStatus({bookingId}));
   }
 
   public triggerSelectedAction(bookingId): void {

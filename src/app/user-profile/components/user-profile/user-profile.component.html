@@ -1,0 +1,186 @@
+<div class="user-profile p-2 my-3" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1rem">
+    <div class="form-field" fxFlex.gt-sm="1 1 65%">
+        <form
+            class="p-4 form"
+            fxLayout="column"
+            fxLayoutGap="20px" 
+            [formGroup]="detailForm">
+            <mat-accordion fxLayout="column" fxLayoutGap="1.5rem" displayMode="flat" id="app-booking-list-expandable-tab">
+                <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Personal Information
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div fxLayout="column" fxLayoutGap="0.7rem">
+                        <div fxLayout="row" fxLayoutGap="0.5rem" fxLayoutAlign="space-between">
+                            <mat-form-field fxFlex="1 1 auto" appearance="outline">
+                                <mat-label>First Name</mat-label>
+                                <input matInput placeholder="First Name" formControlName="firstName" required>
+                                <mat-error class="mt-3" *ngIf="hasError('firstName', 'required')">Please enter your first name</mat-error>
+                                <mat-error class="mt-3" *ngIf="hasError('firstName', 'maxlength')">Please enter a valid name, no special character is allowed</mat-error>
+                            </mat-form-field>
+                            <mat-form-field fxFlex="1 1 auto" appearance="outline">
+                                <mat-label>Last Name</mat-label>
+                                <input matInput placeholder="Last Name" formControlName="lastName" required>
+                                <mat-error class="mt-3" *ngIf="hasError('lastName', 'required')">Please enter your last name</mat-error>
+                                <mat-error class="mt-3" *ngIf="hasError('lastName', 'maxlength')">Please enter a valid name, no special character is allowed</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Email</mat-label>
+                            <input matInput placeholder="email@abc.com" formControlName="email" required>
+                            <mat-error class="mt-3" *ngIf="hasError('email', 'required')">Please enter your email address</mat-error>
+                            <mat-error class="mt-3" *ngIf="hasError('email', 'pattern')">please enter a valid email address</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Date of Birth</mat-label>
+                            <input matInput [matDatepicker]="fromDatepicker" [max]="dateTo" (dateChange)="onFromDateChange($event)"
+                            name="fromDate" formControlName="dob" placeholder="DD/MM/YYYY" required>
+                            <mat-datepicker-toggle matSuffix [for]="fromDatepicker"></mat-datepicker-toggle>
+                            <mat-datepicker #fromDatepicker></mat-datepicker>
+                            <mat-error class="mt-3" *ngIf="hasError('dob', 'required')">Please enter your date of birth</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Address</mat-label>
+                            <input matInput placeholder="email@abc.com" formControlName="address" required>
+                            <mat-error class="mt-3" *ngIf="hasError('address', 'required')">Please enter your address</mat-error>
+                            <mat-error class="mt-3" *ngIf="hasError('address', 'maxlength')">please enter a valid address</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Contact Number</mat-label>
+                            <input matInput placeholder="1234567890" formControlName="contactNumber" required>
+                            <mat-error class="mt-3" *ngIf="hasError('contactNumber', 'required')">Please enter your contact number</mat-error>
+                            <mat-error class="mt-3" *ngIf="hasError('contactNumber', 'pattern')">please enter a valid contact number</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Marital Status</mat-label>
+                            <mat-select formControlName="maritalStatus">
+                                <mat-option *ngFor="let status of maritalStatus" [value]="status">
+                                    {{status}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error class="mt-3" *ngIf="hasError('maritalStatus', 'required')">Please enter your contact number</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Nationality</mat-label>
+                            <input matInput placeholder="Indian" formControlName="nationality" required>
+                            <mat-error class="mt-3" *ngIf="hasError('nationality', 'required')">Please enter your nationality</mat-error>
+                            <mat-error class="mt-3" *ngIf="hasError('nationality', 'maxlength')">please enter a valid nationality</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Id Proof Number</mat-label>
+                            <input matInput placeholder="XXXXXXXX" formControlName="idProof" required>
+                            <mat-error class="mt-3" *ngIf="hasError('idProof', 'required')">Please enter your Id Proof Number</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" id="hobbies">
+                            <mat-label>Hobbies</mat-label>
+                            <mat-chip-list #hobbiesList formArrayName="hobbies" required>
+                                <mat-chip *ngFor="let hobby of getSkillsOrHobbies('hobbies')" [selectable]="true" [removable]="true" (removed)="removeSkillsOrHobbies(hobby, 'hobbies')">
+                                    {{hobby}}
+                                    <mat-icon matChipRemove>cancel</mat-icon>
+                                </mat-chip>
+                                <input id="hobby-name" appTrim appLowerCase placeholder="playing music"
+                                    [maxLength]="256" [matChipInputFor]="hobbiesList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="addSkillsOrHobbies($event, 'hobbies')">
+                            </mat-chip-list>
+                            <mat-error class="mt-3">
+                                Please enter atleast one hobby
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <mat-action-row>
+                        <button mat-raised-button color="primary" (click)="nextStep()">Next</button>
+                    </mat-action-row>
+                </mat-expansion-panel>
+                <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Educational Information
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div fxLayout="column" fxLayoutGap="0.7rem">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Qualification</mat-label>
+                            <input matInput placeholder="B Sc." formControlName="qualification" required>
+                            <mat-error class="mt-3" *ngIf="hasError('qualification', 'required')">Please enter your qualification</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <mat-action-row>
+                        <button mat-raised-button color="warn" (click)="prevStep()">Previous</button>
+                        <button mat-raised-button color="primary" (click)="nextStep()">Next</button>
+                    </mat-action-row>
+                </mat-expansion-panel>
+                <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Professional Information
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div fxLayout="column" fxLayoutGap="0.7rem">
+                        <mat-form-field appearance="outline" id="skills">
+                            <mat-label>Skills</mat-label>
+                            <mat-chip-list #skillList formArrayName="skills" required>
+                                <mat-chip *ngFor="let skill of getSkillsOrHobbies('skills')" [selectable]="true" [removable]="true" (removed)="removeSkillsOrHobbies(skill, 'skills')">
+                                    {{skill}}
+                                    <mat-icon matChipRemove>cancel</mat-icon>
+                                </mat-chip>
+                                <input id="skill-name" appTrim appLowerCase placeholder="Java"
+                                    [maxLength]="256" [matChipInputFor]="skillList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="addSkillsOrHobbies($event, 'skills')" required>
+                            </mat-chip-list>
+                            <mat-error class="mt-3">
+                                Please enter atleast one skills
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Total Year Of Experience</mat-label>
+                            <input matInput placeholder="12" formControlName="numberOfYears" required>
+                            <mat-error class="mt-3" *ngIf="hasError('numberOfYears', 'required')">Please enter total year of experience</mat-error>
+                            <mat-error class="mt-3" *ngIf="hasError('numberOfYears', 'pattern')">please enter a valid year</mat-error>
+                        </mat-form-field>
+                        <div formArrayName="jobDetails">
+                            <div class="mb-3" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="0.2rem" fxLayoutAlign.gt-sm="start center" *ngFor="let experience of t.controls; let i = index" [formGroupName]="i">
+                                <mat-form-field class="experience-form" appearance="outline">
+                                    <mat-label>Company</mat-label>
+                                    <input matInput placeholder="company" formControlName="companyName" [required]="t.controls[i]['controls'].companyName.touched || this.step === 2">
+                                    <mat-error class="mt-3">
+                                        <div *ngIf="experience.get('companyName').hasError('required')">
+                                            Please enter your company name
+                                        </div>
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="experience-form" appearance="outline">
+                                    <mat-label>Designation</mat-label>
+                                    <input matInput placeholder="designation" formControlName="designation" [required]="t.controls[i]['controls'].designation.touched  || this.step === 2">
+                                    <mat-error class="mt-3">
+                                        <div *ngIf="experience.get('designation').hasError('required')">
+                                            Please enter your designation
+                                        </div>
+                                    </mat-error>
+                                </mat-form-field>
+                                <div fxLayoutAlign.lt-md="center center">
+                                    <button *ngIf="i !== 0" mat-icon-button color="warn" aria-label="Remove/clear"
+                                        (click)="removeExperienceDetail(i)">
+                                        <mat-icon>highlight_off</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                            <button ngClass.lt-md="w-100" class="mt-3" mat-raised-button color="primary" aria-label="Add"
+                                (click)="addExperienceFormGroup()">
+                                <span>Add Experience</span>
+                            </button>
+                        </div>
+                    </div>
+                    <mat-action-row>
+                        <button mat-raised-button color="warn" (click)="prevStep()">Previous</button>
+                        <button mat-raised-button color="primary" type="submit" [disabled]="detailForm.invalid" (click)="onSubmit()">Submit</button>
+                    </mat-action-row>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </form>
+    </div>
+    <div fxFlex.gt-sm="1 1 35%">
+
+    </div>
+</div>

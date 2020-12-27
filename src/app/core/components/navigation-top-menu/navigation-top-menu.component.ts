@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs/operators';
+import { first, map, tap } from 'rxjs/operators';
 
 import { RootState, fromRouterSelector, GoToDashboard, GoToLogin, GoToBaseRoute, GoToCreateAccount } from '@app/store';
 import { DeviceScreenSizeService } from '@app/core/services/device-screen-size/device-screen-size.service';
@@ -10,6 +10,7 @@ import { DialogService } from '@app/core/services/dialog-service/dialog.service'
 import { ActionModalComponent } from '@app/shared/components/action-modal/action-modal.component';
 import { isIamLoginPageORCreateAccountPage } from '@app/store/router/router.selectors';
 import { DashboardTab } from '@app/dashboard/models/dashboard-routing.path';
+import { GoToActiveAboutMe } from '@app/user-profile/user-profile-routing.actions';
 
 @Component({
   selector: 'app-navigation-top-menu',
@@ -22,12 +23,21 @@ export class NavigationTopMenuComponent implements OnInit, OnDestroy {
     map(isSmallDevice => !isSmallDevice)
   );
   public dashboardTab = DashboardTab;
-  public isSignedIn$: Observable<boolean>;
+  public isSignedIn$: Observable<boolean> = this.store$.select(fromUserDetailsSelector.isUserLoggedIn);
+  public isUserLoggedIn$: Observable<boolean> = this.store$.select(fromUserDetailsSelector.isUserLoggedIn);
   public isLoginPage$: Observable<boolean> = this.store$.select(isIamLoginPageORCreateAccountPage);
   public showActions: boolean;
-  public userLoggedIn$: Observable<string> = this.store$.select(fromUserDetailsSelector.getUserLoggedInName);
+  public loggedInUserEmail: string;
   public activeRoute: string;
   public subscriptionArray: Subscription[] = [];
+  public options = [
+    {tab: 'Profile', icon: 'description'},
+    // {tab: 'My jobs', icon: 'favorite_border'},
+    // {tab: 'My reviews', icon: 'rate_review'},
+    // {tab: 'Email preferences', icon: 'email'},
+    // {tab: 'Search preferences', icon: 'search'},
+    {tab: 'Account', icon: 'tune'},
+  ];
 
   constructor(
     private readonly deviceSizeBreakpointService: DeviceScreenSizeService,
@@ -48,8 +58,11 @@ export class NavigationTopMenuComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.subscriptionArray.push(this.store$.select(fromRouterSelector.getActiveUrl).subscribe(
       res => res ? this.activeRoute = res.replace('/', '') : ''
-    )),
-    this.isSignedIn$ = this.store$.select(fromUserDetailsSelector.isUserLoggedIn);
+    ));
+    this.store$.select(fromUserDetailsSelector.getUserLoggedInEmail).pipe(
+      first(),
+      tap(email => this.loggedInUserEmail = email)
+    ).subscribe();
   }
 
   // public triggerAction(): void {
@@ -78,6 +91,13 @@ export class NavigationTopMenuComponent implements OnInit, OnDestroy {
 
   public goToSignUp(): void {
     this.store$.dispatch(new GoToCreateAccount());
+  }
+
+  public goToSectionAsPerUserSelect(tab: string): void {
+    switch (tab) {
+      case 'Profile': this.store$.dispatch(new GoToActiveAboutMe());
+                      break;
+    }
   }
 
 }

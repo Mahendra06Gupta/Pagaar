@@ -7,13 +7,16 @@ import { Store } from '@ngrx/store';
 import { RouterReducerState } from '@ngrx/router-store';
 
 import * as RouterActions from './router.actions';
-import { Go } from './router.actions';
+import { Go, GoUsingActiveUserId } from './router.actions';
 import { RouterState } from './router.reducer';
+import { RootState } from '../models/root-state.model';
+import { getUserLoggedInEmail } from '../user-details/user-details.selectors';
 
 @Injectable()
 export class RouterEffects {
 
     constructor(
+        private readonly store$: Store<RootState>,
         private readonly actions$: Actions,
         private readonly router: Router,
     ) {
@@ -27,6 +30,20 @@ export class RouterEffects {
         (action) => {
             return this.navigateTo(action.payload.path, action.payload.query);
         })
+    );
+
+    @Effect({ dispatch: false })
+    public navigateUsingActiveAccountId$ = this.actions$.pipe(
+        ofType(RouterActions.GO_USING_ACTIVE_USER_ID),
+        map((action: GoUsingActiveUserId) => action.payload),
+        withLatestFrom(
+            this.store$.select(getUserLoggedInEmail),
+            (actionPayload, activeAccountId) => ({
+                path: actionPayload.pathSupplier(actionPayload.userId || activeAccountId),
+                query: actionPayload.query
+            })
+        ),
+        tap(({ path, query }) => this.navigateTo(path, query))
     );
 
     private navigateTo(path: string[], queryParams: object = {}): void {

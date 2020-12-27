@@ -12,21 +12,25 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: MainRoutes.dashboard,
         pathMatch: 'full',
       },
       {
-        path: 'login',
+        path: MainRoutes.login,
         component: LoginPageComponent,
       },
       {
-        path: 'create-account',
+        path: MainRoutes.createAccount,
         component: SignUpComponent,
       },
       {
-        path: 'dashboard',
+        path: MainRoutes.dashboard,
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
       },
+      {
+        path: MainRoutes.userProfile,
+        loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfileModule)
+      }
     ]
   },
   // {
