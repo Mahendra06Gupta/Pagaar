@@ -15,6 +15,9 @@ export class ErrorHandlerMessageService {
     console.log(err.error);
     let errorMessage;
     switch (err.status) {
+      case 400:
+        errorMessage = err.error.message;
+        break;
       case 412:
         errorMessage = err.error.errors[0].error[0].message;
         break;

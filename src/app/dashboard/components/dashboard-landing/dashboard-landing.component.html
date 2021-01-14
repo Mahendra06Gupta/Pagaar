@@ -1,3 +1,9 @@
+<ng-container *ngIf="!hideUpdateProfileMessage">
+    <div *ngIf="!isDetailsExists" class="d-flex bg-dark text-light align-items-center justify-content-center">
+        <p class="p-3 m-0">It seems your profile is not updated, please <a class="text-info" (click)="goToAboutMe()">click here</a> to update your profile so that we can recommends you the job matching with your profile in future</p>
+        <button mat-icon-button (click) = "hideUpdateProfileInfo()"><mat-icon>clear</mat-icon></button>
+    </div>
+</ng-container>
 <app-dashboard-search-form></app-dashboard-search-form>
 <div fxLayout="column" fxLayoutAlign="center center" fxLayoutAlign.lt-md="start" fxLayoutGap="0" fxLayoutGap.gt-sm="1rem">
     <div *ngIf="(isLargeDevices$ | async)" class="w-100 text-center" ngClass.gt-sm="border-bottom">

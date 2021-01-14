@@ -6,6 +6,7 @@ import { RememberMeService } from '@app/core/services';
 import { GoToLogin, RootState } from '@app/store';
 import { Role, RoleType } from '@app/models/data.model';
 import { AuthService } from '@app/shared/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sign-up',
@@ -26,7 +27,8 @@ export class SignUpComponent implements OnInit {
     public readonly fb: FormBuilder,
     public readonly store$: Store<RootState>,
     private readonly authService: AuthService,
-    private readonly rememberMeService: RememberMeService
+    private readonly rememberMeService: RememberMeService,
+    private readonly toastrService: ToastrService
   ) { }
 
   ngOnInit() {
@@ -64,7 +66,10 @@ export class SignUpComponent implements OnInit {
     };
     delete payload.lastName;
     this.authService.createAccount(payload).subscribe(
-      (res) => console.log(res)
+      (res) => {
+        this.toastrService.success(res.message);
+        this.goToLogin();
+      }
     );
   }
 
