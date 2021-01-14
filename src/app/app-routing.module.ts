@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { LoginPageComponent } from '@core/components/login-page/login-page.component';
-import { DashboardComponent } from './core/components/dashboard/dashboard.component';
-import { AuthenticatedGuard } from './core/guards/authenticated.guard';
+import { AuthenticatedGuard } from '@core/guards/authenticated.guard';
 import { MainRoutes } from '@app/app.route-names';
-import { SignUpComponent } from './core/components';
+import { SignUpComponent } from '@core/components/sign-up/sign-up.component';
+import { DashboardComponent } from '@core/components/dashboard/dashboard.component';
+import { UserProfileRoutingPath } from './user-profile/models/user-profile-routing.path';
 
 const routes: Routes = [
   {
@@ -24,15 +26,51 @@ const routes: Routes = [
         component: SignUpComponent,
       },
       {
-        path: MainRoutes.dashboard,
-        loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+        path: '',
+        children: [
+          {
+            path: '',
+            component: DashboardComponent,
+            children: [
+              {
+                path: MainRoutes.dashboard,
+                loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+              },
+              {
+                path: UserProfileRoutingPath.userProfile,
+                loadChildren: () => import ('./user-profile/user-profile.module').then(m => m.UserProfileModule)
+              }
+            ]
+          }
+        ]
       },
-      {
-        path: MainRoutes.userProfile,
-        loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfileModule)
-      }
+      // {
+      //   path: MainRoutes.dashboard,
+      //   component: DashboardComponent,
+      //   loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+      // }
     ]
-  },
+  }
+];
+
+// const routes: Routes = [
+//   {
+//     path: '',
+//     children: [
+//       {
+//         path: '',
+//         redirectTo: MainRoutes.dashboard,
+//         pathMatch: 'full',
+//       },
+//       {
+
+//       },
+//       {
+//         path: MainRoutes.userProfile,
+//         loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfileModule)
+//       }
+//     ]
+//   },
   // {
   //   path: '',
   //   canActivate: [AuthenticatedGuard],
@@ -50,7 +88,7 @@ const routes: Routes = [
   //     }
   //   ]
   // },
-];
+// ];
 
 @NgModule({
   providers: [

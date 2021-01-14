@@ -31,7 +31,8 @@ import { ErrorHandlerMessageService } from '@core/services/error-handler-message
             this.router.navigate(['/login']);
             return throwError(response);
           } else if (response.status === 403) {
-            this.errorHandlerMessageService.warn(response.error);
+            console.log(response);
+            this.errorHandlerMessageService.warn(response.error.message);
             // this.authService.cleanup();
             this.router.navigate(['/login']);
             return throwError(response);

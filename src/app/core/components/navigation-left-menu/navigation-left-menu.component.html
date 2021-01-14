@@ -1,12 +1,33 @@
-<mat-nav-list [ngClass.lt-md]="{'small': true}" class="left-menu-container bg-light h-100 pt-0">
-    <ng-container *ngFor="let menuItems of sidenavMenu">
-        <mat-list-item [fxHide.gt-sm]="menuItems.name === 'Logout'" tabindex="0" (click)="triggerAction(menuItems.action, menuItems.actionDescription)">
-            <a *hasPermission=menuItems.permissions class="d-inline-block w-100 active">
-                <mat-icon aria-hidden="true" mat-list-icon>{{menuItems.icon}}</mat-icon>
-                <span>
-                    {{menuItems.name}}
-                </span>
+<mat-nav-list [ngClass.lt-md]="{'small': true}" class="left-menu-container bg-light h-100 pt-0 w-100">
+    <ng-container *ngFor="let menuItems of sidenavMenu, let i = index">
+        <mat-list-item tabindex="0" (click)="triggerAction(menuItems.action, menuItems.actionDescription)">
+            <a *hasPermission=menuItems.permissions class="w-100 active" fxLayoutAlign="space-between center">
+                <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="0.2rem">
+                    <mat-icon aria-hidden="true" mat-list-icon>{{menuItems.icon}}</mat-icon>
+                    <span>
+                        {{menuItems.name}}
+                    </span>
+                </div>
+                <mat-icon>chevron_right</mat-icon>
             </a>
+            <mat-divider *ngIf="i !== sidenavMenu.length-1"></mat-divider>
         </mat-list-item>
+    </ng-container>
+    <ng-container *ngIf="(isUserLoggedIn$ | async)">
+        <mat-divider class="divider"></mat-divider>
+        <ng-container *ngFor="let menuItems of sidenavMenuAfterLogin, let i = index">
+            <mat-list-item tabindex="0" (click)="triggerAction(menuItems.action, menuItems.actionDescription)">
+                <a *hasPermission=menuItems.permissions class="w-100 active" fxLayoutAlign="space-between center">
+                    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="0.2rem">
+                        <mat-icon aria-hidden="true" mat-list-icon>{{menuItems.icon}}</mat-icon>
+                        <span>
+                            {{menuItems.name}}
+                        </span>
+                    </div>
+                    <mat-icon>chevron_right</mat-icon>
+                </a>
+                <mat-divider *ngIf="i !== sidenavMenuAfterLogin.length-1"></mat-divider>
+            </mat-list-item>
+        </ng-container>
     </ng-container>
 </mat-nav-list>

@@ -3,11 +3,10 @@ import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { first, map, tap } from 'rxjs/operators';
 
-import { RootState, fromRouterSelector, GoToDashboard, GoToLogin, GoToBaseRoute, GoToCreateAccount } from '@app/store';
+import { RootState, fromRouterSelector, GoToLogin, GoToBaseRoute, GoToCreateAccount } from '@app/store';
 import { DeviceScreenSizeService } from '@app/core/services/device-screen-size/device-screen-size.service';
 import * as fromUserDetailsSelector from '@app/store/user-details/user-details.selectors';
 import { DialogService } from '@app/core/services/dialog-service/dialog.service';
-import { ActionModalComponent } from '@app/shared/components/action-modal/action-modal.component';
 import { isIamLoginPageORCreateAccountPage } from '@app/store/router/router.selectors';
 import { DashboardTab } from '@app/dashboard/models/dashboard-routing.path';
 import { GoToActiveAboutMe } from '@app/user-profile/user-profile-routing.actions';
@@ -23,7 +22,6 @@ export class NavigationTopMenuComponent implements OnInit, OnDestroy {
     map(isSmallDevice => !isSmallDevice)
   );
   public dashboardTab = DashboardTab;
-  public isSignedIn$: Observable<boolean> = this.store$.select(fromUserDetailsSelector.isUserLoggedIn);
   public isUserLoggedIn$: Observable<boolean> = this.store$.select(fromUserDetailsSelector.isUserLoggedIn);
   public isLoginPage$: Observable<boolean> = this.store$.select(isIamLoginPageORCreateAccountPage);
   public showActions: boolean;

@@ -8,7 +8,6 @@ import { UserProfileRoutingPath, UserProfileTab } from './models/user-profile-ro
 const userProfileRoutes: Routes = [
   {
     path: '',
-    // canActivate: [AccountsLoadedGuard],
     children: [
       {
         path: UserProfileRoutingPath.userProfile,
@@ -24,7 +23,7 @@ const userProfileRoutes: Routes = [
         ]
       },
     ]
-  }
+  },
 ];
 
 @NgModule({

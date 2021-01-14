@@ -19,7 +19,7 @@ export class ErrorHandlerMessageService {
         errorMessage = err.error.errors[0].error[0].message;
         break;
       case 403:
-        errorMessage = err.error;
+        errorMessage = err.error.message;
         break;
       case 401:
         if (err.error.error === 'Unauthorized') {

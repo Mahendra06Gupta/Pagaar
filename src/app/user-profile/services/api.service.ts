@@ -22,6 +22,10 @@ export class ApiService {
     return this.restService.get(`${endpoints.updateEmployeeDetail}/${userId}`);
   }
 
+  public getEmployeeDetailByEmail(email: string): Observable<EmployeeDetail> {
+    return this.restService.get(`${endpoints.getEmployeeDetail}/${email}`);
+  }
+
   public getAllEmployersdetail(): Observable<EmployersDetail[]> {
     return this.restService.get(endpoints.updateEmployerDetail);
   }
@@ -30,7 +34,7 @@ export class ApiService {
     return this.restService.get(`${endpoints.updateEmployerDetail}/${employerId}`);
   }
 
-  public addEmployeeDetail(payload: EmployeeDetailApiReuestModel): Observable<any> {
+  public addEmployeeDetail(payload: FormData): Observable<any> {
     return this.restService.post(endpoints.updateEmployeeDetail, payload);
   }
 
