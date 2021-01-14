@@ -24,12 +24,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     public ngOnInit(): void {
         this.menuContextService = this.contextMenuService;
-        // this.store$.select(getUserLoggedInEmail).pipe(
-        //     first(),
-        //     switchMap(email => this.apiService.getEmployeeDetailByEmail(email).pipe(
-        //         tap((details) => console.log(details))
-        //     ))
-        // ).subscribe();
+        this.store$.select(getUserLoggedInEmail).pipe(
+            first(),
+            switchMap(email => this.apiService.getEmployeeDetailByEmail(email).pipe(
+                tap((details) => console.log(details))
+            ))
+        ).subscribe();
     }
 
     public ngAfterViewInit(): void {
