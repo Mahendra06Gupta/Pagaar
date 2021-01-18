@@ -36,7 +36,7 @@
         <ng-container *ngIf="jobResult$ | async as jobResult">
             <p>Angular Jobs</p>
             <div class="row justify-content-center" ngClass.lt-md="column m-0 p-2">
-                <mat-card ngClass.gt-md="col-3 m-2" ngClass.lt-md="col-12" *ngFor="let job of jobResult.jobs">
+                <mat-card ngClass.lt-lg="col-5 m-2" ngClass.gt-md="col-3 m-2" ngClass.lt-md="col-12" *ngFor="let job of jobResult.jobs">
                     <h6 class="main-text title">{{job.title}}</h6>
                     <p class="main-text">{{job.employer.companyName}}</p>
                     <p fxLayout="row" fxLayoutAlign="start center" class="main-text">{{job.location}} <b class="mx-1">&#x2022;</b> {{job.nature.replace('_', '') | titlecase}}</p>
@@ -68,6 +68,23 @@
                         <p class="pt-3 posting">Deadline: {{job.applicationDeadline}}</p>
                     </div>
                 </mat-card>
+            </div>
+            <div fxLayout="row">
+                <ng-container *ngIf="currentPage !== 1">
+                    <button *ngIf="!isFirstPage" mat-icon-button (click)="prevPage()" class="pagination m-2">
+                        <mat-icon>chevron_left</mat-icon>
+                    </button>
+                </ng-container>
+                <div  *ngFor="let page of totalPage(jobResult.totalItems / 10 | numberRound : true), let i = index">
+                    <ng-container *ngIf=" page >= this.startButtonPage && page < this.showButtonTillPage">
+                        <button [disabled]="i + 1 === currentPage" [ngClass]="{'active': i + 1 === currentPage}" (click)="nextPage(i + 1)" mat-stroked-button class="pagination m-2">{{page + 1}}</button>
+                    </ng-container>
+                </div>
+                <ng-container *ngIf="(this.showButtonTillPage * 10 < jobResult.totalItems)">
+                    <button *ngIf="!isLastPage" mat-icon-button (click)="nextPage()" class="pagination m-2">
+                        <mat-icon>chevron_right</mat-icon>
+                    </button>
+                </ng-container>
             </div>
         </ng-container>
     </ng-template>

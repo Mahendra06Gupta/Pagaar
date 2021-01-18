@@ -2,7 +2,7 @@ import { INIT_ACTION } from '@ngrx/store-devtools/src/reducer';
 import { DashboardActions, INIT_DASHBOARD_SEARCH, UPDATE_DASHBOARD_SEARCH_RESULT } from './dashboard.actions';
 import { JobReuslt } from './models/dashboard-state.model';
 export interface DashboardState {
-    searchKeyword: {jobTitle: string, location: string, initiated: boolean};
+    searchKeyword: {jobTitle: string, location: string, initiated: boolean, pageSize: number, pageNumber: number};
     jobResult: JobReuslt;
 }
 

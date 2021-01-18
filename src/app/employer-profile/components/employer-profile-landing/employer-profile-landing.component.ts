@@ -9,11 +9,11 @@ import { UserProfileTab } from '@app/employee-profile/models/employee-profile-ro
 // import { getSavedState, localStorageKey } from '@app/dashboard/store/dashboard.reducer';
 
 @Component({
-  selector: 'app-employee-profile-landing',
-  templateUrl: './employee-profile-landing.component.html',
-  styleUrls: ['./employee-profile-landing.component.scss']
+  selector: 'app-employer-profile-landing',
+  templateUrl: './employer-profile-landing.component.html',
+  styleUrls: ['./employer-profile-landing.component.scss']
 })
-export class EmployeeProfileLandingComponent implements OnInit {
+export class EmployerProfileLandingComponent implements OnInit {
 
   public userEmail: string;
   public userNameAbv: string;

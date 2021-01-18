@@ -51,7 +51,12 @@ export const getUserLoggedInEmail = createSelector(
     (state: fromUserModel.UserData) => state && state.email
 );
 
-export const getLoggedUSerToken = createSelector(
+export const getLoggedUserToken = createSelector(
     getLoggedInUserData,
     (state: fromUserModel.UserData) => state && state.token
+);
+
+export const getUserRole = createSelector(
+    getLoggedInUserData,
+    (state: fromUserModel.UserData) => state && state.roles
 );

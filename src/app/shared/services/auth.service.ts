@@ -6,7 +6,7 @@ import { endpoints } from '../endpoints/auth-api-endpoints';
 import { CreateAccountApiRequestModel, LoginApiReuestModel } from '../models/auth.model';
 import { RestService } from '@app/core/services';
 import { RootState } from '@app/store';
-import { getLoggedUSerToken } from '@app/store/user-details/user-details.selectors';
+import { getLoggedUserToken } from '@app/store/user-details/user-details.selectors';
 import { tap } from 'rxjs/operators';
 
 @Injectable({
@@ -30,7 +30,7 @@ export class AuthService {
   }
 
   public getAuthInfo(): string {
-    this.store$.select(getLoggedUSerToken).pipe(
+    this.store$.select(getLoggedUserToken).pipe(
       tap((res) => this.token = res)
     ).subscribe();
 

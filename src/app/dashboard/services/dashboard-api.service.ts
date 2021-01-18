@@ -15,13 +15,20 @@ export class DashboardApiService {
     private readonly restService: RestService
   ) { }
 
-  public getJobDetailByTitleAndLocation({jobTitle, location}): Observable<JobReuslt> {
+  public getJobDetailByTitleAndLocation({jobTitle, location, pageNumber, pageSize}): Observable<JobReuslt> {
+    console.log(jobTitle, location);
     let params: HttpParams = new HttpParams();
     if (jobTitle) {
       params = params.append('title', jobTitle);
     }
     if (location) {
       params = params.append('location', location);
+    }
+    if (pageNumber) {
+      params = params.append('page', pageNumber);
+    }
+    if (pageSize) {
+      params = params.append('size', pageSize);
     }
     return this.restService.get(`${endpoints.jobSearch}?${params}`);
   }

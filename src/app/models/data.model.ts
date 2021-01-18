@@ -5,6 +5,7 @@ export interface UserData {
     token: string;
     type?: string;
     logged: boolean;
+    roles: string[];
 }
 
 export function getUser(userEntities: UserData[]): UserData {

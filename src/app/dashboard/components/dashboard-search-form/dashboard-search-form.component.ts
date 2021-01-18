@@ -49,7 +49,7 @@ export class DashboardSearchFormComponent implements OnInit {
 
   public ngOnInit(): void {
     this.initForm();
-    this.store$.dispatch(new InitDashboardSearch({...this.searchForm.value, initiated: true}));
+    this.store$.dispatch(new InitDashboardSearch({...this.searchForm.value, initiated: true, pageNumber: 1, pageSize: 10}));
     this.store$.dispatch(new UpdateDashboardSearchResult(dummyData));
     this.search.emit();
   }
@@ -70,8 +70,8 @@ export class DashboardSearchFormComponent implements OnInit {
     if (this.isFormValid()) {
       return;
     } else {
-      this.store$.dispatch(new InitDashboardSearch({...this.searchForm.value, initiated: true}));
-      this.dashboardApiService.getJobDetailByTitleAndLocation(this.searchForm.value).pipe(
+      this.store$.dispatch(new InitDashboardSearch({...this.searchForm.value, initiated: true, pageNumber: 1, pageSize: 10}));
+      this.dashboardApiService.getJobDetailByTitleAndLocation({...this.searchForm.value, pageNumber: 1, pageSize: 10}).pipe(
         first(),
         tap(res => {
           res.totalItems > 0 ? this.store$.dispatch(new UpdateDashboardSearchResult(res)) : this.store$.dispatch(new UpdateDashboardSearchResult(dummyData));

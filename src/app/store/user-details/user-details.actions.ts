@@ -16,7 +16,7 @@ export const LOGOUT_SUCCESSFULLY = '[USER_DETAILS] LOGOUT_SUCCESSFULLY';
 export class UserLogged implements Action {
     public readonly type = USER_LOGIN;
 
-    constructor(public readonly payload: {email: string, token: string, logged: boolean}[]) {
+    constructor(public readonly payload: {email: string, token: string, logged: boolean, roles: string[]}[]) {
     }
 }
 

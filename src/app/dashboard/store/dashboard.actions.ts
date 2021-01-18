@@ -7,7 +7,7 @@ export const UPDATE_DASHBOARD_SEARCH_RESULT = '[DASHBOARD] UPDATE_DASHBOARD_SEAR
 export class InitDashboardSearch implements Action {
     public readonly type = INIT_DASHBOARD_SEARCH;
 
-    constructor(public payload: {jobTitle: string, location: string, initiated: boolean}) {
+    constructor(public payload: {jobTitle: string, location: string, initiated: boolean, pageNumber: number, pageSize: number}) {
     }
 }
 export class UpdateDashboardSearchResult implements Action {

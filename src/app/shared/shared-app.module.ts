@@ -43,6 +43,7 @@ import { PageTitleComponent } from './components/page-title/page-title.component
 import { DashboardSearchFormComponent } from '@app/dashboard/components/dashboard-search-form/dashboard-search-form.component';
 import { HasPermissionDirective } from './directives/has-permission.directive';
 import { GlobalSpinnerComponent } from './components/spinner/global-spinner.component';
+import { NumberRoundPipe } from './pipe/number-round.pipe';
 
 
 const angularMaterialModules = [
@@ -88,7 +89,8 @@ const angularMaterialModules = [
         PageTitleComponent,
         DashboardSearchFormComponent,
         GlobalSpinnerComponent,
-        HasPermissionDirective
+        HasPermissionDirective,
+        NumberRoundPipe
     ],
     imports: [
         RouterModule,
@@ -116,7 +118,8 @@ const angularMaterialModules = [
         PageTitleComponent,
         DashboardSearchFormComponent,
         HasPermissionDirective,
-        GlobalSpinnerComponent
+        GlobalSpinnerComponent,
+        NumberRoundPipe
     ],
     entryComponents: [
         DialogComponent,

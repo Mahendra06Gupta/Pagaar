@@ -23,6 +23,7 @@ export function UserDetailsReducer(state: UserDetailsState = INITIAL_USERDETAILS
             // return UserDetailsAdapter.setAll(action.payload, {
             //     ...state
             // });
+            localStorage.setItem('role', JSON.stringify(action.payload[0].roles));
             return UserDetailsAdapter.setAll(action.payload, state);
         }
         // case LOGIN_SUCCESSFULLY: {

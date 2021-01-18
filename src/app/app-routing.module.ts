@@ -7,6 +7,9 @@ import { MainRoutes } from '@app/app.route-names';
 import { SignUpComponent } from '@core/components/sign-up/sign-up.component';
 import { DashboardComponent } from '@core/components/dashboard/dashboard.component';
 import { EmployeeProfileRoutingPath } from './employee-profile/models/employee-profile-routing.path';
+import { select, Store } from '@ngrx/store';
+import { RootState } from './store';
+import { of } from 'rxjs';
 
 const routes: Routes = [
   {
@@ -38,57 +41,15 @@ const routes: Routes = [
               },
               {
                 path: EmployeeProfileRoutingPath.userProfile,
-                loadChildren: () => import ('./employee-profile/employee-profile.module').then(m => m.UserProfileModule)
+                loadChildren: () => isLoggedInUserEmployee() ? import ('./employee-profile/employee-profile.module').then(m => m.EmployeeProfileModule) : import ('./employer-profile/employer-profile.module').then(m => m.EmployerProfileModule)
               }
             ]
           }
         ]
-      },
-      // {
-      //   path: MainRoutes.dashboard,
-      //   component: DashboardComponent,
-      //   loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
-      // }
+      }
     ]
   }
 ];
-
-// const routes: Routes = [
-//   {
-//     path: '',
-//     children: [
-//       {
-//         path: '',
-//         redirectTo: MainRoutes.dashboard,
-//         pathMatch: 'full',
-//       },
-//       {
-
-//       },
-//       {
-//         path: MainRoutes.userProfile,
-//         loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfileModule)
-//       }
-//     ]
-//   },
-  // {
-  //   path: '',
-  //   canActivate: [AuthenticatedGuard],
-  //   canActivateChild: [AuthenticatedGuard],
-  //   children: [
-  //     {
-  //       path: '',
-  //       component: DashboardComponent,
-  //       children: [
-  //         {
-  //           path: MainRoutes.conference,
-  //           loadChildren: () => import('@app/dashboard/components/conference/conference.module').then(m => m.ConferenceModule)
-  //         },
-  //       ]
-  //     }
-  //   ]
-  // },
-// ];
 
 @NgModule({
   providers: [
@@ -98,3 +59,8 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
+function isLoggedInUserEmployee(): boolean {
+  console.log(JSON.parse(localStorage.getItem('role')).includes('EMPLOYEE'));
+  return JSON.parse(localStorage.getItem('role')).includes('EMPLOYEE');
+}

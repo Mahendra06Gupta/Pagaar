@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { UserProfileLandingComponent } from './components/employee-profile-landing/employee-profile-landing.component';
+import { EmployeeProfileLandingComponent } from './components/employee-profile-landing/employee-profile-landing.component';
 
 import { EmployeeProfileComponent } from './components/employee-profile/employee-profile.component';
 import { EmployeeProfileRoutingPath, UserProfileTab } from './models/employee-profile-routing.path';
 
-const userProfileRoutes: Routes = [
+const employeeProfileRoutes: Routes = [
   {
     path: '',
     children: [
       {
         path: EmployeeProfileRoutingPath.userProfile,
-        component: UserProfileLandingComponent,
+        component: EmployeeProfileLandingComponent,
         // canActivate: [LoadAccountDetailsGuard, ProductsLoadedGuard],
         children: [
           {
@@ -27,7 +27,7 @@ const userProfileRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(userProfileRoutes)],
+  imports: [RouterModule.forChild(employeeProfileRoutes)],
   exports: [RouterModule]
 })
-export class UserProfileRoutingModule { }
+export class EmployeeProfileRoutingModule { }

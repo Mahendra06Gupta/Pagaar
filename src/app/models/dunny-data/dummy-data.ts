@@ -1,7 +1,7 @@
 import { JobReuslt } from '@app/dashboard/store/models/dashboard-state.model';
 
 export const dummyData: JobReuslt = {
-    totalItems: 11,
+    totalItems: 100,
     jobs: [
         {
             id: '600270da9e048220ee4b4822',

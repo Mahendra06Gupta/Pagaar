@@ -50,3 +50,21 @@
 .posting {
     font-size: 0.75rem;
 }
+
+.pagination {
+    height: 40px;
+    min-width: 40px;
+    background: #e4e2e0;
+    color: black;
+    font-size: 1.125rem;
+    margin: auto;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+
+    &.active {
+        background: #595959;
+        color: white;
+    }
+}

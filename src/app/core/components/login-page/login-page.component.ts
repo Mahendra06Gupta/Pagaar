@@ -57,10 +57,11 @@ export class LoginPageComponent implements OnInit {
       this.rememberMeService.remove('rememberme');
     }
     this.authService.login(this.loginForm.value).subscribe(
-      (res: {username: string, token: string}) => {
+      (res: {username: string, token: string, roles: string[]}) => {
         this.store$.dispatch(new UserLogged([{
           email: res.username,
           token: res.token,
+          roles: res.roles,
           logged: true
         }]));
         this.store$.dispatch(new GoToDashboard());

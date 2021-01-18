@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 
 import { SharedAppModule } from '../shared';
-import { UserProfileLandingComponent } from './components/employee-profile-landing/employee-profile-landing.component';
-import { UserProfileRoutingModule } from './employee-profile-routing.module';
+import { EmployeeProfileLandingComponent } from './components/employee-profile-landing/employee-profile-landing.component';
+import { EmployeeProfileRoutingModule } from './employee-profile-routing.module';
 import { EmployeeProfileComponent } from './components/employee-profile/employee-profile.component';
 
 @NgModule({
   declarations: [
-    UserProfileLandingComponent,
+    EmployeeProfileLandingComponent,
     EmployeeProfileComponent
   ],
   imports: [
     SharedAppModule,
-    UserProfileRoutingModule
+    EmployeeProfileRoutingModule
   ]
 })
-export class UserProfileModule { }
+export class EmployeeProfileModule { }
