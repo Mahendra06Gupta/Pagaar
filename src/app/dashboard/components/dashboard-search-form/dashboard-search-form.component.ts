@@ -49,9 +49,6 @@ export class DashboardSearchFormComponent implements OnInit {
 
   public ngOnInit(): void {
     this.initForm();
-    this.store$.dispatch(new InitDashboardSearch({...this.searchForm.value, initiated: true, pageNumber: 1, pageSize: 10}));
-    this.store$.dispatch(new UpdateDashboardSearchResult(dummyData));
-    this.search.emit();
   }
 
   public isFormValid(): boolean {
