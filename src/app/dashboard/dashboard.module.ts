@@ -3,7 +3,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { SharedAppModule } from '../shared';
-import * as fromBookingStore from './store/store';
+import * as fromDashboardStore from './store/store';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardLandingComponent } from './components/dashboard-landing/dashboard-landing.component';
 
@@ -14,8 +14,8 @@ import { DashboardLandingComponent } from './components/dashboard-landing/dashbo
   imports: [
     SharedAppModule,
     DashboardRoutingModule,
-    // EffectsModule.forFeature(fromBookingStore.BOOKINGS_EFFECTS),
-    // StoreModule.forFeature('dashboard', fromBookingStore.BOOKINGS_REDUCERS)
+    EffectsModule.forFeature(fromDashboardStore.DASHBOARD_EFFECTS),
+    StoreModule.forFeature('dashboard', fromDashboardStore.DASHBOARD_REDUCERS)
   ]
 })
 export class DashboardModule { }

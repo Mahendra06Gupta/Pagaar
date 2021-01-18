@@ -11,19 +11,19 @@ import { MatChipInputEvent, MatChipList } from '@angular/material/chips';
 
 import { RootState } from '@app/store';
 import { getUserLoggedInEmail } from '@app/store/user-details/user-details.selectors';
-import { ApiService } from '@app/user-profile/services/api.service';
+import { ApiService } from '@app/employee-profile/services/api.service';
 import { DateFormats } from '@app/shared/models/date-format/date-formats';
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss'],
+  selector: 'app-employee-profile',
+  templateUrl: './employee-profile.component.html',
+  styleUrls: ['./employee-profile.component.scss'],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: DateFormats },
   ]
 })
-export class UserProfileComponent implements OnInit {
+export class EmployeeProfileComponent implements OnInit {
 
   @ViewChild('skillList', { static: true })
   public skillList: MatChipList;
@@ -62,7 +62,7 @@ export class UserProfileComponent implements OnInit {
         this.hobbiesList.errorState = status === 'INVALID');
   }
 
-  public isFormValid(): boolean {
+  public isFormInValid(): boolean {
     if (this.detailForm.invalid) {
       return true;
     } else if (!this.idProofUploadFileSuccessfully || !this.qualificationUploadFileSuccessfully) {
@@ -145,16 +145,16 @@ export class UserProfileComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    if (this.isFormValid()) {
+    if (this.isFormInValid()) {
       return;
     } else {
       if (this.detailForm.value) {
         const payload = {
           ...this.detailForm.value,
           name: `${this.detailForm.value.firstName} ${this.detailForm.value.lastName}`,
-          dob: moment(this.detailForm.value.dob).format('DD-MM-YYYY'),
+          dob: moment(this.detailForm.value.dob).format('DD/MM/YYYY'),
           experience: {
-            numberOfYears: this.detailForm.value.numberOfYears,
+            numberOfYears: +this.detailForm.value.numberOfYears,
             jobDetails: this.detailForm.value.jobDetails
           }
         };
@@ -165,14 +165,22 @@ export class UserProfileComponent implements OnInit {
         const formData: FormData = new FormData();
         for (const key in payload) {
           if (payload.hasOwnProperty(key)) {
-            formData.append(key, payload[key]);
+            if (key === 'experience') {
+              formData.append('experience.numberOfYears', payload[key].numberOfYears);
+              payload[key].jobDetails.forEach((res, index) => {
+                formData.append(`experience.jobDetails[${index}].companyName`, res.companyName);
+                formData.append(`experience.jobDetails[${index}].designation`, res.designation);
+              });
+            } else {
+              formData.append(key, payload[key]);
+            }
           }
         }
-        formData.append('idProofDoc', this.idProofUploadFile);
-        formData.append('qualificationDoc', this.qualificationUploadFile);
+        formData.append('idProof', this.idProofUploadFile);
+        formData.append('qualification', this.qualificationUploadFile);
         this.apiService.addEmployeeDetail(formData).pipe(
           tap(res => {
-            console.log(res);
+            // this.store$.dispatch(ne)
           })
         ).subscribe();
       }
@@ -211,7 +219,7 @@ export class UserProfileComponent implements OnInit {
       // idProof: ['', [Validators.required]],
       skills: this.fb.array([], [Validators.required]),
       hobbies: this.fb.array([], [Validators.required]),
-      numberOfYears: ['', [Validators.required, Validators.pattern('^[0-9]{1}$')]],
+      numberOfYears: ['', [Validators.required, Validators.pattern('^[0-9]{1,2}$')]],
       jobDetails: this.fb.array([this.createExperienceJobDetailsFromGroup()])
     });
   }

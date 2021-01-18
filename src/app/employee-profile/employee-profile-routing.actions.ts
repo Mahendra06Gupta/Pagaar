@@ -1,6 +1,6 @@
 import { GoUsingActiveUserId } from '@app/store/router/router.actions';
 import { MainRoutes } from '@app/app.route-names';
-import { UserProfileTab } from './models/user-profile-routing.path';
+import { UserProfileTab } from './models/employee-profile-routing.path';
 
 const pathSupplier = {
     aboutMe: (userId: string) => [

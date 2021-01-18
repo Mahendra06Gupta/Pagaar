@@ -1,4 +1,8 @@
-<div></div>
+<div class="d-flex toaster align-items-center justify-content-center">
+    <mat-icon *ngIf="showToastForError || showErrorForJobTitle" color="warn">info</mat-icon>
+    <p *ngIf="showToastForError" class="text p-3 m-0">Enter a job title or location to start a search</p>
+    <p *ngIf="showErrorForJobTitle" class="text p-3 m-0">Enter a job title to start a search</p>
+</div>
 <form fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="center center" fxLayout.lt-md="column" class="p-4 form"[formGroup]="searchForm" (ngSubmit)="onSubmit()">
     <div class="search-form" ngClass.lt-md="w-100">
         <h5 class="mb-0">What</h5>

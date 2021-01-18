@@ -1,20 +1,22 @@
 import { Action } from '@ngrx/store';
+import { JobReuslt } from './models/dashboard-state.model';
 
-export const INIT_BOOKING_AND_CONFERENCE = '[BOOKINGS] INIT_BOOKING_AND_CONFERENCE';
-export const CLEAR_BOOKING_AND_CONFERENCE = '[BOOKINGS] CLEAR_BOOKING_AND_CONFERENCE';
+export const INIT_DASHBOARD_SEARCH = '[DASHBOARD] INIT_DASHBOARD_SEARCH';
+export const UPDATE_DASHBOARD_SEARCH_RESULT = '[DASHBOARD] UPDATE_DASHBOARD_SEARCH_RESULT';
 
-// export class InitBookingAndconference implements Action {
-//     public readonly type = INIT_BOOKING_AND_CONFERENCE;
+export class InitDashboardSearch implements Action {
+    public readonly type = INIT_DASHBOARD_SEARCH;
 
-//     constructor(public readonly payload: LoadedBookingsData) {
-//     }
-// }
+    constructor(public payload: {jobTitle: string, location: string, initiated: boolean}) {
+    }
+}
+export class UpdateDashboardSearchResult implements Action {
+    public readonly type = UPDATE_DASHBOARD_SEARCH_RESULT;
 
-export class ClearBookingAndConference implements Action {
-    public readonly type = CLEAR_BOOKING_AND_CONFERENCE;
+    constructor(public payload: JobReuslt) {
+    }
 }
 
-export type BookingsActions =
-    // InitBookingAndconference
-    // |
-    ClearBookingAndConference;
+export type DashboardActions =
+    InitDashboardSearch |
+    UpdateDashboardSearchResult;

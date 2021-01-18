@@ -1,13 +1,14 @@
 export interface EmployeeDetailApiReuestModel {
+    id: string;
     name: string;
     email: string;
     dob: string;
     address: string;
     contactNumber: string;
-    qualification: string;
+    qualificationDoc: string;
     maritalStatus: string;
     nationality: string;
-    idProof: string;
+    idProofDoc: string;
     skills: string[];
     hobbies: string[];
     experience: Experience;

@@ -6,7 +6,7 @@ import { AuthenticatedGuard } from '@core/guards/authenticated.guard';
 import { MainRoutes } from '@app/app.route-names';
 import { SignUpComponent } from '@core/components/sign-up/sign-up.component';
 import { DashboardComponent } from '@core/components/dashboard/dashboard.component';
-import { UserProfileRoutingPath } from './user-profile/models/user-profile-routing.path';
+import { EmployeeProfileRoutingPath } from './employee-profile/models/employee-profile-routing.path';
 
 const routes: Routes = [
   {
@@ -37,8 +37,8 @@ const routes: Routes = [
                 loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
               },
               {
-                path: UserProfileRoutingPath.userProfile,
-                loadChildren: () => import ('./user-profile/user-profile.module').then(m => m.UserProfileModule)
+                path: EmployeeProfileRoutingPath.userProfile,
+                loadChildren: () => import ('./employee-profile/employee-profile.module').then(m => m.UserProfileModule)
               }
             ]
           }

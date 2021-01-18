@@ -13,7 +13,7 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div fxLayout="column" fxLayoutGap="0.7rem">
-                        <div fxLayout="row" fxLayoutGap="0.5rem" fxLayoutAlign="space-between">
+                        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="0.5rem" fxLayoutAlign="space-between">
                             <mat-form-field fxFlex="1 1 auto" appearance="outline">
                                 <mat-label>First Name</mat-label>
                                 <input matInput placeholder="First Name" formControlName="firstName" required>
@@ -36,7 +36,7 @@
                         <mat-form-field appearance="outline">
                             <mat-label>Date of Birth</mat-label>
                             <input matInput [matDatepicker]="fromDatepicker" [max]="dateTo" (dateChange)="onFromDateChange($event)"
-                                name="fromDate" formControlName="dob" placeholder="DD-MM-YYYY" required>
+                                name="fromDate" formControlName="dob" placeholder="DD/MM/YYYY" required>
                             <mat-datepicker-toggle matSuffix [for]="fromDatepicker"></mat-datepicker-toggle>
                             <mat-datepicker #fromDatepicker></mat-datepicker>
                             <mat-error class="mt-3" *ngIf="hasError('dob', 'required')">Please enter your date of birth</mat-error>
@@ -172,7 +172,7 @@
                     </div>
                     <mat-action-row>
                         <button mat-raised-button color="warn" (click)="prevStep()">Previous</button>
-                        <button mat-raised-button color="primary" type="submit" [disabled]="isFormValid()" (click)="onSubmit()">Submit</button>
+                        <button mat-raised-button color="primary" type="submit" [disabled]="isFormInValid()" (click)="onSubmit()">Submit</button>
                     </mat-action-row>
                 </mat-expansion-panel>
             </mat-accordion>

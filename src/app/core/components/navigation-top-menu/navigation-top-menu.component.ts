@@ -9,7 +9,7 @@ import * as fromUserDetailsSelector from '@app/store/user-details/user-details.s
 import { DialogService } from '@app/core/services/dialog-service/dialog.service';
 import { isIamLoginPageORCreateAccountPage } from '@app/store/router/router.selectors';
 import { DashboardTab } from '@app/dashboard/models/dashboard-routing.path';
-import { GoToActiveAboutMe } from '@app/user-profile/user-profile-routing.actions';
+import { GoToActiveAboutMe } from '@app/employee-profile/employee-profile-routing.actions';
 
 @Component({
   selector: 'app-navigation-top-menu',

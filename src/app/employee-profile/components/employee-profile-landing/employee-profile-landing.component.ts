@@ -5,13 +5,13 @@ import { tap, first } from 'rxjs/operators';
 import { RootState } from '@app/store';
 // import { InitBookingAndconference } from '@app/dashboard/store';
 import * as fromUserDetailsSelector from '@app/store/user-details/user-details.selectors';
-import { UserProfileTab } from '@app/user-profile/models/user-profile-routing.path';
+import { UserProfileTab } from '@app/employee-profile/models/employee-profile-routing.path';
 // import { getSavedState, localStorageKey } from '@app/dashboard/store/dashboard.reducer';
 
 @Component({
-  selector: 'app-user-profile-landing',
-  templateUrl: './user-profile-landing.component.html',
-  styleUrls: ['./user-profile-landing.component.scss']
+  selector: 'app-employee-profile-landing',
+  templateUrl: './employee-profile-landing.component.html',
+  styleUrls: ['./employee-profile-landing.component.scss']
 })
 export class UserProfileLandingComponent implements OnInit {
 

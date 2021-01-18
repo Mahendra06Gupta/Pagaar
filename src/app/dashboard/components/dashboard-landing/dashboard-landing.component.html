@@ -4,40 +4,87 @@
         <button mat-icon-button (click) = "hideUpdateProfileInfo()"><mat-icon>clear</mat-icon></button>
     </div>
 </ng-container>
-<app-dashboard-search-form></app-dashboard-search-form>
+<app-dashboard-search-form (search)="getJobResult()"></app-dashboard-search-form>
 <div fxLayout="column" fxLayoutAlign="center center" fxLayoutAlign.lt-md="start" fxLayoutGap="0" fxLayoutGap.gt-sm="1rem">
     <div *ngIf="(isLargeDevices$ | async)" class="w-100 text-center" ngClass.gt-sm="border-bottom">
-        <div class="my-3">
+        <div *ngIf="!(isUserLoggedIn$ | async) || (isSearchInitiated | async)" class="my-3">
             <a class="link font-weight-bold text-primary">Upload your resume</a>
-            <span> - It only takes your few seconds</span>
+            <ng-container *ngIf="(isSearchInitiated | async) else otheText">
+                <span> - Let employers find you</span>
+            </ng-container>
+            <ng-template #otheText>
+                <span> - It only takes your few seconds</span>
+            </ng-template>
         </div>
-        <div class="my-3">
+        <div class="my-3" *ngIf="!(isSearchInitiated | async)">
             <a class="link font-weight-bold text-primary">Are you Employers? Post a job</a>
             <span> – Your next hire is here</span>
         </div>
     </div>
-    <div class="popular-search px-4 pt-4">
-        <h5>Popular searches</h5>
-    </div>
-    <div class="px-4 pb-4" [ngClass.gt-sm]="'text-center popular-search-section popular-line-height'">
-        <div class="popular d-inline-block" *ngFor="let popularSearch1 of popularSearchLine1">
-            <mat-icon class="position-relative text-center">search</mat-icon>&nbsp;
-            <span>{{popularSearch1}}</span>
+    <ng-container *ngIf="!(isSearchInitiated | async) else showJobResult">
+        <div class="popular-search px-4 pt-4">
+            <h5>Popular searches</h5>
         </div>
-    </div>
+        <div class="px-4 pb-4" [ngClass.gt-sm]="'text-center popular-search-section popular-line-height'">
+            <div class="popular d-inline-block" *ngFor="let popularSearch1 of popularSearchLine1">
+                <mat-icon class="position-relative text-center">search</mat-icon>&nbsp;
+                <span>{{popularSearch1}}</span>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #showJobResult>
+        <ng-container *ngIf="jobResult$ | async as jobResult">
+            <p>Angular Jobs</p>
+            <div class="row justify-content-center" ngClass.lt-md="column m-0 p-2">
+                <mat-card ngClass.gt-md="col-3 m-2" ngClass.lt-md="col-12" *ngFor="let job of jobResult.jobs">
+                    <h6 class="main-text title">{{job.title}}</h6>
+                    <p class="main-text">{{job.employer.companyName}}</p>
+                    <p fxLayout="row" fxLayoutAlign="start center" class="main-text">{{job.location}} <b class="mx-1">&#x2022;</b> {{job.nature.replace('_', '') | titlecase}}</p>
+                    <div fxLayout="row" fxLayoutAlign="space-between">
+                        <h6 class="main-text pb-3">{{job.salary.starting | currency : job.salary.currency}} - {{job.salary.upto | currency : job.salary.currency}}</h6>
+                        <h6>Exact: {{job.salary.exact | currency : job.salary.currency}}</h6>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div fxLayout="row" fxLayoutAlign="space-between">
+                        <div>
+                            <div class="my-2 description">
+                                <h6 class="pt-3">Requirement</h6>
+                                <p class="m-0">{{job.description}}</p>
+                                <p class="m-0" fxLayout="row" fxLayoutAlign="start center">{{job.type | titlecase}} <b class="mx-1">&#x2022;</b> {{job.shift | titlecase}}</p>
+                            </div>
+                            <strong>Benefits</strong> 
+                            <p class="pb-3 m-0 description">
+                                <span *ngFor="let benefits of job.benefits">{{benefits.split('_').join(' ') | titlecase}}</span>
+                            </p>
+                        </div>
+                        <div>
+                            <h6 class="pt-3 my-2">Mode of interview</h6>
+                            <p>{{job.interviewType | titlecase}}</p>
+                        </div>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div fxLayout="row" fxLayoutAlign="space-between">
+                        <p class="pt-3 posting">Job Posted On: {{job.postingDate}}</p>
+                        <p class="pt-3 posting">Deadline: {{job.applicationDeadline}}</p>
+                    </div>
+                </mat-card>
+            </div>
+        </ng-container>
+    </ng-template>
     <div *ngIf="!(isLargeDevices$ | async)" class="px-2 pb-4" fxLayout="row" fxLayoutAlign="space-between">
         <h5 class="font-weight-bold">Create your profile</h5>
         <mat-icon class="arrow">keyboard_arrow_right</mat-icon>
     </div>
-    <div *ngIf="(isLargeDevices$ | async) else forEmployer" class="w-100 text-center bg-light p-4">
+    <div *ngIf="(isLargeDevices$ | async) && !(isUserLoggedIn$ | async) || (isSearchInitiated | async)" class="w-100 text-center bg-light p-4">
         <h5>Let employers find you</h5>
         <button mat-raised-button color="primary" class="mt-2">Upload your resume</button>
     </div>
-    <ng-template #forEmployer>
+    <ng-container *ngIf="!(isLargeDevices$ | async)">
         <div class="w-100 text-center bg-light p-4">
             <h5>For employers</h5>
             <h5>Your next hire is here</h5>
             <button mat-raised-button color="primary" class="mt-2 w-100">Post a job</button>
         </div>
-    </ng-template>
+    </ng-container>
 </div>
+<app-global-spinner *ngIf="showSpinner"></app-global-spinner>

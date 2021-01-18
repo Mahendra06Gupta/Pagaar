@@ -1,22 +1,13 @@
-import { ActionReducerMap, combineReducers, compose } from '@ngrx/store';
+import { ActionReducerMap } from '@ngrx/store';
 
-// import { bookingsMetaReducer } from '@app/dashboard/store/dashboard.reducer';
-// import { DashboardsState } from '@app/dashboard/store/models/dashboard-state.model';
+import * as fromDashboardReducer from './dashboard.reducer';
+import * as DashboardSelectors from './dashboard.selectors';
+import { DashboardsState } from './dashboard.reducer';
 
-// export const BOOKINGS_STORE_REDUCERS: ActionReducerMap<DashboardsState> = {
-    // individualBookingRoom: fromBookingVcReducer.bookingVcReducer,
-    // allConferenceDetail: fromConferenceReducer.conferenceReducer,
-    // allConferenceRoom: fromConferenceAddingReducer.conferenceAddingReducer
-// };
+export const DASHBOARD_REDUCERS: ActionReducerMap<DashboardsState> = {
+    dashboardState: fromDashboardReducer.dashboardReducer
+};
 
-// export function BOOKINGS_REDUCERS(state: any, action: any): DashboardsState {
-//     return compose(bookingsMetaReducer, combineReducers)(BOOKINGS_STORE_REDUCERS)(state, action);
-// }
+export const DASHBOARD_EFFECTS: any[] = [];
 
-export const BOOKINGS_EFFECTS = [];
-
-// export const fromBookingsSelectors: typeof bookingVcSelectors & typeof conferenceSelector & typeof conferenceRoomSelector = {
-//     ...bookingVcSelectors,
-//     ...conferenceSelector,
-//     ...conferenceRoomSelector
-// };
+export const fromDashboardSelectors = DashboardSelectors;

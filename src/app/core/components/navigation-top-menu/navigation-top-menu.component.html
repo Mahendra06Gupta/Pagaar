@@ -32,7 +32,7 @@
                         <span fxHide.lt-sm="true" class="tab-text">Upload your Resume</span>
                     </a>
                     <ng-container *ngIf="(isUserLoggedIn$ | async) else userNotLoggedIn">
-                        <a mat-tab-link id="login" class="login" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <a mat-tab-link id="login" class="login" [matMenuTriggerFor]="menu">
                             <mat-icon>person</mat-icon>
                         </a>
                         <mat-menu #menu="matMenu">
@@ -60,9 +60,11 @@
     </ng-container>
 
     <ng-template #showLoginButton>
-        <button mat-raised-button color="primary" class="login-small" (click)="goToLogin()">
-            Login
-        </button>
+        <ng-container *ngIf="!(isUserLoggedIn$ | async)">
+            <button mat-raised-button color="primary" class="login-small" (click)="goToLogin()">
+                Login
+            </button>
+        </ng-container>
     </ng-template>
 
     <!-- <div class="position-relative mx-0 my-auto" [ngClass]="(isLargeDevices$ | async) ? 'w-auto' : 'w-100'">

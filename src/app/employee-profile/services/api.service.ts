@@ -34,7 +34,8 @@ export class ApiService {
     return this.restService.get(`${endpoints.updateEmployerDetail}/${employerId}`);
   }
 
-  public addEmployeeDetail(payload: FormData): Observable<any> {
+  public addEmployeeDetail(payload): Observable<any> {
+    console.log('payload', payload);
     return this.restService.post(endpoints.updateEmployeeDetail, payload);
   }
 

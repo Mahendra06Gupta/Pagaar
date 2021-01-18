@@ -1,9 +1,32 @@
-import { BookingVcState } from '@app/dashboard/store/individual-booked-vc-room/individual-booked-vc-room.reducer';
-import { ConferenceState } from '@app/dashboard/store/conference-room/conference-room.reducer';
-import { ConferenceAddingState } from '../conference-room-addition/conference-room-addition.reducer';
-
-export interface DashboardsState {
-    individualBookingRoom: BookingVcState;
-    allConferenceDetail: ConferenceState;
-    allConferenceRoom?: ConferenceAddingState;
+export interface JobReuslt {
+    totalItems: number;
+    jobs: {
+        id: string,
+        employer: {
+            employerId: string,
+            companyName: string
+        },
+        title: string,
+        nature: string,
+        totalHiring: number,
+        shift: string,
+        type: string,
+        salary: {
+            starting: number,
+            upto: number,
+            exact: number,
+            currency: string
+        },
+        description: string,
+        benefits: [
+            string
+        ],
+        resumeRequired: true,
+        applicationDeadline: string,
+        postingDate: string,
+        interviewType: string,
+        location: string
+    }[];
+    totalPages: number;
+    currentPage: number;
 }

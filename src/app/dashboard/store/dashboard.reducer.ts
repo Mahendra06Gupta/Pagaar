@@ -1,43 +1,33 @@
-// import { DashboardsState } from './models/dashboard-state.model';
-// import { INIT_BOOKING_AND_CONFERENCE, CLEAR_BOOKING_AND_CONFERENCE, BookingsActions } from './dashboard.actions';
-
-export function getSavedState(localStoreKey: string): any {
-    return JSON.parse(localStorage.getItem(localStoreKey));
+import { INIT_ACTION } from '@ngrx/store-devtools/src/reducer';
+import { DashboardActions, INIT_DASHBOARD_SEARCH, UPDATE_DASHBOARD_SEARCH_RESULT } from './dashboard.actions';
+import { JobReuslt } from './models/dashboard-state.model';
+export interface DashboardState {
+    searchKeyword: {jobTitle: string, location: string, initiated: boolean};
+    jobResult: JobReuslt;
 }
 
-export const localStorageKey = '__app_storage__';
+export interface DashboardsState {
+    dashboardState: DashboardState;
+}
 
-// export function bookingsMetaReducer(reducer): (state: DashboardsState, action: BookingsActions) => DashboardsState {
-//     return function crossBookingsStoreReducer(state: DashboardsState, action: BookingsActions): DashboardsState {
-//         switch (action.type) {
-//             case INIT_BOOKING_AND_CONFERENCE:
-//                 return {
-//                     ...state,
-//                     individualBookingRoom: fromBookingVcReducer.bookingVcReducer(
-//                         state.individualBookingRoom, new InitIndividualBookingVc(action.payload.booking)
-//                     ),
-//                     allConferenceDetail: fromConferenceReducer.conferenceReducer(
-//                         state.allConferenceDetail, new InitConference(action.payload.conference)
-//                     ),
-//                     allConferenceRoom: fromConferenceAddingReducer.conferenceAddingReducer(
-//                         state.allConferenceRoom, new InitConferenceRoom(action.payload.conferenceRoom)
-//                     )
-//                 };
-//             case CLEAR_BOOKING_AND_CONFERENCE:
-//                 return {
-//                     ...state,
-//                     individualBookingRoom: fromBookingVcReducer.bookingVcReducer(
-//                         state.individualBookingRoom, new ClearInidividualBookingsVc()
-//                     ),
-//                     allConferenceDetail: fromConferenceReducer.conferenceReducer(
-//                         state.allConferenceDetail, new ClearConference()
-//                     ),
-//                     allConferenceRoom: fromConferenceAddingReducer.conferenceAddingReducer(
-//                         state.allConferenceRoom, new ClearConferenceRoom()
-//                     )
-//                 };
-//             default:
-//             return reducer(state, action);
-//         }
-//     };
-// }
+export const DASHBOARD_INITIAL_STATE: DashboardState = {
+    searchKeyword: undefined,
+    jobResult: undefined
+};
+
+export function dashboardReducer(state = DASHBOARD_INITIAL_STATE, action: DashboardActions): DashboardState {
+    switch ( action.type ) {
+        case INIT_DASHBOARD_SEARCH: {
+            return {
+                ...state,
+                searchKeyword: action.payload
+            };
+        }
+        case UPDATE_DASHBOARD_SEARCH_RESULT: {
+            return {
+                ...state,
+                jobResult: action.payload
+            };
+        }
+    }
+}
