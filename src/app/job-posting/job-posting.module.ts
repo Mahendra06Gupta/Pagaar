@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 
+
 import { SharedAppModule } from '../shared';
 import { JobPostingLandingRoutingModule } from './job-posting-routing.module';
 import { JobPostingLandingComponent } from './components/job-posting-landing/job-posting-landing.component';
