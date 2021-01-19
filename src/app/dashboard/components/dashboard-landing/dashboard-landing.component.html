@@ -104,4 +104,4 @@
         </div>
     </ng-container>
 </div>
-<app-global-spinner *ngIf="showSpinner"></app-global-spinner>
+<app-global-spinner *ngIf="showSpinner && (isUserLoggedIn$ | async)"></app-global-spinner>

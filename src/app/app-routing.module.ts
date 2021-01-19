@@ -14,7 +14,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: MainRoutes.dashboard,
+        redirectTo: MainRoutes.login,
         pathMatch: 'full',
       },
       {
