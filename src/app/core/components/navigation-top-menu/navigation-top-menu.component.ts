@@ -7,9 +7,12 @@ import { RootState, fromRouterSelector, GoToLogin, GoToBaseRoute, GoToCreateAcco
 import { DeviceScreenSizeService } from '@app/core/services/device-screen-size/device-screen-size.service';
 import * as fromUserDetailsSelector from '@app/store/user-details/user-details.selectors';
 import { DialogService } from '@app/core/services/dialog-service/dialog.service';
-import { isIamLoginPageORCreateAccountPage } from '@app/store/router/router.selectors';
+import { isIamJobPostingPage, isIamLoginPageORCreateAccountPage } from '@app/store/router/router.selectors';
 import { DashboardTab } from '@app/dashboard/models/dashboard-routing.path';
 import { GoToActiveAboutMe } from '@app/employee-profile/employee-profile-routing.actions';
+import { GoToEmployerActiveAboutMe } from '@app/employer-profile/employer-profile-routing.actions';
+import { isLoggedInUserEmployee } from '@app/employee-profile/services/api.service';
+import { GoToJobPosting } from '@app/job-posting/job-posting-routing.actions';
 
 @Component({
   selector: 'app-navigation-top-menu',
@@ -24,22 +27,19 @@ export class NavigationTopMenuComponent implements OnInit, OnDestroy {
   public dashboardTab = DashboardTab;
   public isUserLoggedIn$: Observable<boolean> = this.store$.select(fromUserDetailsSelector.isUserLoggedIn);
   public isLoginPage$: Observable<boolean> = this.store$.select(isIamLoginPageORCreateAccountPage);
+  public isIamJobPostingPage$: Observable<boolean> = this.store$.select(isIamJobPostingPage);
   public showActions: boolean;
   public loggedInUserEmail: string;
   public activeRoute: string;
   public subscriptionArray: Subscription[] = [];
   public options = [
     {tab: 'Profile', icon: 'description'},
-    // {tab: 'My jobs', icon: 'favorite_border'},
-    // {tab: 'My reviews', icon: 'rate_review'},
-    // {tab: 'Email preferences', icon: 'email'},
-    // {tab: 'Search preferences', icon: 'search'},
     {tab: 'Account', icon: 'tune'},
   ];
 
   constructor(
     private readonly deviceSizeBreakpointService: DeviceScreenSizeService,
-    public readonly store$: Store<RootState>,
+    private readonly store$: Store<RootState>,
     private readonly dialogService: DialogService
   ) { }
 
@@ -63,16 +63,6 @@ export class NavigationTopMenuComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
 
-  // public triggerAction(): void {
-  //   this.dialogService.openDialog(ActionModalComponent, {
-  //     warningText: 'Are you sure you want to log out?',
-  //     modelTitle: 'Logout',
-  //     warningTextIcon: 'lock',
-  //     actionText: 'Logout',
-  //     allowCancel: true
-  //   });
-  // }
-
   public goToDashboard(): void {
     this.store$.dispatch(new GoToBaseRoute());
   }
@@ -91,9 +81,14 @@ export class NavigationTopMenuComponent implements OnInit, OnDestroy {
     this.store$.dispatch(new GoToCreateAccount());
   }
 
+  public goToEmployerTab(): void {
+    this.store$.dispatch(new GoToJobPosting());
+  }
+
   public goToSectionAsPerUserSelect(tab: string): void {
+    console.log(isLoggedInUserEmployee());
     switch (tab) {
-      case 'Profile': this.store$.dispatch(new GoToActiveAboutMe());
+      case 'Profile': isLoggedInUserEmployee() ? this.store$.dispatch(new GoToActiveAboutMe()) : this.store$.dispatch(new GoToEmployerActiveAboutMe());
                       break;
     }
   }

@@ -1,5 +1,4 @@
 export interface EmployeeDetailApiReuestModel {
-    id: string;
     name: string;
     email: string;
     dob: string;
@@ -22,20 +21,6 @@ export interface Experience {
     }[];
 }
 
-export interface EmployeeDetail extends EmployeeDetailApiReuestModel {
-    id: string;
-}
-
-export interface EmployerDetailApiRequestModel {
-    email: string;
-    phoneNumber: string;
-    country: string;
-    pincode: string;
-    companyName: string;
-    companySize: string;
-    businessNature: string;
-}
-
-export interface EmployersDetail extends EmployerDetailApiRequestModel {
+export interface EmployeesDetail extends EmployeeDetailApiReuestModel {
     id: string;
 }

@@ -1,17 +1,16 @@
-import { EmployeeDetailApiReuestModel } from '@app/employee-profile/models/employee-detail.model';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { employeeAdapter, EmployeeState } from './employee.reducer';
 
 const getEmployeeDetailsState = createFeatureSelector<EmployeeState>('employee');
 
-const getUserState = createSelector(
+const getEmployeeState = createSelector(
     getEmployeeDetailsState,
     (state: EmployeeState) => state
 );
 
 const {
     selectAll,
-} = employeeAdapter.getSelectors(getUserState);
+} = employeeAdapter.getSelectors(getEmployeeState);
 
 export const getEmployeeEntities = selectAll;
 

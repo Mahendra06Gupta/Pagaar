@@ -1,10 +1,10 @@
-export enum UserProfileTab {
-    USER_PROFILE_ABOUT_ME = 'aboutme',
-    USER_PROFILE_RESUME = 'resume'
+export enum EmployerProfileTab {
+    EMPLOYER_PROFILE_ABOUT_ME = 'aboutme',
+    EMPLOYER_PROFILE_RESUME = 'resume'
 }
 
 export const EmployeeProfileRoutingPath = {
     userProfile: ':userId',
-    aboutMe: `:userId/${UserProfileTab.USER_PROFILE_ABOUT_ME}`,
-    resume: `:userId/${UserProfileTab.USER_PROFILE_RESUME}`
+    aboutMe: `:userId/${EmployerProfileTab.EMPLOYER_PROFILE_ABOUT_ME}`,
+    resume: `:userId/${EmployerProfileTab.EMPLOYER_PROFILE_RESUME}`
 };

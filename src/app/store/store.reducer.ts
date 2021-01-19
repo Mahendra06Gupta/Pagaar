@@ -10,7 +10,7 @@ function getSavedState(localStoreKey: string): any {
     return JSON.parse(localStorage.getItem(localStoreKey));
 }
 
-const stateKeys = ['user', 'dashboard'];
+const stateKeys = ['user', 'dashboard', 'employee', 'employer'];
 const localStorageKey = '__app_storage__';
 
 export function rootStoreMetaReducer(reducer): (state, action: Action) => RootState {

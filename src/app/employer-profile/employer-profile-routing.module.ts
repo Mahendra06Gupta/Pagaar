@@ -1,23 +1,23 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthenticatedGuard } from '@app/core/guards/authenticated.guard';
 
 import { EmployerProfileLandingComponent } from './components/employer-profile-landing/employer-profile-landing.component';
 import { EmployerProfileComponent } from './components/employer-profile/employer-profile.component';
-import { EmployeeProfileRoutingPath, UserProfileTab } from './models/employer-profile-routing.path';
+import { EmployeeProfileRoutingPath, EmployerProfileTab } from './models/employer-profile-routing.path';
 
 const EmployerProfileRoutes: Routes = [
   {
     path: '',
+    canActivateChild: [AuthenticatedGuard],
     children: [
       {
         path: EmployeeProfileRoutingPath.userProfile,
         component: EmployerProfileLandingComponent,
-        // canActivate: [LoadAccountDetailsGuard, ProductsLoadedGuard],
         children: [
           {
-            path: UserProfileTab.USER_PROFILE_ABOUT_ME,
+            path: EmployerProfileTab.EMPLOYER_PROFILE_ABOUT_ME,
             component: EmployerProfileComponent,
-            // canActivate: [AccountsLoadedGuard, HoldersLoadedGuard],
             pathMatch: 'full'
           },
         ]

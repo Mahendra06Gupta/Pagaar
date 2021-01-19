@@ -2,10 +2,10 @@ export interface UserData {
     name?: string;
     id?: string;
     email: string;
-    token: string;
     type?: string;
     logged: boolean;
     roles: string[];
+    token: string;
 }
 
 export function getUser(userEntities: UserData[]): UserData {
@@ -23,7 +23,6 @@ export interface Role {
 }
 
 export enum RoleType {
-    ADMIN = 'Admin',
     EMPLOYEE = 'Employee',
     EMPLOYER = 'Employer'
 }

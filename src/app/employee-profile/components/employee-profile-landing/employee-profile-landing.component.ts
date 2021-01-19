@@ -5,7 +5,7 @@ import { tap, first } from 'rxjs/operators';
 import { RootState } from '@app/store';
 // import { InitBookingAndconference } from '@app/dashboard/store';
 import * as fromUserDetailsSelector from '@app/store/user-details/user-details.selectors';
-import { UserProfileTab } from '@app/employee-profile/models/employee-profile-routing.path';
+import { EmployeeProfileTab } from '@app/employee-profile/models/employee-profile-routing.path';
 // import { getSavedState, localStorageKey } from '@app/dashboard/store/dashboard.reducer';
 
 @Component({
@@ -17,7 +17,7 @@ export class EmployeeProfileLandingComponent implements OnInit {
 
   public userEmail: string;
   public userNameAbv: string;
-  public userProfileTab = UserProfileTab;
+  public employeeProfileTab = EmployeeProfileTab;
 
   constructor(
     public readonly store$: Store<RootState>

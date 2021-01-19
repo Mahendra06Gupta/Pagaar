@@ -16,7 +16,6 @@ export class DashboardApiService {
   ) { }
 
   public getJobDetailByTitleAndLocation({jobTitle, location, pageNumber, pageSize}): Observable<JobReuslt> {
-    console.log(jobTitle, location);
     let params: HttpParams = new HttpParams();
     if (jobTitle) {
       params = params.append('title', jobTitle);

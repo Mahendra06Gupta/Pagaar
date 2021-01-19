@@ -7,9 +7,6 @@ import { MainRoutes } from '@app/app.route-names';
 import { SignUpComponent } from '@core/components/sign-up/sign-up.component';
 import { DashboardComponent } from '@core/components/dashboard/dashboard.component';
 import { EmployeeProfileRoutingPath } from './employee-profile/models/employee-profile-routing.path';
-import { select, Store } from '@ngrx/store';
-import { RootState } from './store';
-import { of } from 'rxjs';
 
 const routes: Routes = [
   {
@@ -29,6 +26,10 @@ const routes: Routes = [
         component: SignUpComponent,
       },
       {
+        path: MainRoutes.jobPosting,
+        loadChildren: () => import('./job-posting/job-posting.module').then(m => m.JobPostingModule)
+      },
+      {
         path: '',
         children: [
           {
@@ -44,9 +45,9 @@ const routes: Routes = [
                 loadChildren: () => isLoggedInUserEmployee() ? import ('./employee-profile/employee-profile.module').then(m => m.EmployeeProfileModule) : import ('./employer-profile/employer-profile.module').then(m => m.EmployerProfileModule)
               }
             ]
-          }
+          },
         ]
-      }
+      },
     ]
   }
 ];
@@ -61,6 +62,9 @@ const routes: Routes = [
 export class AppRoutingModule { }
 
 function isLoggedInUserEmployee(): boolean {
-  console.log(JSON.parse(localStorage.getItem('role')).includes('EMPLOYEE'));
   return JSON.parse(localStorage.getItem('role')).includes('EMPLOYEE');
+}
+
+function isLoggedInUserAdmin(): boolean {
+  return JSON.parse(localStorage.getItem('role')).includes('ADMIN');
 }

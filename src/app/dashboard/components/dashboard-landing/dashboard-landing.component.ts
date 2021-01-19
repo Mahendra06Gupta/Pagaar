@@ -6,15 +6,17 @@ import { DeviceScreenSizeService } from '@app/core/services';
 import { Store } from '@ngrx/store';
 import { RootState } from '@app/store';
 import { GoToActiveAboutMe } from '@app/employee-profile/employee-profile-routing.actions';
-import { UserProfileTab } from '@app/employee-profile/models/employee-profile-routing.path';
+import { EmployeeProfileTab } from '@app/employee-profile/models/employee-profile-routing.path';
 import * as fromUserDetailsSelector from '@app/store/user-details/user-details.selectors';
 import { getJobResult, getSearchKeyword, isSearcgInitiated } from '@app/dashboard/store/dashboard.selectors';
 import { JobReuslt } from '@app/dashboard/store/models/dashboard-state.model';
 import { DashboardApiService } from '@app/dashboard/services/dashboard-api.service';
 import { UpdateDashboardSearchResult } from '@app/dashboard/store';
-import { dummyData } from '@app/models/dunny-data/dummy-data';
+import { dummyData } from '@app/models/dummy-data/dummy-data';
 import { AddEmployeeDetails } from '@app/store/employee-store/employee.actions';
-import { ApiService } from '@app/employee-profile/services/api.service';
+import { AddEmployerDetails } from '@app/store/employer-store/employer.actions';
+import { ApiService, isLoggedInUserEmployee } from '@app/employee-profile/services/api.service';
+import { GoToEmployerActiveAboutMe } from '@app/employer-profile/employer-profile-routing.actions';
 
 @Component({
   selector: 'app-dashboard-landing',
@@ -24,7 +26,7 @@ import { ApiService } from '@app/employee-profile/services/api.service';
 export class DashboardLandingComponent implements OnInit {
 
   public isDetailsExists: boolean;
-  public userProfileTab = UserProfileTab;
+  public userProfileTab = EmployeeProfileTab;
   public hideUpdateProfileMessage = false;
   public isLargeDevices$: Observable<boolean> = this.deviceSizeBreakpointService.isSmallDevice().pipe(
     map(isSmallDevice => !isSmallDevice)
@@ -52,7 +54,7 @@ export class DashboardLandingComponent implements OnInit {
       first(),
       switchMap(email => email ? this.apiService.getEmployeeDetailByEmail(email).pipe(
         tap((details) => {
-          this.store$.dispatch(new AddEmployeeDetails([details]));
+          this.store$.dispatch(isLoggedInUserEmployee() ? new AddEmployeeDetails([details]) : new AddEmployerDetails([details]));
           this.isDetailsExists = details ? true : false;
           this.showSpinner = false;
         })
@@ -61,7 +63,7 @@ export class DashboardLandingComponent implements OnInit {
   }
 
   public goToAboutMe(): void {
-    this.store$.dispatch(new GoToActiveAboutMe());
+    isLoggedInUserEmployee() ? this.store$.dispatch(new GoToActiveAboutMe()) : this.store$.dispatch(new GoToEmployerActiveAboutMe());
   }
 
   public hideUpdateProfileInfo(): void {

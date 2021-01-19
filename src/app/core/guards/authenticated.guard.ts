@@ -26,8 +26,7 @@ export class AuthenticatedGuard implements CanActivate, CanActivateChild {
 
   private redirectToLoginPageIfNotAuthenticated = (isAuthenticated: boolean) => {
     if (!isAuthenticated) {
-      console.log('isme jaata hai kya');
-      this.store$.dispatch(new GoToDashboard());
+      this.store$.dispatch(new GoToLogin());
     }
   }
 }

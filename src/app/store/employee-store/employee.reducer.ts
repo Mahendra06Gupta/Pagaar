@@ -1,13 +1,13 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 
-import { EmployeeDetailApiReuestModel } from '@app/employee-profile/models/employee-detail.model';
+import { EmployeesDetail } from '@app/employee-profile/models/employee-detail.model';
 import { ADD_EMPLOYEE_DETAILS, EmployeeActions } from './employee.actions';
 
-export interface EmployeeState extends EntityState<EmployeeDetailApiReuestModel> {
+export interface EmployeeState extends EntityState<EmployeesDetail> {
     initiated: boolean;
 }
 
-export const employeeAdapter: EntityAdapter<EmployeeDetailApiReuestModel> = createEntityAdapter<EmployeeDetailApiReuestModel>({
+export const employeeAdapter: EntityAdapter<EmployeesDetail> = createEntityAdapter<EmployeesDetail>({
     selectId: employee => employee.id
 });
 

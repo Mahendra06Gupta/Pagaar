@@ -1,0 +1,121 @@
+<div class="mx-auto p-2 m-4" ngClass.lt-md="w-100" ngClass.gt-sm="w-75">
+    <mat-card class="my-3">
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between center">
+            <div fxLayout="column">
+                <h1 class="text">Pagaar for employers</h1>
+                <h6>Hire your new talent here</h6>
+            </div>
+            <img class="img" src="/assets/employers_discussion.jpg"/>
+        </div>
+    </mat-card>
+    <mat-card class="my-3">
+        <div class="my-3" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1rem">
+            <div class="form-field" fxFlex.gt-sm="1 1 100%">
+                <form
+                    class="form"
+                    fxLayout="column"
+                    fxLayoutGap="20px" 
+                    [formGroup]="jobPostingForm"
+                    (ngSubmit)="onSubmit()">
+                    <div fxLayout="column" fxLayoutGap="0.7rem">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Job Title</mat-label>
+                            <input matInput placeholder="Java" formControlName="title" required>
+                            <mat-error class="mt-3" *ngIf="hasError('title', 'required')">Please enter job title pincode</mat-error>
+                            <mat-error class="mt-3" *ngIf="hasError('title', 'pattern')">please enter a valid job title pincode</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Job Nature</mat-label>
+                            <mat-select formControlName="nature" required>
+                                <mat-option *ngFor="let nature of jobNature" [value]="nature.value">{{nature.label}}</mat-option>
+                            </mat-select>
+                            <mat-error class="mt-3" *ngIf="hasError('nature', 'required')">Please enter job nature</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>How many hires?</mat-label>
+                            <input matInput placeholder="100" formControlName="totalHiring" required>
+                            <mat-error class="mt-3" *ngIf="hasError('totalHiring', 'required')">Please enter number of hires</mat-error>
+                            <mat-error class="mt-3" *ngIf="hasError('totalHiring', 'pattern')">please enter a valid hiring number</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Job Shift</mat-label>
+                            <mat-select formControlName="shift" required>
+                                <mat-option *ngFor="let shift of jobShift" [value]="shift.value">{{shift.label}}</mat-option>
+                            </mat-select>
+                            <mat-error class="mt-3" *ngIf="hasError('shift', 'required')">Please enter job shift</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Job Type</mat-label>
+                            <mat-select formControlName="type" required>
+                                <mat-option *ngFor="let type of jobType" [value]="type.value">{{type.label}}</mat-option>
+                            </mat-select>
+                            <mat-error class="mt-3" *ngIf="hasError('type', 'required')">Please enter job type</mat-error>
+                        </mat-form-field>
+                        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="0.5rem" fxLayoutAlign="space-between">
+                            <mat-form-field fxFlex="1 1 auto" appearance="outline">
+                                <mat-label>Starting Salary (INR)</mat-label>
+                                <input matInput placeholder="10,000" formControlName="starting" required>
+                                <mat-error class="mt-3" *ngIf="hasError('starting', 'required')">Please enter starting salary of the job</mat-error>
+                                <mat-error class="mt-3" *ngIf="hasError('starting', 'maxlength')">Please enter a valid salary</mat-error>
+                            </mat-form-field>
+                            <mat-form-field fxFlex="1 1 auto" appearance="outline">
+                                <mat-label>Upto (INR)</mat-label>
+                                <input matInput placeholder="10,000" formControlName="upto" required>
+                                <mat-error class="mt-3" *ngIf="hasError('upto', 'required')">Please enter salary upto for job</mat-error>
+                                <mat-error class="mt-3" *ngIf="hasError('upto', 'maxlength')">Please enter a valid salary</mat-error>
+                            </mat-form-field>
+                            <mat-form-field fxFlex="1 1 auto" appearance="outline">
+                                <mat-label>Exact Salary (INR)</mat-label>
+                                <input matInput placeholder="10,000" formControlName="exact" required>
+                                <mat-error class="mt-3" *ngIf="hasError('exact', 'required')">Please enter exact amount which can be offered</mat-error>
+                                <mat-error class="mt-3" *ngIf="hasError('exact', 'maxlength')">Please enter a valid salary</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Description</mat-label>
+                            <input matInput placeholder="Java Developer Required for....." formControlName="description" required>
+                            <mat-error class="mt-3" *ngIf="hasError('shift', 'required')">Please enter job description</mat-error>
+                            <mat-error class="mt-3" *ngIf="hasError('shift', 'maxlength')">please enter a valid job description</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Benefits</mat-label>
+                            <mat-select formControlName="benefits" multiple required>
+                                <mat-option *ngFor="let benefit of benefits" [value]="benefit.value">{{benefit.label}}</mat-option>
+                            </mat-select>
+                            <mat-error class="mt-3" *ngIf="hasError('benefits', 'required')">Please enter benefits</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Date of Birth</mat-label>
+                            <input matInput [matDatepicker]="fromDatepicker" [min]="dateTo" (dateChange)="onFromDateChange($event)"
+                                name="fromDate" formControlName="applicationDeadline" placeholder="DD/MM/YYYY" required>
+                            <mat-datepicker-toggle matSuffix [for]="fromDatepicker"></mat-datepicker-toggle>
+                            <mat-datepicker #fromDatepicker></mat-datepicker>
+                            <mat-error class="mt-3" *ngIf="hasError('applicationDeadline', 'required')">Please enter application deadline</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Interview Type</mat-label>
+                            <mat-select formControlName="interviewType" required>
+                                <mat-option *ngFor="let type of jobInterviewType" [value]="type.value">{{type.label}}</mat-option>
+                            </mat-select>
+                            <mat-error class="mt-3" *ngIf="hasError('interviewType', 'required')">Please enter job type</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Location</mat-label>
+                            <input matInput placeholder="Noida" formControlName="location" required>
+                            <mat-error class="mt-3" *ngIf="hasError('location', 'required')">Please enter job location</mat-error>
+                            <mat-error class="mt-3" *ngIf="hasError('location', 'maxlength')">please enter a valid job location</mat-error>
+                        </mat-form-field>
+                        <div>
+                            <h6>Resume Required</h6>
+                            <mat-checkbox [disabled]="disabledYesCheckbox" (change)="checkbox('YES', $event)" class="m-3">Yes</mat-checkbox>
+                            <mat-checkbox [disabled]="disabledNoCheckbox" (change)="checkbox('NO', $event)" class="m-3">No</mat-checkbox>
+                        </div>
+                    </div>
+                    <button [disabled]="jobPostingForm.invalid" color="primary" class="w-25" mat-raised-button type="submit">
+                        Submit
+                    </button>
+                </form>
+            </div>
+        </div>
+    </mat-card>
+</div>

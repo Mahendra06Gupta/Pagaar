@@ -1,10 +1,10 @@
 import { GoUsingActiveUserId } from '@app/store/router/router.actions';
 import { MainRoutes } from '@app/app.route-names';
-import { UserProfileTab } from './models/employee-profile-routing.path';
+import { EmployeeProfileTab } from './models/employee-profile-routing.path';
 
 const pathSupplier = {
     aboutMe: (userId: string) => [
-        MainRoutes.userProfile, userId, UserProfileTab.USER_PROFILE_ABOUT_ME
+        MainRoutes.employerProfile, userId, EmployeeProfileTab.EMPLOYEE_PROFILE_ABOUT_ME
     ],
 };
 

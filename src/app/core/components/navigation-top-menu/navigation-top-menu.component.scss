@@ -12,7 +12,7 @@
     .logo-trigger {
 
         .image {
-            width: 50px;
+            width: 30px;
         }
     }
 
@@ -22,5 +22,10 @@
 
     .login-small {
         border-radius: 4.25rem;
+    }
+
+    &.employer-header {
+        background: #000000;
+        color: #ffffff;
     }
 }

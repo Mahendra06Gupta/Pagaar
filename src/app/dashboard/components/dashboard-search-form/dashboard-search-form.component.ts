@@ -9,7 +9,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { RootState } from '@app/store';
 import { DashboardApiService } from '@app/dashboard/services/dashboard-api.service';
 import { InitDashboardSearch, UpdateDashboardSearchResult } from '@app/dashboard/store';
-import { dummyData } from '@app/models/dunny-data/dummy-data';
+import { dummyData } from '@app/models/dummy-data/dummy-data';
 
 export const DATE_FORMATS = {
   parse: {

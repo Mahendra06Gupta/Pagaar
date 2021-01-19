@@ -1,15 +1,10 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import * as moment from 'moment';
 import { tap } from 'rxjs/operators';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { MatChipList } from '@angular/material/chips';
 
 import { GoToDashboard, RootState } from '@app/store';
 import { getUserLoggedInEmail } from '@app/store/user-details/user-details.selectors';
-import { DateFormats } from '@app/shared/models/date-format/date-formats';
 import { EmployerApiService } from '@app/employer-profile/services/employer-api.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -17,21 +12,11 @@ import { ToastrService } from 'ngx-toastr';
   selector: 'app-employer-profile',
   templateUrl: './employer-profile.component.html',
   styleUrls: ['./employer-profile.component.scss'],
-  providers: [
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: DateFormats },
-  ]
 })
 export class EmployerProfileComponent implements OnInit {
 
-  @ViewChild('skillList', { static: true })
-  public skillList: MatChipList;
-  @ViewChild('hobbiesList', { static: true })
-  public hobbiesList: MatChipList;
-
   public detailForm: FormGroup;
   public userLoggedEmailId: string;
-  public dateTo: moment.Moment = moment().subtract(18, 'years');
   public businessName = [
     {value: 'EXTRACTIVE_INDUSTRY', label: 'Extractive Industry'},
     {value: 'GENETIC_INDUSTRY', label: 'Genetic Industry'},
@@ -46,10 +31,6 @@ export class EmployerProfileComponent implements OnInit {
   ];
 
   public step = 0;
-  public idProofUploadFile: any;
-  public idProofUploadFileSuccessfully: boolean;
-  public qualificationUploadFile: any;
-  public qualificationUploadFileSuccessfully: boolean;
 
   constructor(
     private readonly fb: FormBuilder,
@@ -66,7 +47,6 @@ export class EmployerProfileComponent implements OnInit {
       })
     ).subscribe();
   }
-
 
   public hasError(controlName: string, errorName: string): boolean {
     return this.detailForm.controls[controlName].hasError(errorName);

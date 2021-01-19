@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { RootState } from '@app/store';
 import { ContextMenuService } from './core/services/context-menu/context-menu.service';
-import { isIamLoginPageORCreateAccountPage } from '@app/store/router/router.selectors';
+import { isIamJobPostingPage, isIamLoginPageORCreateAccountPage } from '@app/store/router/router.selectors';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,6 +13,7 @@ import { isIamLoginPageORCreateAccountPage } from '@app/store/router/router.sele
 export class AppComponent {
   title = 'pagaar-app';
   public isLoginPage$: Observable<boolean> = this.store$.select(isIamLoginPageORCreateAccountPage);
+  public isIamJobPostingPage$: Observable<boolean> = this.store$.select(isIamJobPostingPage);
 
   constructor(
     public readonly contextMenuService: ContextMenuService,
