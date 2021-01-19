@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthenticatedGuard } from '@app/core/guards/authenticated.guard';
 
 import { JobPostingLandingComponent } from './components/job-posting-landing/job-posting-landing.component';
-import { JobPostingListingComponent } from './components/job-posting-listing/job-posting-listing.component';
+// import { JobPostingListingComponent } from './components/job-posting-listing/job-posting-listing.component';
 import { JobPostingComponent } from './components/job-posting/job-posting.component';
 import { JobPostingTab } from './models/job-posting-routing.path';
 
@@ -21,10 +21,10 @@ const JobPostingRoutes: Routes = [
         path: JobPostingTab.JOB_POSTING,
         component: JobPostingComponent
       },
-      {
-        path: JobPostingTab.ALL_JOB_POSTING_LIST,
-        component: JobPostingListingComponent
-      }
+      // {
+      //   path: JobPostingTab.ALL_JOB_POSTING_LIST,
+      //   component: JobPostingListingComponent
+      // }
     ]
   },
 ];
