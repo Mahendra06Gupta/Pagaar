@@ -1,21 +1,11 @@
-<div fxLayout="row" fxLayoutAlign="start center" class="mt-3">
-    <div>
-        <h1 fxLayoutAlign="center center" class="abv mb-0 position-relative bg-white">{{userNameAbv.toUpperCase()}}</h1>
+<mat-card>
+    <div fxLayout="row" fxLayoutAlign="start center" class="mt-3">
+        <div>
+            <h1 fxLayoutAlign="center center" class="abv mb-0 position-relative bg-white">{{userNameAbv.toUpperCase()}}</h1>
+        </div>
+        <div class="user" ngClass.gt-sm="user-profile w-50">
+            <h6 class="mb-0">{{userEmail}}</h6>
+        </div>
     </div>
-    <div class="user" ngClass.gt-sm="user-profile w-50">
-        <h6 class="mb-0">{{userEmail}}</h6>
-    </div>
-</div>
-<div fxLayout="row" fxLayoutGap="1.5rem" class="profile-tab">
-    <nav class="navbar-bottom-border" fxFlex="1 1 auto" mat-tab-nav-bar role="navigation" aria-label="Tab Links">
-        <!-- <a mat-tab-link id="user-profile-about-me" class="user-profile-about-me-tab" routerLink="{{userProfileTab.USER_PROFILE_RESUME}}"
-            routerLinkActive #userProfileAboutMeActive="routerLinkActive" [active]="userProfileAboutMeActive.isActive">
-            <span fxHide.lt-sm="true" class="tab-text">Resume</span>
-        </a> -->
-        <a mat-tab-link id="user-profile-resume" class="user-profile-resume-tab" [routerLink]="employerProfileTab.EMPLOYER_PROFILE_ABOUT_ME"
-            routerLinkActive #userProfileResumeActive="routerLinkActive" [active]="userProfileResumeActive.isActive">
-            <span fxHide.lt-sm="true" class="tab-text">About Me</span>
-        </a>
-    </nav>
-</div>
+</mat-card>
 <router-outlet></router-outlet>

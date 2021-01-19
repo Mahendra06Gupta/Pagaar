@@ -1,6 +1,6 @@
-<mat-nav-list [ngClass.lt-md]="{'small': true}" class="left-menu-container bg-light h-100 pt-0 w-100">
-    <ng-container *ngFor="let menuItems of sidenavMenu, let i = index">
-        <mat-list-item tabindex="0" (click)="triggerAction(menuItems.action, menuItems.actionDescription)">
+<mat-nav-list *ngIf="activeUrl$ | async as activeUrl" [ngClass.lt-md]="{'small w-100': true}" class="left-menu-container bg-light h-100 pt-0">
+    <ng-container *ngFor="let menuItems of isLoggedInUserEmployee ? sidenavMenu : sideNavMenuForEmployerAndAdmin , let i = index">
+        <mat-list-item tabindex="0" [ngClass]="{'selected': activeUrl === '/' + menuItems.url && (isLargeDevices$ | async)}" (click)="triggerAction(menuItems.action, menuItems.actionDescription, i)">
             <a *hasPermission=menuItems.permissions class="w-100 active" fxLayoutAlign="space-between center">
                 <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="0.2rem">
                     <mat-icon aria-hidden="true" mat-list-icon>{{menuItems.icon}}</mat-icon>
@@ -14,9 +14,9 @@
         </mat-list-item>
     </ng-container>
     <ng-container *ngIf="(isUserLoggedIn$ | async)">
-        <mat-divider class="divider"></mat-divider>
+        <mat-divider *ngIf="isLoggedInUserEmployee" class="divider"></mat-divider>
         <ng-container *ngFor="let menuItems of sidenavMenuAfterLogin, let i = index">
-            <mat-list-item tabindex="0" (click)="triggerAction(menuItems.action, menuItems.actionDescription)">
+            <mat-list-item tabindex="0" [ngClass]="{'selected': activeUrl.includes(menuItems.url) && (isLargeDevices$ | async)}" (click)="triggerAction(menuItems.action, menuItems.actionDescription, i, true)">
                 <a *hasPermission=menuItems.permissions class="w-100 active" fxLayoutAlign="space-between center">
                     <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="0.2rem">
                         <mat-icon aria-hidden="true" mat-list-icon>{{menuItems.icon}}</mat-icon>

@@ -11,3 +11,12 @@ export interface EmployerDetailApiRequestModel {
 export interface EmployersDetail extends EmployerDetailApiRequestModel {
     id: string;
 }
+
+export function getEmployer(employerEntities: EmployersDetail[], email: string): EmployersDetail {
+
+    for (const employer of employerEntities) {
+        if (employer.email === email) {
+            return employer;
+        }
+    }
+}

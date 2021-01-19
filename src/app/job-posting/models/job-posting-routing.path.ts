@@ -4,6 +4,7 @@ export enum JobPostingTab {
 }
 
 export const EmployeeProfileRoutingPath = {
-    jobPosting: JobPostingTab.JOB_POSTING,
-    jobPostingList: JobPostingTab.ALL_JOB_POSTING_LIST
+    profile: ':userId',
+    jobPosting: `:userId/${JobPostingTab.JOB_POSTING}`,
+    jobPostingList: `:userId/${JobPostingTab.ALL_JOB_POSTING_LIST}`
 };

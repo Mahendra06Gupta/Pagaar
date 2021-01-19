@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { first, map, switchMap, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { DeviceScreenSizeService } from '@app/core/services';
-import { Store } from '@ngrx/store';
 import { RootState } from '@app/store';
 import { GoToActiveAboutMe } from '@app/employee-profile/employee-profile-routing.actions';
 import { EmployeeProfileTab } from '@app/employee-profile/models/employee-profile-routing.path';
@@ -12,11 +12,9 @@ import { getJobResult, getSearchKeyword, isSearcgInitiated } from '@app/dashboar
 import { JobReuslt } from '@app/dashboard/store/models/dashboard-state.model';
 import { DashboardApiService } from '@app/dashboard/services/dashboard-api.service';
 import { UpdateDashboardSearchResult } from '@app/dashboard/store';
-import { dummyData } from '@app/models/dummy-data/dummy-data';
 import { AddEmployeeDetails } from '@app/store/employee-store/employee.actions';
-import { AddEmployerDetails } from '@app/store/employer-store/employer.actions';
-import { ApiService, isLoggedInUserEmployee } from '@app/employee-profile/services/api.service';
-import { GoToEmployerActiveAboutMe } from '@app/employer-profile/employer-profile-routing.actions';
+import { ApiService } from '@app/employee-profile/services/api.service';
+import { GoToJobPosting } from '@app/job-posting/job-posting-routing.actions';
 
 @Component({
   selector: 'app-dashboard-landing',
@@ -54,7 +52,7 @@ export class DashboardLandingComponent implements OnInit {
       first(),
       switchMap(email => email ? this.apiService.getEmployeeDetailByEmail(email).pipe(
         tap((details) => {
-          this.store$.dispatch(isLoggedInUserEmployee() ? new AddEmployeeDetails([details]) : new AddEmployerDetails([details]));
+          this.store$.dispatch(new AddEmployeeDetails([details]));
           this.isDetailsExists = details ? true : false;
           this.showSpinner = false;
         })
@@ -63,7 +61,11 @@ export class DashboardLandingComponent implements OnInit {
   }
 
   public goToAboutMe(): void {
-    isLoggedInUserEmployee() ? this.store$.dispatch(new GoToActiveAboutMe()) : this.store$.dispatch(new GoToEmployerActiveAboutMe());
+    this.store$.dispatch(new GoToActiveAboutMe());
+  }
+
+  public goToEmployerTab(): void {
+    this.store$.dispatch(new GoToJobPosting());
   }
 
   public hideUpdateProfileInfo(): void {
@@ -102,7 +104,7 @@ export class DashboardLandingComponent implements OnInit {
       switchMap(res => this.dashboardApiService.getJobDetailByTitleAndLocation({...res, pageNumber: this.currentPage, pageSize: this.currentPage * 10}).pipe(
         first(),
         tap(search => {
-          search.totalItems > 0 ? this.store$.dispatch(new UpdateDashboardSearchResult(search)) : this.store$.dispatch(new UpdateDashboardSearchResult(dummyData));
+          this.store$.dispatch(new UpdateDashboardSearchResult(search));
         })
       ))
     ).subscribe();

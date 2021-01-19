@@ -1,8 +1,8 @@
 <div class="h-100 main" [ngClass]="{'home': (isLoginPage$ | async)}">
     <div class="min-vh-100 vh-100 body" fxLayout="column" fxLayoutAlign="stretch">
         <app-navigation-top-menu fxFlex="0 0 auto">
-            <button *ngIf="!(isIamJobPostingPage$ | async)" mat-icon-button (click)="contextMenuService.toggleSideMenu()" fxHide.gt-sm>
-                <mat-icon aria-hidden="true" class="bg-light">menu</mat-icon>
+            <button mat-icon-button (click)="contextMenuService.toggleSideMenu()" fxHide.gt-sm>
+                <mat-icon aria-hidden="true" [ngClass]="{'bg-light' : !(isIamJobPostingPage$ | async)}">menu</mat-icon>
             </button>
         </app-navigation-top-menu>
         <main class="overflow-auto main-body" fxFlex="1 1 auto" fxFill>

@@ -6,6 +6,8 @@ import { GoToCreateAccount, GoToDashboard, RootState, UserLogged } from '@app/st
 import { ToastrService } from 'ngx-toastr';
 import { RememberMeService } from '@app/core/services';
 import { AuthService } from '@app/shared/services/auth.service';
+import { isLoggedInUserEmployee } from '@app/models/data.model';
+import { GoToJobPosting } from '@app/job-posting/job-posting-routing.actions';
 
 @Component({
   selector: 'app-login-page',
@@ -64,7 +66,7 @@ export class LoginPageComponent implements OnInit {
           roles: res.roles,
           logged: true
         }]));
-        this.store$.dispatch(new GoToDashboard());
+        this.store$.dispatch(isLoggedInUserEmployee() ? new GoToDashboard() : new GoToJobPosting());
       }
     );
   }

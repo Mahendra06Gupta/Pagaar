@@ -2,6 +2,11 @@
     width: 300px;
     padding-top: 0;
 
+    .selected {
+        background: #4051B5;
+        color: #ffffff;
+    }
+
     &.small{
         width: 200px;
     }

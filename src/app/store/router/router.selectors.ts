@@ -18,6 +18,6 @@ export const isIamLoginPageORCreateAccountPage = createSelector(
 export const isIamJobPostingPage = createSelector(
     getActiveUrl,
     (activeUrl: string) => {
-        return activeUrl?.includes(MainRoutes.jobPosting);
+        return activeUrl?.includes(MainRoutes.jobPosting) || activeUrl?.includes(MainRoutes.employerProfile);
     }
 );

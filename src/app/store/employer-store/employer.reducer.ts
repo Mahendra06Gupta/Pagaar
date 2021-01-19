@@ -9,7 +9,7 @@ export interface EmployerState extends EntityState<EmployersDetail> {
 }
 
 export const employerAdapter: EntityAdapter<EmployersDetail> = createEntityAdapter<EmployersDetail>({
-    selectId: employer => employer.id
+    selectId: employer => employer.email
 });
 
 export const INITIAL_EMPLOYER_STATE: EmployerState = employerAdapter.getInitialState({

@@ -5,6 +5,7 @@ import { RestService } from '@core/services';
 import { endpoints } from '@shared/endpoints/auth-api-endpoints';
 import { EmployeeDetailApiReuestModel, EmployeesDetail } from '../models/employee-detail.model';
 import { EmployerDetailApiRequestModel, EmployersDetail } from '@app/employer-profile/models/employer-detail.model';
+import { isLoggedInUserEmployee } from '@app/models/data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +25,8 @@ export class ApiService {
   }
 
   public getEmployeeDetailByEmail(email: string): Observable<any> {
-    return this.restService.get(`${isLoggedInUserEmployee() ? endpoints.getEmployeeDetail : endpoints.getEmployerDetail}/${email}`);
+    return this.restService.get(`${endpoints.getEmployeeDetail}/${email}`);
   }
-
 
   public addEmployeeDetail(payload): Observable<any> {
     console.log('payload', payload);
@@ -40,8 +40,4 @@ export class ApiService {
   public updateEmployeeById(userId: string, payload: any): Observable<any> {
     return this.restService.put(`${endpoints.updateEmployeeDetail}/${userId}`, payload);
   }
-}
-
-export function isLoggedInUserEmployee(): boolean {
-  return JSON.parse(localStorage.getItem('role')).includes('EMPLOYEE');
 }

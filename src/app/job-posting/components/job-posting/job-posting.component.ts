@@ -74,11 +74,9 @@ export class JobPostingComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+    this.initForm();
     this.store$.select(fromEmployerSelector.getEmployerIds).pipe(
-      tap((id) => {
-        this.employerId = id.toString(),
-        this.initForm();
-      })
+      tap((id) => this.employerId = id.toString())
     ).subscribe();
   }
 

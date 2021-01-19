@@ -10,7 +10,7 @@ const employeeProfileRoutes: Routes = [
     path: '',
     children: [
       {
-        path: EmployeeProfileRoutingPath.userProfile,
+        path: EmployeeProfileRoutingPath.employeeProfile,
         component: EmployeeProfileLandingComponent,
         // canActivate: [LoadAccountDetailsGuard, ProductsLoadedGuard],
         children: [

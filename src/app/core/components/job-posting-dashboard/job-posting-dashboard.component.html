@@ -1,0 +1,21 @@
+<mat-sidenav-container #sideNavContainer fxFlexFill class="dashboard">
+    <mat-sidenav ngClass.lt-md="w-100"
+            (click)="toggleSidenavMenu()"
+            [mode]="menuContextService.contextMenuType"
+            [opened]="menuContextService.isOpen"
+            [position]="(isLargeDevices$ | async) ? 'start' : 'end'">
+        <app-navigation-left-menu></app-navigation-left-menu>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="mx-auto p-2 m-4" ngClass.lt-md="w-100" ngClass.gt-sm="w-100">
+            <ng-container *ngIf="!hideUpdateProfileMessage">
+                <div *ngIf="!isDetailsExists" class="d-flex bg-dark text-light align-items-center justify-content-center">
+                    <p class="p-3 m-0">It seems your profile is not updated, please <a class="text-info" (click)="goToAboutMe()">click here</a> to update your profile so that we can recommends you the job matching with your profile in future</p>
+                    <button mat-icon-button (click) = "hideUpdateProfileInfo()"><mat-icon>clear</mat-icon></button>
+                </div>
+            </ng-container>
+            <router-outlet></router-outlet>
+            <app-global-spinner *ngIf="showSpinner && (isUserLoggedIn$ | async)"></app-global-spinner>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

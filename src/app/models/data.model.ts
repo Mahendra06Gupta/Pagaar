@@ -26,3 +26,15 @@ export enum RoleType {
     EMPLOYEE = 'Employee',
     EMPLOYER = 'Employer'
 }
+
+export function isLoggedInUserEmployee(): boolean {
+    return JSON.parse(localStorage?.getItem('role'))?.includes('EMPLOYEE');
+}
+
+export function isLoggedInUserEmployer(): boolean {
+    return JSON.parse(localStorage?.getItem('role'))?.includes('EMPLOYER');
+}
+
+export function isLoggedInUserAdmin(): boolean {
+    return JSON.parse(localStorage?.getItem('role'))?.includes('ADMIN');
+}

@@ -4,7 +4,7 @@ import { AuthenticatedGuard } from '@app/core/guards/authenticated.guard';
 
 import { EmployerProfileLandingComponent } from './components/employer-profile-landing/employer-profile-landing.component';
 import { EmployerProfileComponent } from './components/employer-profile/employer-profile.component';
-import { EmployeeProfileRoutingPath, EmployerProfileTab } from './models/employer-profile-routing.path';
+import { EmployerProfileRoutingPath, EmployerProfileTab } from './models/employer-profile-routing.path';
 
 const EmployerProfileRoutes: Routes = [
   {
@@ -12,7 +12,7 @@ const EmployerProfileRoutes: Routes = [
     canActivateChild: [AuthenticatedGuard],
     children: [
       {
-        path: EmployeeProfileRoutingPath.userProfile,
+        path: EmployerProfileRoutingPath.employerProfile,
         component: EmployerProfileLandingComponent,
         children: [
           {

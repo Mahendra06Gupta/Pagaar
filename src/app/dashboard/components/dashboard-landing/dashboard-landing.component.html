@@ -17,7 +17,7 @@
             </ng-template>
         </div>
         <div class="my-3" *ngIf="!(isSearchInitiated | async)">
-            <a class="link font-weight-bold text-primary">Are you Employers? Post a job</a>
+            <a (click)="goToEmployerTab()" class="link font-weight-bold text-primary">Are you Employers? Post a job</a>
             <span> – Your next hire is here</span>
         </div>
     </div>
@@ -34,8 +34,8 @@
     </ng-container>
     <ng-template #showJobResult>
         <ng-container *ngIf="jobResult$ | async as jobResult">
-            <p>Angular Jobs</p>
-            <div class="row justify-content-center" ngClass.lt-md="column m-0 p-2">
+            <p> Jobs</p>
+            <div class="w-100 row justify-content-center" ngClass.lt-md="column m-0 p-2">
                 <mat-card ngClass.lt-lg="col-5 m-2" ngClass.gt-md="col-3 m-2" ngClass.lt-md="col-12" *ngFor="let job of jobResult.jobs">
                     <h6 class="main-text title">{{job.title}}</h6>
                     <p class="main-text">{{job.employer.companyName}}</p>

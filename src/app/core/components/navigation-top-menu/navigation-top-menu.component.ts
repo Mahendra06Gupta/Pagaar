@@ -3,7 +3,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { first, map, tap } from 'rxjs/operators';
 
-import { RootState, fromRouterSelector, GoToLogin, GoToBaseRoute, GoToCreateAccount } from '@app/store';
+import { RootState, fromRouterSelector, GoToLogin, GoToCreateAccount, GoToDashboard } from '@app/store';
 import { DeviceScreenSizeService } from '@app/core/services/device-screen-size/device-screen-size.service';
 import * as fromUserDetailsSelector from '@app/store/user-details/user-details.selectors';
 import { DialogService } from '@app/core/services/dialog-service/dialog.service';
@@ -11,8 +11,8 @@ import { isIamJobPostingPage, isIamLoginPageORCreateAccountPage } from '@app/sto
 import { DashboardTab } from '@app/dashboard/models/dashboard-routing.path';
 import { GoToActiveAboutMe } from '@app/employee-profile/employee-profile-routing.actions';
 import { GoToEmployerActiveAboutMe } from '@app/employer-profile/employer-profile-routing.actions';
-import { isLoggedInUserEmployee } from '@app/employee-profile/services/api.service';
 import { GoToJobPosting } from '@app/job-posting/job-posting-routing.actions';
+import { isLoggedInUserEmployee } from '@app/models/data.model';
 
 @Component({
   selector: 'app-navigation-top-menu',
@@ -34,8 +34,9 @@ export class NavigationTopMenuComponent implements OnInit, OnDestroy {
   public subscriptionArray: Subscription[] = [];
   public options = [
     {tab: 'Profile', icon: 'description'},
-    {tab: 'Account', icon: 'tune'},
+    // {tab: 'Account', icon: 'tune'},
   ];
+  public isLoggedInUserEmployee = isLoggedInUserEmployee();
 
   constructor(
     private readonly deviceSizeBreakpointService: DeviceScreenSizeService,
@@ -64,7 +65,7 @@ export class NavigationTopMenuComponent implements OnInit, OnDestroy {
   }
 
   public goToDashboard(): void {
-    this.store$.dispatch(new GoToBaseRoute());
+    this.isLoggedInUserEmployee ? this.store$.dispatch(new GoToDashboard()) : this.store$.dispatch(new GoToJobPosting());
   }
 
   public ngOnDestroy(): void {
@@ -86,11 +87,9 @@ export class NavigationTopMenuComponent implements OnInit, OnDestroy {
   }
 
   public goToSectionAsPerUserSelect(tab: string): void {
-    console.log(isLoggedInUserEmployee());
     switch (tab) {
-      case 'Profile': isLoggedInUserEmployee() ? this.store$.dispatch(new GoToActiveAboutMe()) : this.store$.dispatch(new GoToEmployerActiveAboutMe());
+      case 'Profile': this.isLoggedInUserEmployee ? this.store$.dispatch(new GoToActiveAboutMe()) : this.store$.dispatch(new GoToEmployerActiveAboutMe());
                       break;
     }
   }
-
 }

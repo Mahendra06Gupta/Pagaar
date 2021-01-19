@@ -32,7 +32,7 @@
                     <a *ngIf="!(isUserLoggedIn$ | async)" mat-tab-link id="upload-your-resume" class="upload-your-resume" (click)="goToSignUp()">
                         <span fxHide.lt-sm="true" class="tab-text">Upload your Resume</span>
                     </a>
-                    <ng-container *ngIf="((isUserLoggedIn$ | async) && !(isIamJobPostingPage$ | async)) else userNotLoggedIn">
+                    <ng-container *ngIf="(isUserLoggedIn$ | async) else userNotLoggedIn">
                         <a mat-tab-link id="login" class="login" [matMenuTriggerFor]="menu">
                             <mat-icon>person</mat-icon>
                         </a>
@@ -42,7 +42,7 @@
                                 <span>{{opt.tab}}</span>
                                 <mat-icon class="text-dark">{{opt.icon}}</mat-icon>
                             </button>
-                            <div class="border-top text-center pt-2 mt-2">Logout</div>
+                            <!-- <div class="border-top text-center pt-2 mt-2">Logout</div> -->
                         </mat-menu>
                     </ng-container>
                     <ng-template #userNotLoggedIn>
@@ -50,9 +50,11 @@
                             <span fxHide.lt-sm="true" class="tab-text text-primary font-weight-bold">Login</span>
                         </a>
                     </ng-template>
-                    <a *ngIf="!(isIamJobPostingPage$ | async)" mat-tab-link class="bold" (click)="goToEmployerTab()">
-                        <span fxHide.lt-sm="true" class="tab-text">Post Jobs/ Are you Employers?</span>
-                    </a>
+                    <ng-container *ngIf="!isLoggedInUserEmployee">
+                        <a *ngIf="!(isIamJobPostingPage$ | async)" mat-tab-link class="bold" (click)="goToEmployerTab()">
+                            <span fxHide.lt-sm="true" class="tab-text">Post Jobs/ Are you Employers?</span>
+                        </a>
+                    </ng-container>
                 </nav>
             </div>
             <ng-content select="button"></ng-content>
