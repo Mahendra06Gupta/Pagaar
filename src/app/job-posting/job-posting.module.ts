@@ -12,7 +12,7 @@ import { JobPostingComponent } from './components/job-posting/job-posting.compon
 @NgModule({
   declarations: [
     JobPostingLandingComponent,
-    JobPostingComponent
+    JobPostingComponent,
     // JobPostingListingComponent,
     // JobPostListExpandableTabComponent,
     // JobListExpandableTabEntryComponent,
