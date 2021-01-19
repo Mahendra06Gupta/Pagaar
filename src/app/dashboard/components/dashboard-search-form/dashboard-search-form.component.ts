@@ -9,7 +9,6 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { RootState } from '@app/store';
 import { DashboardApiService } from '@app/dashboard/services/dashboard-api.service';
 import { InitDashboardSearch, UpdateDashboardSearchResult } from '@app/dashboard/store';
-import { dummyData } from '@app/models/dummy-data/dummy-data';
 
 export const DATE_FORMATS = {
   parse: {
@@ -71,7 +70,7 @@ export class DashboardSearchFormComponent implements OnInit {
       this.dashboardApiService.getJobDetailByTitleAndLocation({...this.searchForm.value, pageNumber: 1, pageSize: 10}).pipe(
         first(),
         tap(res => {
-          res.totalItems > 0 ? this.store$.dispatch(new UpdateDashboardSearchResult(res)) : this.store$.dispatch(new UpdateDashboardSearchResult(dummyData));
+          this.store$.dispatch(new UpdateDashboardSearchResult(res));
           this.search.emit();
         })
       ).subscribe();
