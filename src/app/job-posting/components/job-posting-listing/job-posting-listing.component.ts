@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { tap, first } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 import { RootState } from '@app/store';
-import * as fromUserDetailsSelector from '@app/store/user-details/user-details.selectors';
-import { EmployerProfileTab } from '@app/employer-profile/models/employer-profile-routing.path';
 import { JobPostingApiService } from '@app/job-posting/services/job-posting-api.service';
-import { Observable } from 'rxjs';
 import { JobReuslt } from '@app/dashboard/store/models/dashboard-state.model';
+import { isLoggedInUserAdmin } from '@app/models/data.model';
 
 @Component({
   selector: 'app-job-posting-listing',
@@ -24,7 +22,9 @@ export class JobPostingListingComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.getJobDetails();
+    if (isLoggedInUserAdmin()) {
+      this.getJobDetails();
+    }
   }
 
   private getJobDetails(pageNumber?: number, pageSize?: number) {
