@@ -32,7 +32,7 @@ export class NavigationLeftMenuComponent implements OnInit {
   ];
   public sidenavMenuAfterLogin = [
     // tslint:disable-next-line: max-line-length
-    { name: 'Profile', icon: 'info', action: this.isLoggedInUserEmployee ? new GoToEmployeeAboutMe() : new GoToEmployerActiveAboutMe(), url: this.isLoggedInUserEmployee ? MainRoutes.employeeProfile : MainRoutes.employerProfile , actionDescription: 'GoToFindJobs', permissions: [] },
+    { name: 'Profile', icon: 'info', action: this.isLoggedInUserEmployee ? new GoToEmployeeAboutMe() : new GoToEmployerActiveAboutMe(), url: this.isLoggedInUserEmployee ? MainRoutes.employeeProfile : MainRoutes.employerProfile , actionDescription: 'GoToFindJobs', permissions: ['employer', 'employee'] },
     // { name: 'My jobs', icon: 'work_outline', action: new GoToDashboard(), actionDescription: 'GoToFindJobs', permissions: [] },
     // { name: 'Account', icon: 'account_circle', action: new LogOut(), actionDescription: 'Logout', permissions: [] },
     // { name: 'Sign out', icon: 'power_settings_new', action: new LogOut(), actionDescription: 'GoToEmployersSection', permissions: [] }

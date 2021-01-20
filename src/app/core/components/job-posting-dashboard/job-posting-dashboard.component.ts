@@ -3,7 +3,7 @@ import { MatSidenavContainer } from '@angular/material/sidenav';
 import { DeviceScreenSizeService } from '@app/core/services';
 import { GoToEmployerActiveAboutMe } from '@app/employer-profile/employer-profile-routing.actions';
 import { EmployerApiService } from '@app/employer-profile/services/employer-api.service';
-import { isLoggedInUserEmployee, isLoggedInUserEmployer } from '@app/models/data.model';
+import { isLoggedInUserAdmin, isLoggedInUserEmployee, isLoggedInUserEmployer } from '@app/models/data.model';
 import { RootState } from '@app/store';
 import { AddEmployerDetails } from '@app/store/employer-store/employer.actions';
 import { getUserLoggedInEmail, isUserLoggedIn } from '@app/store/user-details/user-details.selectors';
@@ -48,6 +48,16 @@ export class JobPostingDashboardComponent implements OnInit, AfterViewInit {
                     })
                 ) : of(null))
             ).subscribe();
+        } else if (isLoggedInUserAdmin()) {
+            if (isLoggedInUserAdmin()) {
+                this.employerApiService.getAllEmployersdetail().pipe(
+                    tap((employerDetail) => {
+                        this.store$.dispatch(new AddEmployerDetails(employerDetail));
+                        this.showSpinner = false;
+                        this.isDetailsExists = true;
+                    })
+                ).subscribe();
+            }
         } else {
             this.showSpinner = false;
             this.isDetailsExists = true;

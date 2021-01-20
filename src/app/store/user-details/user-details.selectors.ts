@@ -36,9 +36,9 @@ export const getUserLoggedInName = createSelector(
     (state: fromUserModel.UserData) => state && state.name
 );
 
-export const getUserLoggedInType = createSelector(
+export const getUserLoggedInRole = createSelector(
     getLoggedInUserData,
-    (state: fromUserModel.UserData) => state && state.type
+    (state: fromUserModel.UserData) => state && state.roles[0]
 );
 
 export const getUserLoggedInId = createSelector(

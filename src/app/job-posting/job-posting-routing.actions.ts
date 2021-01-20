@@ -3,7 +3,7 @@ import { MainRoutes } from '@app/app.route-names';
 
 const pathSupplier = {
     jobPosting: () => [MainRoutes.jobPosting],
-    jobPostingListing: () => [MainRoutes.jobPostingListing],
+    jobPostingListing: () => [MainRoutes.jobPosting, MainRoutes.jobPostingListing],
 };
 
 export class GoToJobPosting extends Go {

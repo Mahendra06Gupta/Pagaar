@@ -25,7 +25,8 @@
       <mat-checkbox color="primary" (change)="rememberMe($event.checked)" [checked]="rememberMeSelected">
         Keep me signed in on this device.
       </mat-checkbox>
-      <button mat-raised-button [disabled]="loginForm.invalid" class="py-1 px-3 login-button m-0" color="primary">Log In</button>
+      <app-global-spinner-button [invalid]="loginForm.invalid" [buttonText]="'Log In'" [isFormSubmitted]="isFormSubmitted"></app-global-spinner-button>
+      <!-- <button mat-raised-button [disabled]="loginForm.invalid" class="py-1 px-3 login-button m-0" color="primary">Log In</button> -->
       <div class="position-relative py-sm-3 py-2">
         <hr class="left-divider d-inline-block position-absolute mb-3 mt-2">
           <span class="or-text margin-auto w-100 text-center d-inline-block">or</span>
@@ -35,6 +36,6 @@
         <span>New to Pagaar? Create an account</span>
       </a>
     </form>
-    <a class="text-center mt-4 text-primary d-block">Forgot Your Password?</a>
+    <!-- <a class="text-center mt-4 text-primary d-block">Forgot Your Password?</a> -->
   </div>
 </div>

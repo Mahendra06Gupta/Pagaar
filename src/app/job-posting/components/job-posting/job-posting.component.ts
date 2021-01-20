@@ -14,6 +14,13 @@ import { RootState } from '@app/store';
 import { DateFormats } from '@app/shared/models/date-format/date-formats';
 import { fromEmployerSelector } from '@app/store/store';
 import { JobPostingApiService } from '@app/job-posting/services/job-posting-api.service';
+import { isLoggedInUserAdmin, isLoggedInUserEmployee } from '@app/models/data.model';
+import { EmployerApiService } from '@app/employer-profile/services/employer-api.service';
+import { AddEmployerDetails } from '@app/store/employer-store/employer.actions';
+import { getEmployeeDetails, getEmployeeID } from '@app/store/employee-store/employee.selectors';
+import { Observable } from 'rxjs';
+import { EmployersDetail } from '@app/employer-profile/models/employer-detail.model';
+import { getEmployerDetails, getEmployerEntities } from '@app/store/employer-store/employer.selectors';
 
 @Component({
   selector: 'app-job-posting',
@@ -27,9 +34,11 @@ import { JobPostingApiService } from '@app/job-posting/services/job-posting-api.
 export class JobPostingComponent implements OnInit {
 
   public jobPostingForm: FormGroup;
+  public isFormSubmitted = false;
   public employerId: string;
   public dateTo: moment.Moment = moment();
   public readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  public employerDetails$: Observable<EmployersDetail[]> = this.store$.select(getEmployerEntities);
   public jobNature = [
     {value: 'FULL_TIME', label: 'Full time'},
     {value: 'PART_TIMR', label: 'Part time'},
@@ -75,9 +84,6 @@ export class JobPostingComponent implements OnInit {
 
   public ngOnInit(): void {
     this.initForm();
-    this.store$.select(fromEmployerSelector.getEmployerIds).pipe(
-      tap((id) => this.employerId = id.toString())
-    ).subscribe();
   }
 
   public hasError(controlName: string, errorName: string): boolean {
@@ -108,10 +114,12 @@ export class JobPostingComponent implements OnInit {
         delete payload.upto;
         delete payload.exact;
         delete payload.currency;
+        this.isFormSubmitted = true;
         this.jobPostingApiService.addJobDetail(payload).pipe(
           tap(res => {
+            this.isFormSubmitted = false;
             this.toastrService.success('Job Detail Added Successfully');
-          })
+          }, () => this.isFormSubmitted = false),
         ).subscribe();
       }
     }
@@ -145,7 +153,7 @@ export class JobPostingComponent implements OnInit {
 
   private initForm(): void {
     this.jobPostingForm = this.fb.group({
-      employerId: [this.employerId, [Validators.required]],
+      employerId: ['', [Validators.required]],
       title: ['', [Validators.required, Validators.maxLength(32)]],
       nature: ['', [Validators.required]],
       totalHiring: ['', [Validators.required, Validators.pattern('^[0-9]{1,6}$')]],

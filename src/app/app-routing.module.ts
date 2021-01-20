@@ -7,8 +7,8 @@ import { MainRoutes } from '@app/app.route-names';
 import { SignUpComponent } from '@core/components/sign-up/sign-up.component';
 import { DashboardComponent } from '@core/components/dashboard/dashboard.component';
 import { EmployeeProfileRoutingPath } from './employee-profile/models/employee-profile-routing.path';
-import { isLoggedInUserEmployee } from './models/data.model';
 import { JobPostingDashboardComponent } from './core/components';
+import { isLoggedInUserEmployee } from './models/data.model';
 import { EmployerProfileRoutingPath } from './employer-profile/models/employer-profile-routing.path';
 
 const routes: Routes = [
@@ -28,11 +28,26 @@ const routes: Routes = [
         path: MainRoutes.createAccount,
         component: SignUpComponent,
       },
-      // {
-      //   path: MainRoutes.jobPosting,
-      //   loadChildren: () => import('./job-posting/job-posting.module').then(m => m.JobPostingModule)
-      // },
-      isLoggedInUserEmployee() ? {
+      {
+        path: MainRoutes.jobPosting,
+        component: JobPostingDashboardComponent,
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./job-posting/job-posting.module').then(m => m.JobPostingModule)
+          },
+          {
+            path: MainRoutes.employerProfile,
+            children: [
+              {
+                path: EmployerProfileRoutingPath.employerProfile,
+                loadChildren: () => import ('./employer-profile/employer-profile.module').then(m => m.EmployerProfileModule)
+              }
+            ]
+          }
+        ]
+      },
+      {
         path: '',
         children: [
           {
@@ -46,25 +61,6 @@ const routes: Routes = [
               {
                 path: EmployeeProfileRoutingPath.employeeProfile,
                 loadChildren: () => import ('./employee-profile/employee-profile.module').then(m => m.EmployeeProfileModule)
-              }
-            ]
-          },
-        ]
-      }
-      : {
-        path: '',
-        children: [
-          {
-            path: '',
-            component: JobPostingDashboardComponent,
-            children: [
-              {
-                path: MainRoutes.jobPosting,
-                loadChildren: () => import('./job-posting/job-posting.module').then(m => m.JobPostingModule)
-              },
-              {
-                path: EmployerProfileRoutingPath.employerProfile,
-                loadChildren: () => import ('./employer-profile/employer-profile.module').then(m => m.EmployerProfileModule)
               }
             ]
           },

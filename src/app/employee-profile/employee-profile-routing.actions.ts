@@ -4,7 +4,7 @@ import { EmployeeProfileTab } from './models/employee-profile-routing.path';
 
 const pathSupplier = {
     aboutMe: (userId: string) => [
-        MainRoutes.employerProfile, userId, EmployeeProfileTab.EMPLOYEE_PROFILE_ABOUT_ME
+        MainRoutes.employeeProfile, userId, EmployeeProfileTab.EMPLOYEE_PROFILE_ABOUT_ME
     ],
 };
 

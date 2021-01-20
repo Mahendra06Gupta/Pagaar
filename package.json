@@ -36,6 +36,7 @@
     "core-js": "^3.8.1",
     "express": "^4.17.1",
     "lodash-es": "^4.17.20",
+    "mat-progress-buttons": "^9.2.1",
     "moment": "^2.25.1",
     "ngx-cookie-service": "^11.0.2",
     "ngx-toastr": "^13.2.0",

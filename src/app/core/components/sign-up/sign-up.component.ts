@@ -18,6 +18,7 @@ export class SignUpComponent implements OnInit {
   public signUpForm: FormGroup;
   public hide = true;
   public rememberMeSelected = true;
+  public isFormSubmitted = false;
   public roles: Role[] = [
     { roleId: RoleType.EMPLOYEE, name: RoleType.EMPLOYEE },
     { roleId: RoleType.EMPLOYER, name: RoleType.EMPLOYER }
@@ -62,14 +63,17 @@ export class SignUpComponent implements OnInit {
     }
     const payload = {
       ...this.signUpForm.value,
-      name: `${this.signUpForm.value.firstName} ${this.signUpForm.value.lastName}`
+      name: `${this.signUpForm.value.firstName} ${this.signUpForm.value.lastName}`,
+      roles: [this.signUpForm.value.roles]
     };
     delete payload.lastName;
+    this.isFormSubmitted = true;
     this.authService.createAccount(payload).subscribe(
       (res) => {
+        this.isFormSubmitted = false;
         this.toastrService.success(res.message);
         this.goToLogin();
-      }
+      }, () => this.isFormSubmitted = false
     );
   }
 
@@ -83,7 +87,7 @@ export class SignUpComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9.() ]{3,50}$')]],
       email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      roles: [[this.roles[0].roleId.toUpperCase()], Validators.required]
+      roles: ['', Validators.required]
     });
   }
 

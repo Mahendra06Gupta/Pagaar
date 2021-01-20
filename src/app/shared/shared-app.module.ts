@@ -33,6 +33,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressButtonsModule } from 'mat-progress-buttons';
 
 import { FooterComponent } from './components/footer/footer.component';
 import { LoaderComponent } from './components/loader/loader.component';
@@ -43,6 +44,7 @@ import { PageTitleComponent } from './components/page-title/page-title.component
 import { DashboardSearchFormComponent } from '@app/dashboard/components/dashboard-search-form/dashboard-search-form.component';
 import { HasPermissionDirective } from './directives/has-permission.directive';
 import { GlobalSpinnerComponent } from './components/spinner/global-spinner.component';
+import { GlobalSpinnerButtonComponent } from './components/spinner-button/global-spinner-button.component';
 import { NumberRoundPipe } from './pipe/number-round.pipe';
 
 
@@ -76,7 +78,8 @@ const angularMaterialModules = [
     MatCardModule,
     MatDialogModule,
     MatChipsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatProgressButtonsModule
 ];
 
 @NgModule({
@@ -89,6 +92,7 @@ const angularMaterialModules = [
         PageTitleComponent,
         DashboardSearchFormComponent,
         GlobalSpinnerComponent,
+        GlobalSpinnerButtonComponent,
         HasPermissionDirective,
         NumberRoundPipe
     ],
@@ -119,6 +123,7 @@ const angularMaterialModules = [
         DashboardSearchFormComponent,
         HasPermissionDirective,
         GlobalSpinnerComponent,
+        GlobalSpinnerButtonComponent,
         NumberRoundPipe
     ],
     entryComponents: [

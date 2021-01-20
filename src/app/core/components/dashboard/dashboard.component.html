@@ -1,5 +1,5 @@
 <mat-sidenav-container #sideNavContainer fxFlexFill class="dashboard">
-    <mat-sidenav fxHide.gt-sm class="w-100"
+    <mat-sidenav *ngIf="(isIamJobPostingPage$ | async)" class="w-100"
             (click)="toggleSidenavMenu()"
             [mode]="menuContextService.contextMenuType"
             [opened]="menuContextService.isOpen"

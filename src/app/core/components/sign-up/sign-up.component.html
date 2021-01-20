@@ -17,7 +17,7 @@
             </div>
             <mat-form-field appearance="outline">
                 <mat-label>User Role</mat-label>
-                <mat-select formControlName="roles" multiple required>
+                <mat-select formControlName="roles" required>
                     <mat-option *ngFor="let role of roles" [value]="role.roleId.toUpperCase()">{{role.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -53,7 +53,8 @@
             <mat-checkbox color="primary" (change)="rememberMe($event.checked)" [checked]="rememberMeSelected">
                 Keep me signed in on this device.
             </mat-checkbox>
-            <button mat-raised-button [disabled]="signUpForm.invalid" class="py-1 px-3 login-button m-0" color="primary">Create Account</button>
+            <app-global-spinner-button [invalid]="signUpForm.invalid" [buttonText]="'Create Account'" [isFormSubmitted]="isFormSubmitted"></app-global-spinner-button>
+            <!-- <button mat-raised-button [disabled]="signUpForm.invalid" class="py-1 px-3 login-button m-0" color="primary">Create Account</button> -->
         </form>
     </div>
 </div>

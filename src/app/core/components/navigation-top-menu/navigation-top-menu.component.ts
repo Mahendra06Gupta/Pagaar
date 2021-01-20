@@ -36,7 +36,7 @@ export class NavigationTopMenuComponent implements OnInit, OnDestroy {
     {tab: 'Profile', icon: 'description'},
     // {tab: 'Account', icon: 'tune'},
   ];
-  public isLoggedInUserEmployee = isLoggedInUserEmployee();
+  public isLoggedInUserEmployee = isLoggedInUserEmployee() || true;
 
   constructor(
     private readonly deviceSizeBreakpointService: DeviceScreenSizeService,
@@ -59,7 +59,7 @@ export class NavigationTopMenuComponent implements OnInit, OnDestroy {
       res => res ? this.activeRoute = res.replace('/', '') : ''
     ));
     this.store$.select(fromUserDetailsSelector.getUserLoggedInEmail).pipe(
-      first(),
+      // first(),
       tap(email => this.loggedInUserEmail = email)
     ).subscribe();
   }

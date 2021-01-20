@@ -18,6 +18,13 @@
                 (ngSubmit)="onSubmit()">
                 <div fxLayout="column" fxLayoutGap="0.7rem">
                     <mat-form-field appearance="outline">
+                        <mat-label>Employer</mat-label>
+                        <mat-select formControlName="employerId" required>
+                            <mat-option *ngFor="let employerDetails of (employerDetails$ | async)" [value]="employerDetails.id">{{employerDetails.email}}</mat-option>
+                        </mat-select>
+                        <mat-error class="mt-3" *ngIf="hasError('employerId', 'required')">Please enter employer email</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
                         <mat-label>Job Title</mat-label>
                         <input matInput placeholder="Java" formControlName="title" required>
                         <mat-error class="mt-3" *ngIf="hasError('title', 'required')">Please enter job title pincode</mat-error>
@@ -53,19 +60,19 @@
                     <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="0.5rem" fxLayoutAlign="space-between">
                         <mat-form-field fxFlex="1 1 auto" appearance="outline">
                             <mat-label>Starting Salary (INR)</mat-label>
-                            <input matInput placeholder="10,000" formControlName="starting" required>
+                            <input matInput placeholder="10000" formControlName="starting" required>
                             <mat-error class="mt-3" *ngIf="hasError('starting', 'required')">Please enter starting salary of the job</mat-error>
                             <mat-error class="mt-3" *ngIf="hasError('starting', 'maxlength')">Please enter a valid salary</mat-error>
                         </mat-form-field>
                         <mat-form-field fxFlex="1 1 auto" appearance="outline">
                             <mat-label>Upto (INR)</mat-label>
-                            <input matInput placeholder="10,000" formControlName="upto" required>
+                            <input matInput placeholder="10000" formControlName="upto" required>
                             <mat-error class="mt-3" *ngIf="hasError('upto', 'required')">Please enter salary upto for job</mat-error>
                             <mat-error class="mt-3" *ngIf="hasError('upto', 'maxlength')">Please enter a valid salary</mat-error>
                         </mat-form-field>
                         <mat-form-field fxFlex="1 1 auto" appearance="outline">
                             <mat-label>Exact Salary (INR)</mat-label>
-                            <input matInput placeholder="10,000" formControlName="exact" required>
+                            <input matInput placeholder="10000" formControlName="exact" required>
                             <mat-error class="mt-3" *ngIf="hasError('exact', 'required')">Please enter exact amount which can be offered</mat-error>
                             <mat-error class="mt-3" *ngIf="hasError('exact', 'maxlength')">Please enter a valid salary</mat-error>
                         </mat-form-field>
@@ -84,7 +91,7 @@
                         <mat-error class="mt-3" *ngIf="hasError('benefits', 'required')">Please enter benefits</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline">
-                        <mat-label>Date of Birth</mat-label>
+                        <mat-label>Application Deadline</mat-label>
                         <input matInput [matDatepicker]="fromDatepicker" [min]="dateTo" (dateChange)="onFromDateChange($event)"
                             name="fromDate" formControlName="applicationDeadline" placeholder="DD/MM/YYYY" required>
                         <mat-datepicker-toggle matSuffix [for]="fromDatepicker"></mat-datepicker-toggle>
@@ -111,9 +118,7 @@
                     </div>
                 </div>
                 <div ngClass.gt-sm="d-flex justify-content-center">
-                    <button [disabled]="jobPostingForm.invalid" color="primary" ngClass.lt-md="w-100" class="w-25" mat-raised-button type="submit">
-                        Submit
-                    </button>
+                    <app-global-spinner-button [invalid]="jobPostingForm.invalid" [buttonText]="'Post Job'" [isFormSubmitted]="isFormSubmitted"></app-global-spinner-button>
                 </div>
             </form>
         </div>

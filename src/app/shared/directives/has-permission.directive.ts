@@ -7,7 +7,6 @@ import { RootState, fromUserSelector } from '@app/store';
     selector: '[hasPermission]'
 })
 export class HasPermissionDirective {
-    private currentUser: string;
     private currentUserAccess: string;
     private permissions = [];
 
@@ -18,8 +17,7 @@ export class HasPermissionDirective {
     ) {}
 
     private updateView() {
-        this.store$.select(fromUserSelector.getUserLoggedInName).subscribe(res => this.currentUser = res);
-        this.store$.select(fromUserSelector.getUserLoggedInType).subscribe(res => this.currentUserAccess = res);
+        this.store$.select(fromUserSelector.getUserLoggedInRole).subscribe(res => this.currentUserAccess = res);
         if (this.checkPermission()) {
             this.viewContainer.createEmbeddedView(this.templateRef);
         } else {
@@ -38,7 +36,7 @@ export class HasPermissionDirective {
             return true;
         }
         const hasPermission = false;
-        if (this.currentUser && this.currentUserAccess) {
+        if (this.currentUserAccess) {
             const userRoles = this.currentUserAccess;
             return this.permissions.some((permission) => this.existPermission(userRoles, permission));
         }

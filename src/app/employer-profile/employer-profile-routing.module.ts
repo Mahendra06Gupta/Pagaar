@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { MainRoutes } from '@app/app.route-names';
 import { AuthenticatedGuard } from '@app/core/guards/authenticated.guard';
 
 import { EmployerProfileLandingComponent } from './components/employer-profile-landing/employer-profile-landing.component';
@@ -9,18 +10,13 @@ import { EmployerProfileRoutingPath, EmployerProfileTab } from './models/employe
 const EmployerProfileRoutes: Routes = [
   {
     path: '',
+    component: EmployerProfileLandingComponent,
     canActivateChild: [AuthenticatedGuard],
     children: [
       {
-        path: EmployerProfileRoutingPath.employerProfile,
-        component: EmployerProfileLandingComponent,
-        children: [
-          {
-            path: EmployerProfileTab.EMPLOYER_PROFILE_ABOUT_ME,
-            component: EmployerProfileComponent,
-            pathMatch: 'full'
-          },
-        ]
+        path: EmployerProfileTab.EMPLOYER_PROFILE_ABOUT_ME,
+        component: EmployerProfileComponent,
+        pathMatch: 'full'
       },
     ]
   },
@@ -30,4 +26,8 @@ const EmployerProfileRoutes: Routes = [
   imports: [RouterModule.forChild(EmployerProfileRoutes)],
   exports: [RouterModule]
 })
-export class EmployerProfileRoutingModule { }
+export class EmployerProfileRoutingModule {
+  constructor() {
+    console.log('iss route mein aata hai kya woh bhi nahi aata hai');
+  }
+}

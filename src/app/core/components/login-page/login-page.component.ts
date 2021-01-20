@@ -21,6 +21,7 @@ export class LoginPageComponent implements OnInit {
   public currentState = 'initial';
   public text = 'LOGIN';
   public rememberMeSelected = true;
+  public isFormSubmitted = false;
 
   constructor(
     private readonly fb: FormBuilder,
@@ -58,8 +59,10 @@ export class LoginPageComponent implements OnInit {
     } else {
       this.rememberMeService.remove('rememberme');
     }
+    this.isFormSubmitted = true;
     this.authService.login(this.loginForm.value).subscribe(
       (res: {username: string, token: string, roles: string[]}) => {
+        this.isFormSubmitted = false;
         this.store$.dispatch(new UserLogged([{
           email: res.username,
           token: res.token,
@@ -67,7 +70,7 @@ export class LoginPageComponent implements OnInit {
           logged: true
         }]));
         this.store$.dispatch(isLoggedInUserEmployee() ? new GoToDashboard() : new GoToJobPosting());
-      }
+      }, () => this.isFormSubmitted = false
     );
   }
 
