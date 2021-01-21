@@ -98,8 +98,8 @@
         <h5>Let employers find you</h5>
         <button mat-raised-button color="primary" class="mt-2">Upload your resume</button>
     </div>
-    <ng-container *ngIf="!(isLargeDevices$ | async) && !(isLoggedUserEmployee)">
-        <div class="w-100 text-center bg-light p-4">
+    <ng-container *ngIf="!(isLoggedUserEmployee)">
+        <div *ngIf="!(isLargeDevices$ | async)" class="w-100 text-center bg-light p-4">
             <h5>For employers</h5>
             <h5>Your next hire is here</h5>
             <button mat-raised-button color="primary" class="mt-2 w-100">Post a job</button>
