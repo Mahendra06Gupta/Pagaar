@@ -16,10 +16,12 @@
                 <span> - It only takes your few seconds</span>
             </ng-template>
         </div>
-        <div class="my-3" *ngIf="!(isSearchInitiated | async)">
-            <a (click)="goToEmployerTab()" class="link font-weight-bold text-primary">Are you Employers? Post a job</a>
-            <span> – Your next hire is here</span>
-        </div>
+        <ng-container *ngIf="!isLoggedUserEmployee">
+            <div class="my-3" *ngIf="!(isSearchInitiated | async)">
+                <a (click)="goToEmployerTab()" class="link font-weight-bold text-primary">Are you Employers? Post a job</a>
+                <span> – Your next hire is here</span>
+            </div>
+        </ng-container>
     </div>
     <ng-container *ngIf="!(isSearchInitiated | async) else showJobResult">
         <div class="popular-search px-4 pt-4">
@@ -96,7 +98,7 @@
         <h5>Let employers find you</h5>
         <button mat-raised-button color="primary" class="mt-2">Upload your resume</button>
     </div>
-    <ng-container *ngIf="!(isLargeDevices$ | async)">
+    <ng-container *ngIf="!(isLargeDevices$ | async) && !(isLoggedUserEmployee)">
         <div class="w-100 text-center bg-light p-4">
             <h5>For employers</h5>
             <h5>Your next hire is here</h5>

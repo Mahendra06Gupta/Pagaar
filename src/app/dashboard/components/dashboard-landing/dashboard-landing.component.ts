@@ -15,6 +15,7 @@ import { UpdateDashboardSearchResult } from '@app/dashboard/store';
 import { AddEmployeeDetails } from '@app/store/employee-store/employee.actions';
 import { ApiService } from '@app/employee-profile/services/api.service';
 import { GoToJobPosting } from '@app/job-posting/job-posting-routing.actions';
+import { isLoggedInUserEmployee } from '@app/models/data.model';
 
 @Component({
   selector: 'app-dashboard-landing',
@@ -39,6 +40,7 @@ export class DashboardLandingComponent implements OnInit {
   public currentPage = 1;
   public showButtonTillPage = 5;
   public startButtonPage = 0;
+  public isLoggedUserEmployee = isLoggedInUserEmployee();
 
   constructor(
     private readonly deviceSizeBreakpointService: DeviceScreenSizeService,
