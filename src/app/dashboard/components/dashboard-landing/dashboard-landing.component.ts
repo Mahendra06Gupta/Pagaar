@@ -52,7 +52,9 @@ export class DashboardLandingComponent implements OnInit {
       first(),
       switchMap(email => email ? this.apiService.getEmployeeDetailByEmail(email).pipe(
         tap((details) => {
-          this.store$.dispatch(new AddEmployeeDetails([details]));
+          if (details) {
+            this.store$.dispatch(new AddEmployeeDetails([details]));
+          }
           this.isDetailsExists = details ? true : false;
           this.showSpinner = false;
         })
