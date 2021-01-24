@@ -46,7 +46,7 @@ import { HasPermissionDirective } from './directives/has-permission.directive';
 import { GlobalSpinnerComponent } from './components/spinner/global-spinner.component';
 import { GlobalSpinnerButtonComponent } from './components/spinner-button/global-spinner-button.component';
 import { NumberRoundPipe } from './pipe/number-round.pipe';
-
+import { PostedJobDetailsEntryComponent, PostedJobDetailsModalComponent } from './popups';
 
 const angularMaterialModules = [
     MatAutocompleteModule,
@@ -93,6 +93,8 @@ const angularMaterialModules = [
         DashboardSearchFormComponent,
         GlobalSpinnerComponent,
         GlobalSpinnerButtonComponent,
+        PostedJobDetailsModalComponent,
+        PostedJobDetailsEntryComponent,
         HasPermissionDirective,
         NumberRoundPipe
     ],
@@ -124,6 +126,8 @@ const angularMaterialModules = [
         HasPermissionDirective,
         GlobalSpinnerComponent,
         GlobalSpinnerButtonComponent,
+        PostedJobDetailsModalComponent,
+        PostedJobDetailsEntryComponent,
         NumberRoundPipe
     ],
     entryComponents: [

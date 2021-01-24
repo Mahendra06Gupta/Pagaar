@@ -28,6 +28,7 @@ export enum RoleType {
 }
 
 export function isLoggedInUserEmployee(): boolean {
+    console.log('is it coming inside this', JSON.parse(localStorage?.getItem('role'))?.includes('EMPLOYEE'));
     return JSON.parse(localStorage?.getItem('role'))?.includes('EMPLOYEE');
 }
 

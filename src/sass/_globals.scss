@@ -35,6 +35,11 @@ a {
     background-color: #616161;
 }
 
+.cdk-global-overlay-wrapper {
+    justify-content: center;
+    align-items: center !important;
+}
+
 .cdk-overlay-pane {
 
     .mat-menu-item {

@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { map, tap, withLatestFrom } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { RouterReducerState } from '@ngrx/router-store';
 
 import * as RouterActions from './router.actions';
 import { Go, GoUsingActiveUserId } from './router.actions';
-import { RouterState } from './router.reducer';
 import { RootState } from '../models/root-state.model';
 import { getUserLoggedInEmail } from '../user-details/user-details.selectors';
 

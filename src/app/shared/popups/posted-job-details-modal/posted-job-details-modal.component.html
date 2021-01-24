@@ -1,0 +1,83 @@
+<div class="modal" aria-labelledby="dialogTitle"></div>
+<div class="modal-content" role="dialog" aria-live="polite" id="transaction-modal" aria-labelledby="dialogTitle">
+        <button mat-icon-button mat-dialog-close>
+                <mat-icon>close</mat-icon>
+        </button>
+        <h5 id="dialogTitle">
+                Posted Job Details
+        </h5>
+        <div class="job-posted-details-body-top" fxLayout="row">
+                <div class="job-posted-details-body-left" fxFlex="1 0 auto">
+                        <app-posted-job-details-entry
+                                label="Company Name"
+                                [value]="inputArgs.employer.companyName">
+                        </app-posted-job-details-entry>
+                        <app-posted-job-details-entry
+                                label="Location"
+                                [value]="inputArgs.location">
+                        </app-posted-job-details-entry>
+                        <app-posted-job-details-entry
+                                label="Employment"
+                                [value]="inputArgs.nature.replace('_', ' ') | titlecase">
+                        </app-posted-job-details-entry>
+                        <app-posted-job-details-entry
+                                label="Posted Date"
+                                [value]="inputArgs.postingDate">
+                        </app-posted-job-details-entry>
+                        <app-posted-job-details-entry
+                                label="Deadline"
+                                [value]="inputArgs.applicationDeadline">
+                        </app-posted-job-details-entry>
+                        <app-posted-job-details-entry
+                                label="Interview Type"
+                                [value]="inputArgs.interviewType | titlecase">
+                        </app-posted-job-details-entry>
+                        <app-posted-job-details-entry
+                                label="Shift"
+                                [value]="inputArgs.shift | titlecase">
+                        </app-posted-job-details-entry>
+                        <app-posted-job-details-entry
+                                label="Position"
+                                [value]="inputArgs.type | titlecase">
+                        </app-posted-job-details-entry>
+                        <app-posted-job-details-entry
+                                label="Resume Required"
+                                [value]="inputArgs.resumeRequired ? 'Yes' : 'No'">
+                        </app-posted-job-details-entry>
+                        <app-posted-job-details-entry
+                                label="No. of Opening"
+                                [value]="inputArgs.totalHiring">
+                        </app-posted-job-details-entry>
+                </div>
+                <div fxFlex="1 0 auto">
+                        <app-posted-job-details-entry
+                                label="Job Title"
+                                [value]="inputArgs.title">
+                        </app-posted-job-details-entry>
+                        <app-posted-job-details-entry
+                                label="Description"
+                                [value]="inputArgs.description">
+                        </app-posted-job-details-entry>
+                        <app-posted-job-details-entry
+                                label="Starting salary"
+                                [value]="inputArgs.salary.starting | currency: inputArgs.salary.currency">
+                        </app-posted-job-details-entry>
+                        <app-posted-job-details-entry
+                                label="Starting salary"
+                                [value]="inputArgs.salary.upto | currency: inputArgs.salary.currency">
+                        </app-posted-job-details-entry>
+                        <app-posted-job-details-entry
+                                label="Starting salary"
+                                [value]="inputArgs.salary.exact | currency: inputArgs.salary.currency">
+                        </app-posted-job-details-entry>
+                        <div class="pl-2">Benefits</div>
+                        <div class="pl-2" *ngFor="let benefit of inputArgs.benefits">
+                                &#x2022; {{benefit.split('_').join(' ') | titlecase}}
+                                <!-- <app-posted-job-details-entry -->
+                                        <!-- label="&#x2022;" -->
+                                        <!-- [value]="benefit">
+                                </app-posted-job-details-entry> -->
+                        </div>
+                </div>
+        </div>
+</div>

@@ -1,0 +1,26 @@
+.modal {
+
+  .modal-content .message {
+    font-size: 1.3125rem;
+  }
+
+  .modal-footer {
+    padding-right: 24px;
+    text-align: center;
+  }
+}
+
+.mat-dialog-container {
+
+  .mat-dialog-content {
+
+    .modal-content {
+      padding: 24px;
+
+      .modal-footer {
+        padding-bottom: .5rem;
+        text-align: center;
+      }
+    }
+  }
+}

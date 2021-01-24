@@ -1,0 +1,23 @@
+.mat-header-row {
+
+    background: aliceblue;
+}
+.table-container {
+    height: 24rem;
+
+    .date {
+        bottom: 5px
+    }
+    .sort-icon {
+        top: 2px;
+        cursor: pointer;
+    }
+
+    .action-button {
+        width: 24px;
+
+        mat-icon {
+            font-size: 1rem;
+        }
+    }
+}

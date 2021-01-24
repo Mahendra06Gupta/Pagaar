@@ -1,0 +1,66 @@
+<mat-accordion displayMode="flat" id="app-booking-list-expandable-tab">
+    <mat-expansion-panel disabled="true" class="header-panel">
+        <mat-expansion-panel-header>
+            <mat-panel-title class="header-panel-title" fxLayout="row">
+                <div fxLayout="row" class="expansion-room-row">
+                    <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="start">
+                        <strong>Room Name</strong>
+                    </div>
+                    <div fxFlex="1 1 33" fxLayout="row"> <!--(click)="sortroomsAsPerDate()"-->
+                        <strong>Date
+                            <mat-icon class="sort-icon" aria-hidden="true">{{isDescendingByDate ? 'arrow_drop_up' : 'arrow_drop_down'}}</mat-icon>
+                        </strong>
+                    </div>
+                    <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="end">
+                        <strong>Status</strong>
+                    </div>
+                </div>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <ng-container *ngFor="let job of jobList.jobs">
+        <mat-expansion-panel class="expandable-room-history-body">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div fxLayout="row" class="expansion-room-row">
+                        <div fxFlex="1 1 33" fxLayout="row"
+                                fxLayoutAlign="start">{{job.title}}</div>
+                        <!-- <div fxFlex="1 1 33" class="room-history-type">{{room.date | date : 'dd MMM yyyy'}}</div> -->
+                        <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="end">{{job.location}}</div>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <!-- <div>
+                <app-job-post-list-expandable-tab-entry
+                    label="Room Id"
+                    [value]=" room.roomId">
+                </app-job-post-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+
+            <div>
+                <app-job-post-list-expandable-tab-entry
+                    label="Booking Id"
+                    [value]="room.bookingId">
+                </app-job-post-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+
+            <div>
+                <app-job-post-list-expandable-tab-entry
+                    label="Person"
+                    [value]="room.bookedBy">
+                </app-job-post-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+
+            <div>
+                <app-job-post-list-expandable-tab-entry
+                    label="Slot"
+                    [value]="room.slot">
+                </app-job-post-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div> -->
+        </mat-expansion-panel>
+    </ng-container>
+</mat-accordion>
