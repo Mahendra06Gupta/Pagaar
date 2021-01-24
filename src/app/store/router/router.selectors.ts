@@ -15,6 +15,13 @@ export const isIamLoginPageORCreateAccountPage = createSelector(
     (activeUrl: string) => activeUrl?.includes(MainRoutes.login) || activeUrl?.includes(MainRoutes.createAccount)
 );
 
+export const isIamJobPostingPageForEmployerAdmin = createSelector(
+    getActiveUrl,
+    (activeUrl: string) => {
+        return activeUrl === `/${MainRoutes.jobPosting}`;
+    }
+);
+
 export const isIamJobPostingPage = createSelector(
     getActiveUrl,
     (activeUrl: string) => {

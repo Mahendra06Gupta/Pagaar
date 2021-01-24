@@ -39,7 +39,8 @@ export class NavigationLeftMenuComponent implements OnInit {
   ];
   public sideNavMenuForEmployerAndAdmin = [
     { name: 'Post jobs', icon: 'groups', action: new GoToJobPosting(), actionDescription: 'GoToJobPosting', url: MainRoutes.jobPosting, permissions: [] },
-    { name: 'Job List', icon: 'list', action: new GoToJobPostingListing(), actionDescription: 'GoToJobPostingListing', url: MainRoutes.jobPostingListing, permissions: [] }
+    // tslint:disable-next-line: max-line-length
+    { name: 'Job List', icon: 'list', action: new GoToJobPostingListing(), actionDescription: 'GoToJobPostingListing', url: `${MainRoutes.jobPosting}/${MainRoutes.jobPostingListing}`, permissions: [] }
   ];
 
   constructor(

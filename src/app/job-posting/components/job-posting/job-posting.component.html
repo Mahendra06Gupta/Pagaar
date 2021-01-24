@@ -113,8 +113,8 @@
                     </mat-form-field>
                     <div>
                         <h6>Resume Required</h6>
-                        <mat-checkbox [disabled]="disabledYesCheckbox" (change)="checkbox('YES', $event)" class="m-3">Yes</mat-checkbox>
-                        <mat-checkbox [disabled]="disabledNoCheckbox" (change)="checkbox('NO', $event)" class="m-3">No</mat-checkbox>
+                        <mat-checkbox (change)="checkbox('YES', $event)" [checked]="yesChecked" class="m-3">Yes</mat-checkbox>
+                        <mat-checkbox (change)="checkbox('NO', $event)" [checked]="noChecked" class="m-3">No</mat-checkbox>
                     </div>
                 </div>
                 <div ngClass.gt-sm="d-flex justify-content-center">

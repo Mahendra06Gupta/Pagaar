@@ -12,11 +12,6 @@ export class PostedJobDetailsModalComponent implements OnInit {
     ) {}
 
     public ngOnInit(): void {
-        console.log(this.inputArgs);
-        this.inputArgs = this.inputArgs.transaction;
-    }
-
-    public describeTransactionType(transactionType: string, cancelled: boolean): string {
-        return cancelled ? transactionType + ' (cancelled)' : transactionType;
+        this.inputArgs = this.inputArgs.jobs;
     }
 }

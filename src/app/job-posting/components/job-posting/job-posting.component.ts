@@ -21,6 +21,8 @@ import { getEmployeeDetails, getEmployeeID } from '@app/store/employee-store/emp
 import { Observable } from 'rxjs';
 import { EmployersDetail } from '@app/employer-profile/models/employer-detail.model';
 import { getEmployerDetails, getEmployerEntities } from '@app/store/employer-store/employer.selectors';
+import { Jobs } from '@app/dashboard/store/models/dashboard-state.model';
+import { DialogService } from '@app/core/services';
 
 @Component({
   selector: 'app-job-posting',
@@ -32,7 +34,7 @@ import { getEmployerDetails, getEmployerEntities } from '@app/store/employer-sto
   ]
 })
 export class JobPostingComponent implements OnInit {
-
+  public inputArgs: Jobs;
   public jobPostingForm: FormGroup;
   public isFormSubmitted = false;
   public employerId: string;
@@ -41,8 +43,8 @@ export class JobPostingComponent implements OnInit {
   public employerDetails$: Observable<EmployersDetail[]> = this.store$.select(getEmployerEntities);
   public jobNature = [
     {value: 'FULL_TIME', label: 'Full time'},
-    {value: 'PART_TIMR', label: 'Part time'},
-    {value: 'REMOTE', label: 'Remote'}
+    {value: 'PART_TIME', label: 'Part time'},
+    // {value: 'REMOTE', label: 'Remote'}
   ];
   public jobType = [
     {value: 'PERMANENT', label: 'Permanent'},
@@ -74,16 +76,27 @@ export class JobPostingComponent implements OnInit {
   ];
   public disabledNoCheckbox = false;
   public disabledYesCheckbox = false;
+  public yesChecked = false;
+  public noChecked = false;
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly store$: Store<RootState>,
     private readonly jobPostingApiService: JobPostingApiService,
-    private readonly toastrService: ToastrService
+    private readonly toastrService: ToastrService,
+    private readonly dialogService: DialogService
   ) {}
 
   public ngOnInit(): void {
     this.initForm();
+    if (this.inputArgs) {
+      this.checkbox(this?.inputArgs?.resumeRequired ? 'YES' : 'NO');
+      if (this?.inputArgs?.resumeRequired) {
+        this.yesChecked = true;
+      } else {
+        this.noChecked = true;
+      }
+    }
   }
 
   public hasError(controlName: string, errorName: string): boolean {
@@ -107,7 +120,8 @@ export class JobPostingComponent implements OnInit {
             upto: +this.jobPostingForm.value.upto,
             exact: +this.jobPostingForm.value.exact,
             currency: this.jobPostingForm.value.currency
-          }
+          },
+          ...this.inputArgs?.id && {id: this.inputArgs.id}
         };
         delete payload.employerId;
         delete payload.starting;
@@ -115,10 +129,14 @@ export class JobPostingComponent implements OnInit {
         delete payload.exact;
         delete payload.currency;
         this.isFormSubmitted = true;
-        this.jobPostingApiService.addJobDetail(payload).pipe(
+        const apiToHit = this?.inputArgs ? this.jobPostingApiService.updateJobDetail(payload) : this.jobPostingApiService.addJobDetail(payload);
+        apiToHit.pipe(
           tap(res => {
             this.isFormSubmitted = false;
-            this.toastrService.success('Job Detail Added Successfully');
+            this?.inputArgs ? this.toastrService.success('Job Detail Updated Successfully') : this.toastrService.success('Job Detail Added Successfully');
+            if (this?.inputArgs) {
+              this.dialogService.closeAllDialogs();
+            }
           }, () => this.isFormSubmitted = false),
         ).subscribe();
       }
@@ -129,23 +147,15 @@ export class JobPostingComponent implements OnInit {
     this.jobPostingForm.get('applicationDeadline').setValue(event.value);
   }
 
-  public checkbox(value: string, event: MatCheckboxChange) {
+  public checkbox(value: string, event?: MatCheckboxChange) {
     if (value === 'YES') {
+      this.yesChecked = true;
+      this.noChecked = false;
       this.jobPostingForm.get('resumeRequired').setValue(true);
     } else if (value === 'NO') {
+      this.yesChecked = false;
+      this.noChecked = true;
       this.jobPostingForm.get('resumeRequired').setValue(false);
-    }
-
-    if (value === 'YES' && event.checked) {
-      this.disabledNoCheckbox = true;
-    } else if (value === 'YES' && !event.checked) {
-      this.disabledNoCheckbox = false;
-    }
-
-    if (value === 'NO' && event.checked) {
-      this.disabledYesCheckbox = true;
-    } else if (value === 'NO' && !event.checked) {
-      this.disabledYesCheckbox = false;
     }
   }
 
@@ -153,22 +163,22 @@ export class JobPostingComponent implements OnInit {
 
   private initForm(): void {
     this.jobPostingForm = this.fb.group({
-      employerId: ['', [Validators.required]],
-      title: ['', [Validators.required, Validators.maxLength(32)]],
-      nature: ['', [Validators.required]],
-      totalHiring: ['', [Validators.required, Validators.pattern('^[0-9]{1,6}$')]],
-      shift: ['', [Validators.required, Validators.maxLength(32)]],
-      type: ['', [Validators.required]],
-      starting: ['', [Validators.required, Validators.pattern('^[0-9]{1,10}$')]],
-      upto: ['', [Validators.required, Validators.pattern('^[0-9]{1,10}$')]],
-      exact: ['', [Validators.required, Validators.pattern('^[0-9]{1,10}$')]],
-      currency: ['INR', [Validators.required, Validators.maxLength(32)]],
-      description: ['', [Validators.required, Validators.maxLength(1000)]],
-      benefits: ['', [Validators.required]],
+      employerId: [this.inputArgs?.employer?.employerId ? this.inputArgs.employer.employerId : '', [Validators.required]],
+      title: [this?.inputArgs?.title ? this.inputArgs.title : '', [Validators.required, Validators.maxLength(32)]],
+      nature: [this?.inputArgs?.nature ? this.inputArgs.nature : '', [Validators.required]],
+      totalHiring: [this?.inputArgs?.totalHiring ? this.inputArgs.totalHiring : '', [Validators.required, Validators.pattern('^[0-9]{1,6}$')]],
+      shift: [this?.inputArgs?.shift ? this.inputArgs.shift : '', [Validators.required, Validators.maxLength(32)]],
+      type: [this?.inputArgs?.type ? this.inputArgs.type : '', [Validators.required]],
+      starting: [this?.inputArgs?.salary?.starting ? this.inputArgs.salary.starting : '', [Validators.required, Validators.pattern('^[0-9]{1,10}$')]],
+      upto: [this?.inputArgs?.salary?.upto ? this.inputArgs.salary.upto : '', [Validators.required, Validators.pattern('^[0-9]{1,10}$')]],
+      exact: [this?.inputArgs?.salary?.exact ? this.inputArgs.salary.exact : '', [Validators.required, Validators.pattern('^[0-9]{1,10}$')]],
+      currency: [this?.inputArgs?.salary?.currency ? this.inputArgs.salary.currency : 'INR', [Validators.required, Validators.maxLength(32)]],
+      description: [this?.inputArgs?.description ? this.inputArgs.description : '', [Validators.required, Validators.maxLength(1000)]],
+      benefits: [this?.inputArgs?.benefits ? this.inputArgs.benefits : '', [Validators.required]],
       resumeRequired: ['', [Validators.required]],
-      applicationDeadline: ['', [Validators.required]],
-      interviewType: ['', [Validators.required, Validators.maxLength(32)]],
-      location: ['', [Validators.required, Validators.maxLength(32)]],
+      applicationDeadline: [this?.inputArgs?.applicationDeadline ? moment(this?.inputArgs?.applicationDeadline, 'DD/MM/YYYY') : '', [Validators.required]],
+      interviewType: [this?.inputArgs?.interviewType ? this.inputArgs.interviewType : '', [Validators.required, Validators.maxLength(32)]],
+      location: [this?.inputArgs?.location ? this.inputArgs.location : '', [Validators.required, Validators.maxLength(32)]],
     });
   }
 

@@ -20,6 +20,10 @@ export class JobPostingApiService {
     return this.restService.post(endpoints.jobs , payload);
   }
 
+  public updateJobDetail(payload): Observable<any> {
+    return this.restService.put(endpoints.jobs , payload);
+  }
+
   public getAllJobDetails(pageNumber?: number, pageSize?: number): Observable<JobReuslt> {
     let params: HttpParams = new HttpParams();
     if (pageNumber) {
@@ -29,5 +33,9 @@ export class JobPostingApiService {
       params = params.append('size', pageSize.toString());
     }
     return this.restService.get(`${endpoints.jobs}?${params}`);
+  }
+
+  public deleteSelectedJobDetails(jobId: string): Observable<any> {
+    return this.restService.delete(`${endpoints.jobs}/${jobId}`);
   }
 }

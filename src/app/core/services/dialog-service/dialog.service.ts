@@ -30,7 +30,7 @@ export class DialogService {
 
     return new Observable(subscriber => {
       dialogRef.afterClosed().subscribe(result => {
-          subscriber.next(result);
+          subscriber.next(result ? result : 'close');
       });
     });
   }

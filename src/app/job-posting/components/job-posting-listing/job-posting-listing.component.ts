@@ -9,6 +9,8 @@ import { JobReuslt, Jobs } from '@app/dashboard/store/models/dashboard-state.mod
 import { isLoggedInUserAdmin } from '@app/models/data.model';
 import { DialogService } from '@app/core/services';
 import { PostedJobDetailsModalComponent } from '@app/shared/popups';
+import { ActionModalComponent } from '@app/shared/components/action-modal';
+import { JobPostingComponent } from '../job-posting/job-posting.component';
 
 @Component({
   selector: 'app-job-posting-listing',
@@ -45,9 +47,32 @@ export class JobPostingListingComponent implements OnInit {
     ).subscribe();
   }
 
-  public postedJobSelected(transaction: Jobs): void {
-    this.dialogService.openDialog(PostedJobDetailsModalComponent, {
-        transaction
+  public postedJobSelected(jobDetails: {job: Jobs, action: string}): void {
+    const jobs = jobDetails.job;
+    if (jobDetails.action === 'details') {
+      this.dialogService.openDialog(PostedJobDetailsModalComponent, {
+        jobs
+      });
+    } else if (jobDetails.action === 'cancel') {
+      this.showSpinner = true;
+      this.deleteJob(jobDetails.job.id);
+    } else if (jobDetails.action === 'edit') {
+      this.dialogService.openDialog(JobPostingComponent,
+        jobs
+      ).subscribe(res => this.getJobDetails());
+    }
+  }
+
+  public deleteJob(jobId: string): void {
+    this.dialogService.openDialog(ActionModalComponent, {
+      warningText: 'Are you sure you want to delete the job?',
+      modelTitle: 'Delete Job',
+      allowCancel: true,
+      warningTextIcon: 'cancel',
+      actionText: 'Delete',
+      jobId
+    }).subscribe((res) => {
+      this.showSpinner = false;
     });
   }
 }
