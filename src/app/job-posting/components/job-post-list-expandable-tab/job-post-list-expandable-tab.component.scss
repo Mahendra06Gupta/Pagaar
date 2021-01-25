@@ -1,5 +1,5 @@
 
-#app-booking-list-expandable-tab {
+#app-job-posting-list-expanable-tab {
 
     .header-panel {
 
@@ -31,17 +31,17 @@
     width: 33%;
 }
 
-.expansion-room-row {
+.expandable-job-history-row {
     width: 100%;
 }
 
-.expandable-room-history-body {
+.expandable-job-history-body {
 
     .mat-expansion-panel-header {
         background-color: color('grey', 'lighten-3');
     }
 
-    app-booking-list-expandable-tab-entry {
+    app-job-post-list-expandable-tab-entry {
         margin: 10px 5px;
     }
 

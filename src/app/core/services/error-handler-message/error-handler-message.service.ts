@@ -12,7 +12,6 @@ export class ErrorHandlerMessageService {
   ) {}
 
   public showToastForErrors(err: any): void {
-    console.log(err.error);
     let errorMessage;
     switch (err.status) {
       case 400:

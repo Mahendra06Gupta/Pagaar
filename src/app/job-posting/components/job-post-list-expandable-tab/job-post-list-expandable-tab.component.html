@@ -1,66 +1,120 @@
-<mat-accordion displayMode="flat" id="app-booking-list-expandable-tab">
+<mat-accordion displayMode="flat" id="app-job-posting-list-expanable-tab">
     <mat-expansion-panel disabled="true" class="header-panel">
         <mat-expansion-panel-header>
             <mat-panel-title class="header-panel-title" fxLayout="row">
-                <div fxLayout="row" class="expansion-room-row">
+                <div fxLayout="row" class="expandable-job-history-row">
                     <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="start">
-                        <strong>Room Name</strong>
+                        <strong>Company Name</strong>
                     </div>
-                    <div fxFlex="1 1 33" fxLayout="row"> <!--(click)="sortroomsAsPerDate()"-->
-                        <strong>Date
-                            <mat-icon class="sort-icon" aria-hidden="true">{{isDescendingByDate ? 'arrow_drop_up' : 'arrow_drop_down'}}</mat-icon>
-                        </strong>
+                    <div fxFlex="1 1 33" fxLayout="row">
+                        <strong>Job Title</strong>
                     </div>
                     <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="end">
-                        <strong>Status</strong>
+                        <strong>Location</strong>
                     </div>
                 </div>
             </mat-panel-title>
         </mat-expansion-panel-header>
     </mat-expansion-panel>
-    <ng-container *ngFor="let job of jobList.jobs">
-        <mat-expansion-panel class="expandable-room-history-body">
+    <ng-container *ngFor="let job of jobList.jobs; let i =index">
+        <mat-expansion-panel class="expandable-job-history-body" expanded="{{i === 0}}">
             <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <div fxLayout="row" class="expansion-room-row">
-                        <div fxFlex="1 1 33" fxLayout="row"
-                                fxLayoutAlign="start">{{job.title}}</div>
-                        <!-- <div fxFlex="1 1 33" class="room-history-type">{{room.date | date : 'dd MMM yyyy'}}</div> -->
-                        <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="end">{{job.location}}</div>
+                <mat-panel-title class="m-0">
+                    <div fxLayout="row" class="expandable-job-history-row">
+                        <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="start">{{job.employer.companyName}}</div>
+                        <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="start">{{job.title}}</div>
+                        <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="start">{{job.location}}</div>
                     </div>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <!-- <div>
+            <div>
                 <app-job-post-list-expandable-tab-entry
-                    label="Room Id"
-                    [value]=" room.roomId">
+                    label="Employment"
+                    [value]="job.nature.replace('_', ' ') | titlecase">
                 </app-job-post-list-expandable-tab-entry>
                 <div class="divider"></div>
             </div>
-
             <div>
                 <app-job-post-list-expandable-tab-entry
-                    label="Booking Id"
-                    [value]="room.bookingId">
+                    label="Posted Date"
+                    [value]="job.postingDate">
                 </app-job-post-list-expandable-tab-entry>
                 <div class="divider"></div>
             </div>
-
             <div>
                 <app-job-post-list-expandable-tab-entry
-                    label="Person"
-                    [value]="room.bookedBy">
+                    label="Deadline"
+                    [value]="job.applicationDeadline">
                 </app-job-post-list-expandable-tab-entry>
                 <div class="divider"></div>
             </div>
-
             <div>
                 <app-job-post-list-expandable-tab-entry
-                    label="Slot"
-                    [value]="room.slot">
+                    label="Interview Type"
+                    [value]="job.interviewType | titlecase">
                 </app-job-post-list-expandable-tab-entry>
                 <div class="divider"></div>
-            </div> -->
+            </div>
+            <div>
+                <app-job-post-list-expandable-tab-entry
+                    label="Shift"
+                    [value]="job.shift | titlecase">
+                </app-job-post-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+            <div>
+                <app-job-post-list-expandable-tab-entry
+                    label="Position"
+                    [value]="job.type | titlecase">
+                </app-job-post-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+            <div>
+                <app-job-post-list-expandable-tab-entry
+                    label="Resume Required"
+                    [value]="job.resumeRequired ? 'Yes' : 'No'">
+                </app-job-post-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+            <div>
+                <app-job-post-list-expandable-tab-entry
+                    label="No. of Opening"
+                    [value]="job.totalHiring">
+                </app-job-post-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+            <div>
+                <app-job-post-list-expandable-tab-entry
+                    label="Description"
+                    [value]="job.description">
+                </app-job-post-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+            <div>
+                <app-job-post-list-expandable-tab-entry
+                    label="Starting salary"
+                    [value]="job.salary.starting | currency: job.salary.currency">
+                </app-job-post-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+            <div>
+                <app-job-post-list-expandable-tab-entry
+                    label="Starting salary"
+                    [value]="job.salary.upto | currency: job.salary.currency">
+                </app-job-post-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+            <div>
+                <app-job-post-list-expandable-tab-entry
+                    label="Starting salary"
+                    [value]="job.salary.exact | currency: job.salary.currency">
+                </app-job-post-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+            <div class="pl-2">Benefits</div>
+            <div class="pl-2" *ngFor="let benefit of job.benefits">
+                &#x2022; {{benefit.split('_').join(' ') | titlecase}}
+            </div>
         </mat-expansion-panel>
     </ng-container>
 </mat-accordion>

@@ -22,7 +22,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     @ViewChild('sideNavContainer') private sideNavContainer: MatSidenavContainer;
 
     public ngOnInit(): void {
-        console.log('isme aata hai kya');
         this.menuContextService = this.contextMenuService;
     }
 

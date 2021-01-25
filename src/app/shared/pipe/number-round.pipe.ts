@@ -6,7 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class NumberRoundPipe implements PipeTransform {
 
   transform(value: number, upward: boolean): number {
-    console.log(upward, value);
     if (upward) {
       return Math.ceil(value);
     } else {

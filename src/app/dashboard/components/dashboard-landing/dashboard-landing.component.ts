@@ -85,7 +85,6 @@ export class DashboardLandingComponent implements OnInit {
   }
 
   public prevPage(index?: number): void {
-    console.log(index);
     this.isLastPage = false;
     this.callPaginationApi(false, index);
   }

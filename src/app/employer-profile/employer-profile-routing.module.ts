@@ -28,6 +28,5 @@ const EmployerProfileRoutes: Routes = [
 })
 export class EmployerProfileRoutingModule {
   constructor() {
-    console.log('iss route mein aata hai kya woh bhi nahi aata hai');
   }
 }
