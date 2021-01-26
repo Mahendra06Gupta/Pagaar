@@ -16,6 +16,7 @@ export class JobPostListTabComponent implements OnChanges {
 
   @Input() public jobList: JobReuslt;
   @Output() public postedJobSelected = new EventEmitter<Jobs>();
+  @Output() public pageChange = new EventEmitter<any>();
   public loader = true;
   public isDescendingByDate = true;
   public dataSource: MatTableDataSource<Jobs>;
@@ -57,12 +58,8 @@ export class JobPostListTabComponent implements OnChanges {
       .map(cd => cd.def);
   }
 
-  public sortroomsAsPerDate(): any {
-    // this.isDescendingByDate
-    // ? this.bookingsVc.sort((a, b) => +new Date (b.date.toString()) - +new Date (a.date.toString()))
-    // : this.bookingsVc.sort((a, b) => +new Date (a.date.toString()) - +new Date (b.date.toString()));
-    // this.isDescendingByDate = !this.isDescendingByDate;
-    // this.dataSource = new MatTableDataSource(this.bookingsVc);
+  public onPageChange(event): any {
+    this.pageChange.emit(event);
   }
 
 }

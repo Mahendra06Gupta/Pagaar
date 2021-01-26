@@ -24,7 +24,7 @@ export class JobPostingApiService {
     return this.restService.put(endpoints.jobs , payload);
   }
 
-  public getAllJobDetails(pageNumber?: number, pageSize?: number): Observable<JobReuslt> {
+  public getAllJobDetails(pageSize?: number, pageNumber?: number): Observable<JobReuslt> {
     let params: HttpParams = new HttpParams();
     if (pageNumber) {
       params = params.append('page', pageNumber.toString());

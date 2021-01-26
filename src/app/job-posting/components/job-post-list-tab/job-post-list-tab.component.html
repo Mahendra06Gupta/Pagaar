@@ -71,5 +71,10 @@
         <tr mat-header-row *matHeaderRowDef="getDisplayedColumns(); sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
+<mat-paginator *ngIf="!loader"
+    [length]="jobList.totalItems"
+    [pageSizeOptions]="[10, 20]"
+    (page)="onPageChange($event)"
+    showFirstLastButtons
+></mat-paginator>

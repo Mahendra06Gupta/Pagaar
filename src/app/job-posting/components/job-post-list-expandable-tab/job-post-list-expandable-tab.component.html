@@ -118,3 +118,9 @@
         </mat-expansion-panel>
     </ng-container>
 </mat-accordion>
+<mat-paginator class="paginator" *ngIf="!loader"
+    [length]="jobList.totalItems"
+    [pageSizeOptions]="[10, 20]"
+    (page)="onPageChange($event)"
+    showFirstLastButtons
+></mat-paginator>

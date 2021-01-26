@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { RootState } from '@app/store/models/root-state.model';
@@ -15,7 +15,7 @@ export class JobPostListExpandableTabComponent implements OnInit {
 
   displayedColumns: string[] = ['roomName', 'roomId', 'date', 'bookedBy', 'slot', 'status', 'bookingId', 'action'];
   @Input() public jobList: JobReuslt;
-  // @Input() public showCancel: boolean;
+  @Output() public pageChange = new EventEmitter<any>();
   public loader = true;
   public isDescendingByDate = true;
 
@@ -25,16 +25,12 @@ export class JobPostListExpandableTabComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    // this.sortroomsAsPerDate();
     setTimeout(() => this.loader = false, 200);
   }
 
-  // public sortroomsAsPerDate(): any {
-  //   this.isDescendingByDate
-  //   ? this.bookingsVc.sort((a, b) => +new Date (b.date.toString()) - +new Date (a.date.toString()))
-  //   : this.bookingsVc.sort((a, b) => +new Date (a.date.toString()) - +new Date (b.date.toString()));
-  //   this.isDescendingByDate = !this.isDescendingByDate;
-  // }
+  public onPageChange(event): any {
+    this.pageChange.emit(event);
+  }
 
   public cancelRoom(bookingId: string): void {
     this.dialogService.openDialog(ActionModalComponent, {

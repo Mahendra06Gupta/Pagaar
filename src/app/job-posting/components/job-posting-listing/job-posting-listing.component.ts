@@ -21,6 +21,8 @@ export class JobPostingListingComponent implements OnInit {
 
   public jobList: JobReuslt;
   public showSpinner = true;
+  public pageNumber = 1;
+  public pageSize = 10;
 
   constructor(
     private readonly dialogService: DialogService,
@@ -31,12 +33,12 @@ export class JobPostingListingComponent implements OnInit {
 
   public ngOnInit(): void {
     if (isLoggedInUserAdmin()) {
-      this.getJobDetails();
+      this.getJobDetails(this.pageSize, this.pageNumber);
     }
   }
 
-  private getJobDetails(pageNumber?: number, pageSize?: number) {
-    this.jobPostingApiService.getAllJobDetails(pageNumber, pageSize).pipe(
+  private getJobDetails(pageSize?: number, pageNumber?: number) {
+    this.jobPostingApiService.getAllJobDetails(pageSize, pageNumber).pipe(
       tap(res => {
         this.showSpinner = false;
         this.jobList = res;
@@ -45,6 +47,12 @@ export class JobPostingListingComponent implements OnInit {
         this.toastrService.error('Failed to load Job Details');
       })
     ).subscribe();
+  }
+
+  public onPageChange(event) {
+    this.pageSize = event.pageSize;
+    this.pageNumber = (event.pageIndex + 1);
+    this.getJobDetails(this.pageSize, this.pageNumber);
   }
 
   public postedJobSelected(jobDetails: {job: Jobs, action: string}): void {
