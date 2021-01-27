@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { first, map, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { RootState, fromRouterSelector, GoToLogin, GoToCreateAccount, GoToDashboard } from '@app/store';
 import { DeviceScreenSizeService } from '@app/core/services/device-screen-size/device-screen-size.service';
@@ -12,7 +12,7 @@ import { DashboardTab } from '@app/dashboard/models/dashboard-routing.path';
 import { GoToActiveAboutMe } from '@app/employee-profile/employee-profile-routing.actions';
 import { GoToEmployerActiveAboutMe } from '@app/employer-profile/employer-profile-routing.actions';
 import { GoToJobPosting } from '@app/job-posting/job-posting-routing.actions';
-import { isLoggedInUserEmployee } from '@app/models/data.model';
+import { isLoggedInUserAdmin, isLoggedInUserEmployee } from '@app/models/data.model';
 
 @Component({
   selector: 'app-navigation-top-menu',
@@ -36,7 +36,8 @@ export class NavigationTopMenuComponent implements OnInit, OnDestroy {
     {tab: 'Profile', icon: 'description'},
     // {tab: 'Account', icon: 'tune'},
   ];
-  public isLoggedInUserEmployee = isLoggedInUserEmployee() || true;
+  public isLoggedInUserEmployee = isLoggedInUserEmployee();
+  public isLoggedInUserAdmin = isLoggedInUserAdmin();
 
   constructor(
     private readonly deviceSizeBreakpointService: DeviceScreenSizeService,

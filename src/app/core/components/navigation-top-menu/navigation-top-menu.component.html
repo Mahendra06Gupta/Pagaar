@@ -38,11 +38,13 @@
                         </a>
                         <mat-menu #menu="matMenu">
                             <h6 class="text-center my-3">{{loggedInUserEmail}}</h6>
-                            <mat-divider></mat-divider>
-                            <button fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let opt of options" mat-menu-item (click)="goToSectionAsPerUserSelect(opt.tab)">
-                                <span>{{opt.tab}}</span>
-                                <mat-icon class="text-dark">{{opt.icon}}</mat-icon>
-                            </button>
+                            <ng-container *ngIf="!isLoggedInUserAdmin">
+                                <mat-divider></mat-divider>
+                                <button fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let opt of options" mat-menu-item (click)="goToSectionAsPerUserSelect(opt.tab)">
+                                    <span>{{opt.tab}}</span>
+                                    <mat-icon class="text-dark">{{opt.icon}}</mat-icon>
+                                </button>
+                            </ng-container>
                             <!-- <div class="border-top text-center pt-2 mt-2">Logout</div> -->
                         </mat-menu>
                     </ng-container>
