@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, Action } from '@ngrx/store';
-import { RootState, GoToDashboard, LogOut } from '@app/store';
+import { RootState, GoToDashboard } from '@app/store';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -14,6 +14,7 @@ import { GoToEmployerActiveAboutMe } from '@app/employer-profile/employer-profil
 import { GoToActiveAboutMe as GoToEmployeeAboutMe } from '@app/employee-profile/employee-profile-routing.actions';
 import { getActiveUrl } from '@app/store/router/router.selectors';
 import { MainRoutes } from '@app/app.route-names';
+import { GoToEmployerListing } from '@app/employer-list/employer-list-routing.actions';
 
 @Component({
   selector: 'app-navigation-left-menu',
@@ -39,8 +40,9 @@ export class NavigationLeftMenuComponent implements OnInit {
   ];
   public sideNavMenuForEmployerAndAdmin = [
     { name: 'Post jobs', icon: 'groups', action: new GoToJobPosting(), actionDescription: 'GoToJobPosting', url: MainRoutes.jobPosting, permissions: [] },
+    { name: 'Job List', icon: 'list', action: new GoToJobPostingListing(), actionDescription: 'GoToJobPostingListing', url: `${MainRoutes.jobPosting}/${MainRoutes.jobPostingListing}`, permissions: ['admin'] },
     // tslint:disable-next-line: max-line-length
-    { name: 'Job List', icon: 'list', action: new GoToJobPostingListing(), actionDescription: 'GoToJobPostingListing', url: `${MainRoutes.jobPosting}/${MainRoutes.jobPostingListing}`, permissions: ['admin'] }
+    { name: 'Employer List', icon: 'view_list', action: new GoToEmployerListing(), actionDescription: 'GoToEmployerListing', url: `${MainRoutes.jobPosting}/${MainRoutes.employerListing}`, permissions: ['admin'] }
   ];
 
   constructor(
@@ -65,6 +67,7 @@ export class NavigationLeftMenuComponent implements OnInit {
       modelTitle: 'Logout',
       warningTextIcon: 'lock',
       actionText: 'Logout',
+      actionFor: 'Logout',
       allowCancel: true
     });
   }

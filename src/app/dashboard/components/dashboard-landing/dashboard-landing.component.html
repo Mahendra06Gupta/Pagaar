@@ -69,6 +69,9 @@
                         <p class="pt-3 posting">Job Posted On: {{job.postingDate}}</p>
                         <p class="pt-3 posting">Deadline: {{job.applicationDeadline}}</p>
                     </div>
+                    <button mat-raised-button color="primary" (click)="apply(job.id, job.employer.employerId)">
+                        Send your application
+                    </button>
                 </mat-card>
             </div>
             <div fxLayout="row">

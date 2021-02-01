@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MainRoutes } from '@app/app.route-names';
 import { AuthenticatedGuard } from '@app/core/guards/authenticated.guard';
 
 import { EmployerProfileLandingComponent } from './components/employer-profile-landing/employer-profile-landing.component';
 import { EmployerProfileComponent } from './components/employer-profile/employer-profile.component';
-import { EmployerProfileRoutingPath, EmployerProfileTab } from './models/employer-profile-routing.path';
+import { EmployerProfileTab } from './models/employer-profile-routing.path';
 
 const EmployerProfileRoutes: Routes = [
   {

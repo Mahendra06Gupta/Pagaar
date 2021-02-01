@@ -16,6 +16,8 @@ import { AddEmployeeDetails } from '@app/store/employee-store/employee.actions';
 import { ApiService } from '@app/employee-profile/services/api.service';
 import { GoToJobPosting } from '@app/job-posting/job-posting-routing.actions';
 import { isLoggedInUserEmployee } from '@app/models/data.model';
+import { getEmployeeID } from '@app/store/employee-store/employee.selectors';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard-landing',
@@ -46,7 +48,8 @@ export class DashboardLandingComponent implements OnInit {
     private readonly deviceSizeBreakpointService: DeviceScreenSizeService,
     private readonly store$: Store<RootState>,
     private readonly apiService: ApiService,
-    private readonly dashboardApiService: DashboardApiService
+    private readonly dashboardApiService: DashboardApiService,
+    private readonly toastrService: ToastrService
   ) { }
 
   public ngOnInit(): void {
@@ -92,6 +95,21 @@ export class DashboardLandingComponent implements OnInit {
   public nextPage(index?: number): void {
     this.isFirstPage = false;
     this.callPaginationApi(true, index);
+  }
+
+  public apply(jobId: string, employerId: string): void {
+    this.store$.select(getEmployeeID).pipe(
+      first(),
+      tap(employeeId => console.log(employeeId)),
+      switchMap(employeeId => this.apiService.applyForJob({
+        employer: {employerId},
+        employee: {employeeId},
+        job: {jobId}
+      }).pipe(
+        tap((res) => this.toastrService.success('Your job application send successfully'),
+        () => this.toastrService.error('Failed to send job application, please try after some time'))
+      ))
+    ).subscribe();
   }
 
   private callPaginationApi(next: boolean, index?: number): void {

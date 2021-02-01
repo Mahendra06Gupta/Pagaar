@@ -1,0 +1,15 @@
+<div class="h-100" fxLayout="column" fxLayoutGap="20px" class="mx-3">
+    <ng-container>
+        <mat-card class="matCard">
+            <h5>Employer-List</h5>
+            <hr class="mt-3">
+            <div fxHide.lt-md *ngIf="employerList">
+                <app-employer-list-tab [employerList]="employerList" (employerSelected)="employerSelected($event)" (pageChange)="onPageChange($event)"></app-employer-list-tab>
+            </div>
+            <div fxHide.gt-sm *ngIf="employerList">
+                <app-employer-list-expandable-tab [employerList]="employerList" (pageChange)="onPageChange($event)"></app-employer-list-expandable-tab>
+            </div>
+        </mat-card>
+    </ng-container>
+</div>
+<app-global-spinner *ngIf="showSpinner"></app-global-spinner>

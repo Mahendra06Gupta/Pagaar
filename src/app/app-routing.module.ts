@@ -10,6 +10,7 @@ import { EmployeeProfileRoutingPath } from './employee-profile/models/employee-p
 import { JobPostingDashboardComponent } from './core/components';
 import { isLoggedInUserEmployee } from './models/data.model';
 import { EmployerProfileRoutingPath } from './employer-profile/models/employer-profile-routing.path';
+import { EmployerListingComponent } from './employer-list/components/employer-listing/employer-listing.component';
 
 const routes: Routes = [
   {
@@ -44,7 +45,16 @@ const routes: Routes = [
                 loadChildren: () => import ('./employer-profile/employer-profile.module').then(m => m.EmployerProfileModule)
               }
             ]
-          }
+          },
+          {
+            path: MainRoutes.employerListing,
+            children: [
+              {
+                path: '',
+                loadChildren: () => import('./employer-list/employer-list.module').then(m => m.EmployerListModule)
+              },
+            ]
+          },
         ]
       },
       {

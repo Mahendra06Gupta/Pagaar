@@ -12,15 +12,10 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 
 import { RootState } from '@app/store';
 import { DateFormats } from '@app/shared/models/date-format/date-formats';
-import { fromEmployerSelector } from '@app/store/store';
 import { JobPostingApiService } from '@app/job-posting/services/job-posting-api.service';
-import { isLoggedInUserAdmin, isLoggedInUserEmployee } from '@app/models/data.model';
-import { EmployerApiService } from '@app/employer-profile/services/employer-api.service';
-import { AddEmployerDetails } from '@app/store/employer-store/employer.actions';
-import { getEmployeeDetails, getEmployeeID } from '@app/store/employee-store/employee.selectors';
 import { Observable } from 'rxjs';
 import { EmployersDetail } from '@app/employer-profile/models/employer-detail.model';
-import { getEmployerDetails, getEmployerEntities } from '@app/store/employer-store/employer.selectors';
+import { getEmployerEntities } from '@app/store/employer-store/employer.selectors';
 import { Jobs } from '@app/dashboard/store/models/dashboard-state.model';
 import { DialogService } from '@app/core/services';
 

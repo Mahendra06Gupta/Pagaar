@@ -7,4 +7,5 @@ export class MainRoutes {
     public static createAccount = 'create-account';
     public static jobPosting = 'job-posting';
     public static jobPostingListing = 'job-list';
+    public static employerListing = 'employer-list';
 }

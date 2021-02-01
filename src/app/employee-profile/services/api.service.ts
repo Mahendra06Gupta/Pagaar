@@ -39,4 +39,8 @@ export class ApiService {
   public updateEmployeeById(userId: string, payload: any): Observable<any> {
     return this.restService.put(`${endpoints.updateEmployeeDetail}/${userId}`, payload);
   }
+
+  public applyForJob(payload: any): Observable<any> {
+    return this.restService.post(`${endpoints.jobs}`, payload);
+  }
 }

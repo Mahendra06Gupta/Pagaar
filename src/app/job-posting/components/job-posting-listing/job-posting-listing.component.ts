@@ -78,6 +78,7 @@ export class JobPostingListingComponent implements OnInit {
       allowCancel: true,
       warningTextIcon: 'cancel',
       actionText: 'Delete',
+      actionFor: 'Job',
       jobId
     }).subscribe((res) => {
       this.showSpinner = false;

@@ -16,10 +16,10 @@ export const getEmployeeEntities = selectAll;
 
 export const getEmployeeDetails = createSelector(
     getEmployeeDetailsState,
-    (state: EmployeeState) => state && state.entities[0]
+    (state: EmployeeState) => state && state.entities
 );
 
 export const getEmployeeID = createSelector(
-    getEmployeeDetails,
-    state => state && state.id
+    getEmployeeDetailsState,
+    state => state && state.ids[0]
 );

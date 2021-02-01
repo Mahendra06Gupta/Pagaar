@@ -1,5 +1,5 @@
 
-#app-job-posting-list-expanable-tab {
+#app-employer-list-expanable-tab {
 
     .header-panel {
 
@@ -24,17 +24,20 @@
     }
 }
 
-.expandable-job-history-row {
+.expandable-employer-history-row {
     width: 100%;
 }
 
-.expandable-job-history-body {
+.expandable-employer-history-body {
 
     .mat-expansion-panel-header {
+        height: 100%;
+        padding-top: 10px;
+        padding-bottom: 10px;
         background-color: color('grey', 'lighten-3');
     }
 
-    app-job-post-list-expandable-tab-entry {
+    app-employer-list-expandable-tab-entry {
         margin: 10px 5px;
     }
 

@@ -10,7 +10,7 @@
                 <app-job-post-list-tab [jobList]="jobList" (postedJobSelected)="postedJobSelected($event)" (pageChange)="onPageChange($event)"></app-job-post-list-tab>
             </div>
             <div fxHide.gt-sm *ngIf="jobList">
-                <app-job-post-list-expandable-tab [jobList]="jobList" (pageChange)="onPageChange($event)"></app-job-post-list-expandable-tab>
+                <app-job-post-list-expandable-tab [jobList]="jobList" (postedJobSelected)="postedJobSelected($event)" (pageChange)="onPageChange($event)"></app-job-post-list-expandable-tab>
             </div>
         </mat-card>
     </ng-container>

@@ -1,4 +1,4 @@
-import { MainRoutes } from "@app/app.route-names";
+import { MainRoutes } from '@app/app.route-names';
 
 export enum EmployerProfileTab {
     EMPLOYER_PROFILE_ABOUT_ME = 'aboutme',
