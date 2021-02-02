@@ -53,7 +53,7 @@ export class ActionModalComponent implements OnInit {
   }
 
   public triggerSelectedAction(): void {
-    switch (this.inputArgs.employerId) {
+    switch (this.inputArgs.actionFor) {
       case 'Job':
         this.triggerDeleteJobAction(this.inputArgs.jobId);
         break;

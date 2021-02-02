@@ -122,7 +122,7 @@ export class DashboardLandingComponent implements OnInit {
       this.startButtonPage = 0;
     }
     this.store$.select(getSearchKeyword).pipe(
-      switchMap(res => this.dashboardApiService.getJobDetailByTitleAndLocation({...res, pageNumber: this.currentPage, pageSize: this.currentPage * 10}).pipe(
+      switchMap(res => this.dashboardApiService.getJobDetailByTitleAndLocation({...res, pageNumber: this.currentPage, pageSize: 10}).pipe(
         first(),
         tap(search => {
           this.store$.dispatch(new UpdateDashboardSearchResult(search));

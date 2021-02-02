@@ -56,7 +56,9 @@
                             </div>
                             <strong>Benefits</strong> 
                             <p class="pb-3 m-0 description">
-                                <span *ngFor="let benefits of job.benefits">{{benefits.split('_').join(' ') | titlecase}}</span>
+                                <span *ngFor="let benefits of job.benefits">
+                                    <p><b class="mx-1">&#x2022;</b>{{benefits.split('_').join(' ') | titlecase}}</p>
+                                </span>
                             </p>
                         </div>
                         <div>
@@ -65,13 +67,15 @@
                         </div>
                     </div>
                     <mat-divider></mat-divider>
-                    <div fxLayout="row" fxLayoutAlign="space-between">
-                        <p class="pt-3 posting">Job Posted On: {{job.postingDate}}</p>
-                        <p class="pt-3 posting">Deadline: {{job.applicationDeadline}}</p>
+                    <div fxLayout="column" fxLayoutAlign="space-between">
+                        <div fxLayout="row" fxLayoutAlign="space-between">
+                            <p class="pt-3 posting">Job Posted On: {{job.postingDate}}</p>
+                            <p class="pt-3 posting">Deadline: {{job.applicationDeadline}}</p>
+                        </div>
+                        <button mat-raised-button color="primary" (click)="apply(job.id, job.employer.employerId)">
+                            Send your application
+                        </button>
                     </div>
-                    <button mat-raised-button color="primary" (click)="apply(job.id, job.employer.employerId)">
-                        Send your application
-                    </button>
                 </mat-card>
             </div>
             <div fxLayout="row">

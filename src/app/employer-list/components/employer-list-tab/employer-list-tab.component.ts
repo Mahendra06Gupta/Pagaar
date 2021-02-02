@@ -5,7 +5,6 @@ import { MatPaginator } from '@angular/material/paginator';
 
 import { RootState } from '@app/store/models/root-state.model';
 import { DialogService } from '@app/core/services/dialog-service/dialog.service';
-import { Jobs } from '@app/dashboard/store/models/dashboard-state.model';
 import { EmployersDetail } from '@app/employer-profile/models/employer-detail.model';
 
 @Component({

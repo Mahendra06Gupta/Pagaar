@@ -54,6 +54,7 @@ export class JobPostingDashboardComponent implements OnInit, AfterViewInit {
                         );
                     } else if (isLoggedInUserAdmin()) {
                         return this.employerApiService.getAllEmployersdetail().pipe(
+                            first(),
                             tap((employerDetail) => {
                                 this.store$.dispatch(new AddEmployerDetails(employerDetail));
                                 this.showSpinner = false;
