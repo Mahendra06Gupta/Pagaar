@@ -2,23 +2,23 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthenticatedGuard } from '@app/core/guards/authenticated.guard';
 
-import { EmployerListingComponent } from './components/employer-listing/employer-listing.component';
+import { EmployeeListingComponent } from './components/employee-listing/employee-listing.component';
 
-const EmployerListRoutes: Routes = [
+const EmployeeListRoutes: Routes = [
   {
     path: '',
     canActivateChild: [AuthenticatedGuard],
     children: [
       {
         path: '',
-        component: EmployerListingComponent,
+        component: EmployeeListingComponent,
       }
     ]
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(EmployerListRoutes)],
+  imports: [RouterModule.forChild(EmployeeListRoutes)],
   exports: [RouterModule]
 })
-export class EmployerListLandingRoutingModule { }
+export class EmployeeListLandingRoutingModule { }

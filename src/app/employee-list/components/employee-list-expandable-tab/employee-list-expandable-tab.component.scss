@@ -1,0 +1,54 @@
+
+#app-employee-list-expanable-tab {
+
+    .header-panel {
+
+        & > .mat-expansion-panel-header {
+            background: aliceblue;
+            padding-top: 10px;
+        }
+
+        .sort-icon {
+            font-size: 20px;
+            color: #001928;
+            vertical-align: sub;
+        }
+
+        .header-panel-title {
+            margin-right: 22px;
+
+            & > div {
+                color: #001928;
+            }
+        }
+    }
+}
+
+.expandable-employee-history-row {
+    width: 100%;
+}
+
+.expandable-employee-history-body {
+
+    .mat-expansion-panel-header {
+        height: 100%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        background-color: color('grey', 'lighten-3');
+    }
+
+    app-employee-list-expandable-tab-entry {
+        margin: 10px 5px;
+    }
+
+}
+
+.cancel {
+    text-align: right;
+    padding-top: 20px;
+    padding-bottom: 5px;
+
+    a {
+        font-weight: bold;
+    }
+}

@@ -14,7 +14,7 @@ export interface EmployeeDetailApiReuestModel {
 }
 
 export interface Experience {
-    numberOfYears: string;
+    numberOfYears: number;
     jobDetails: {
         companyName: string;
         designation: string;

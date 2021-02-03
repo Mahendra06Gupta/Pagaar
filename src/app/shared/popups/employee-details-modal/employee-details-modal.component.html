@@ -1,0 +1,39 @@
+<div class="modal" aria-labelledby="dialogTitle"></div>
+<div class="modal-content" role="dialog" aria-live="polite" id="transaction-modal" aria-labelledby="dialogTitle">
+        <button mat-icon-button mat-dialog-close>
+                <mat-icon>close</mat-icon>
+        </button>
+        <div fxLayout="row" fxLayoutAlign="start center">
+                <h5 id="dialogTitle">
+                        Employee Details
+                </h5>
+                <!-- <a>(View job applied by this employee)</a> -->
+        </div>
+        <div class="job-posted-details-body-top" fxLayout="row">
+                <div class="job-posted-details-body-left" fxFlex="1 0 auto">
+                        <app-employee-details-entry
+                                label="Address:"
+                                [value]="inputArgs.address">
+                        </app-employee-details-entry>
+                        <div class="pl-2">Experience</div>
+                        <div class="pl-2 border shadow mt-2" *ngFor="let experience of inputArgs.experience.jobDetails">
+                                <p class="m-0">Company Name: {{experience.companyName}}</p>
+                                <p class="m-0">Designation: {{experience.designation}}</p>
+                        </div>
+                        <div class="pl-2 mt-3">Hobbies</div>
+                        <div class="pl-2" *ngFor="let hobby of inputArgs.hobbies">
+                                &#x2022; {{hobby}}
+                        </div>
+                </div>
+                <div fxFlex="1 0 auto">
+                        <app-employee-details-entry
+                                label="Marital status:"
+                                [value]="inputArgs.maritalStatus | titlecase">
+                        </app-employee-details-entry>
+                        <div class="pl-2">Skills</div>
+                        <div class="pl-2" *ngFor="let skill of inputArgs.skills">
+                                &#x2022; {{skill}}
+                        </div>
+                </div>
+        </div>
+</div>

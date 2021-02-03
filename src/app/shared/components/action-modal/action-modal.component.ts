@@ -7,6 +7,7 @@ import { RootState, LoggedOutSuccessfully, GoToBaseRoute } from '@app/store';
 import { DialogService } from '@app/core/services/dialog-service/dialog.service';
 import { JobPostingApiService } from '@app/job-posting/services/job-posting-api.service';
 import { EmployerApiService } from '@app/employer-profile/services/employer-api.service';
+import { ApiService } from '@app/employee-profile/services/api.service';
 
 @Component({
   templateUrl: './action-modal.component.html',
@@ -21,7 +22,8 @@ export class ActionModalComponent implements OnInit {
     private readonly dialogService: DialogService,
     private readonly toastrService: ToastrService,
     private readonly jobPostingApiService: JobPostingApiService,
-    private readonly employerApiService: EmployerApiService
+    private readonly employerApiService: EmployerApiService,
+    private readonly apiService: ApiService
   ) { }
 
   public ngOnInit(): void {
@@ -52,6 +54,16 @@ export class ActionModalComponent implements OnInit {
     ).subscribe();
   }
 
+  private triggerDeleteEmployeeAction(employeeId: string): void {
+    this.apiService.deleteEmployeeById(employeeId).pipe(
+      tap(res => {
+        this.toastrService.success('Select Employee deleted Successfully');
+      }, () => {
+        this.toastrService.error('Unable to delete employee, Please try again after some time');
+      })
+    ).subscribe();
+  }
+
   public triggerSelectedAction(): void {
     switch (this.inputArgs.actionFor) {
       case 'Job':
@@ -59,6 +71,9 @@ export class ActionModalComponent implements OnInit {
         break;
       case 'Employer':
         this.triggerDeleteEmployerAction(this.inputArgs.employerId);
+        break;
+      case 'Employee':
+        this.triggerDeleteEmployeeAction(this.inputArgs.employeeId);
         break;
       default:
         this.triggerSignOutAction();

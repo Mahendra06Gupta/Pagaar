@@ -15,6 +15,7 @@ import { GoToActiveAboutMe as GoToEmployeeAboutMe } from '@app/employee-profile/
 import { getActiveUrl } from '@app/store/router/router.selectors';
 import { MainRoutes } from '@app/app.route-names';
 import { GoToEmployerListing } from '@app/employer-list/employer-list-routing.actions';
+import { GoToEmployeeListing } from '@app/employee-list/employee-list-routing.actions';
 
 @Component({
   selector: 'app-navigation-left-menu',
@@ -42,7 +43,9 @@ export class NavigationLeftMenuComponent implements OnInit {
     { name: 'Post jobs', icon: 'groups', action: new GoToJobPosting(), actionDescription: 'GoToJobPosting', url: MainRoutes.jobPosting, permissions: [] },
     { name: 'Job List', icon: 'list', action: new GoToJobPostingListing(), actionDescription: 'GoToJobPostingListing', url: `${MainRoutes.jobPosting}/${MainRoutes.jobPostingListing}`, permissions: ['admin'] },
     // tslint:disable-next-line: max-line-length
-    { name: 'Employer List', icon: 'view_list', action: new GoToEmployerListing(), actionDescription: 'GoToEmployerListing', url: `${MainRoutes.jobPosting}/${MainRoutes.employerListing}`, permissions: ['admin'] }
+    { name: 'Employer List', icon: 'view_list', action: new GoToEmployerListing(), actionDescription: 'GoToEmployerListing', url: `${MainRoutes.jobPosting}/${MainRoutes.employerListing}`, permissions: ['admin'] },
+    // tslint:disable-next-line: max-line-length
+    { name: 'Employee List', icon: 'view_list', action: new GoToEmployeeListing(), actionDescription: 'GoToEmployeeListing', url: `${MainRoutes.jobPosting}/${MainRoutes.employeeListing}`, permissions: ['admin', 'employer'] }
   ];
 
   constructor(

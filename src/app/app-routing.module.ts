@@ -55,6 +55,15 @@ const routes: Routes = [
               },
             ]
           },
+          {
+            path: MainRoutes.employeeListing,
+            children: [
+              {
+                path: '',
+                loadChildren: () => import('./employee-list/employee-list.module').then(m => m.EmployeeListModule)
+              },
+            ]
+          },
         ]
       },
       {

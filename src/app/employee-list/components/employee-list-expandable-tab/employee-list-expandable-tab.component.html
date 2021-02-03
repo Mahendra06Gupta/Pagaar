@@ -1,0 +1,65 @@
+<mat-accordion displayMode="flat" id="app-employee-list-expanable-tab">
+    <mat-expansion-panel disabled="true" class="header-panel">
+        <mat-expansion-panel-header>
+            <mat-panel-title class="header-panel-title" fxLayout="row">
+                <div fxLayout="row" class="expandable-employee-history-row">
+                    <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="start">
+                        <strong>Name</strong>
+                    </div>
+                    <div fxFlex="1 1 33" fxLayout="row">
+                        <strong>Email</strong>
+                    </div>
+                    <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="end">
+                        <strong>Total year of experience</strong>
+                    </div>
+                </div>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <ng-container *ngFor="let details of employeeList; let i =index">
+        <mat-expansion-panel class="expandable-employee-history-body" expanded="{{i === 0}}">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="m-0">
+                    <div fxLayout="row" class="expandable-employee-history-row">
+                        <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="start">{{details.name}}</div>
+                        <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="start">{{details.email}}</div>
+                        <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="start">{{details.experience.numberOfYears}}</div>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+                <app-employee-list-expandable-tab-entry
+                    label="Contact Number"
+                    [value]="details.contactNumber">
+                </app-employee-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+            <div>
+                <app-employee-list-expandable-tab-entry
+                    label="Date of birth"
+                    [value]="details.dob">
+                </app-employee-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+            <div>
+                <app-employee-list-expandable-tab-entry
+                    label="Nationality"
+                    [value]="details.nationality | titlecase">
+                </app-employee-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+            <div>
+                <app-employee-list-expandable-tab-entry
+                    label="Marital Status"
+                    [value]="details.maritalStatus">
+                </app-employee-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+        </mat-expansion-panel>
+    </ng-container>
+</mat-accordion>
+<mat-paginator class="paginator" *ngIf="!loader"
+    [length]="employeeList.length"
+    [pageSizeOptions]="[10, 20]"
+    showFirstLastButtons
+></mat-paginator> <!--(page)="onPageChange($event)"-->

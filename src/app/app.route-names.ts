@@ -8,4 +8,5 @@ export class MainRoutes {
     public static jobPosting = 'job-posting';
     public static jobPostingListing = 'job-list';
     public static employerListing = 'employer-list';
+    public static employeeListing = 'employee-list';
 }

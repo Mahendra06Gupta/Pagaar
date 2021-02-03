@@ -4,8 +4,6 @@ import { Observable } from 'rxjs';
 import { RestService } from '@core/services';
 import { endpoints } from '@shared/endpoints/auth-api-endpoints';
 import { EmployeeDetailApiReuestModel, EmployeesDetail } from '../models/employee-detail.model';
-import { EmployerDetailApiRequestModel, EmployersDetail } from '@app/employer-profile/models/employer-detail.model';
-import { isLoggedInUserEmployee } from '@app/models/data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +14,7 @@ export class ApiService {
     private readonly restService: RestService
   ) { }
 
-  public getAllEmployeedetail(): Observable<EmployeeDetailApiReuestModel[]> {
+  public getAllEmployeedetail(): Observable<EmployeesDetail[]> {
     return this.restService.get(endpoints.updateEmployeeDetail);
   }
 
