@@ -46,8 +46,10 @@ export class JobPostingDashboardComponent implements OnInit, AfterViewInit {
                             first(),
                             switchMap(email => email ? this.employerApiService.getEmployerDetailByEmail(email).pipe(
                                 tap((details) => {
-                                    this.store$.dispatch(new AddEmployerDetails([details]));
-                                    this.isDetailsExists = details ? true : false;
+                                    if (details) {
+                                        this.store$.dispatch(new AddEmployerDetails([details]));
+                                        this.isDetailsExists = details ? true : false;
+                                    }
                                     this.showSpinner = false;
                                 })
                             ) : of(null))
@@ -56,9 +58,11 @@ export class JobPostingDashboardComponent implements OnInit, AfterViewInit {
                         return this.employerApiService.getAllEmployersdetail().pipe(
                             first(),
                             tap((employerDetail) => {
-                                this.store$.dispatch(new AddEmployerDetails(employerDetail));
+                                if (employerDetail) {
+                                    this.store$.dispatch(new AddEmployerDetails(employerDetail));
+                                    this.isDetailsExists = true;
+                                }
                                 this.showSpinner = false;
-                                this.isDetailsExists = true;
                             })
                         );
                     } else {

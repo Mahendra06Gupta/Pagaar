@@ -6,6 +6,7 @@ export const endpoints = {
     getEmployerDetail: 'v1/employers/email',
     updateEmployerDetail: 'v1/employers/',
     jobs: 'v1/jobs/',
+    jobsApply: 'v1/jobs/apply',
     jobSearch: 'v1/jobs/search',
     jobSearchByEmployer: 'v1/jobs/search/employer/'
 };

@@ -44,7 +44,7 @@
                     <p fxLayout="row" fxLayoutAlign="start center" class="main-text">{{job.location}} <b class="mx-1">&#x2022;</b> {{job.nature.replace('_', '') | titlecase}}</p>
                     <div fxLayout="row" fxLayoutAlign="space-between">
                         <h6 class="main-text pb-3">{{job.salary.starting | currency : job.salary.currency}} - {{job.salary.upto | currency : job.salary.currency}}</h6>
-                        <h6>Exact: {{job.salary.exact | currency : job.salary.currency}}</h6>
+                        <h6 class="main-text pb-3">Exact: {{job.salary.exact | currency : job.salary.currency}}</h6>
                     </div>
                     <mat-divider></mat-divider>
                     <div fxLayout="row" fxLayoutAlign="space-between">

@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { tap } from 'rxjs/operators';
 
-import { GoToDashboard, RootState } from '@app/store';
+import { RootState } from '@app/store';
 import { getUserLoggedInEmail } from '@app/store/user-details/user-details.selectors';
 import { EmployerApiService } from '@app/employer-profile/services/employer-api.service';
 import { ToastrService } from 'ngx-toastr';
+import { GoToJobPosting } from '@app/job-posting/job-posting-routing.actions';
 
 @Component({
   selector: 'app-employer-profile',
@@ -72,7 +73,7 @@ export class EmployerProfileComponent implements OnInit {
         this.employerApiService.addEmployerDetail(this.detailForm.value).pipe(
           tap(res => {
             this.toastrService.success('Detail Added Successfully');
-            this.store$.dispatch(new GoToDashboard());
+            this.store$.dispatch(new GoToJobPosting());
           })
         ).subscribe();
       }

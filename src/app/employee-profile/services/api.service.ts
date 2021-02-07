@@ -39,6 +39,6 @@ export class ApiService {
   }
 
   public applyForJob(payload: any): Observable<any> {
-    return this.restService.post(`${endpoints.jobs}`, payload);
+    return this.restService.post(`${endpoints.jobsApply}`, payload);
   }
 }
