@@ -64,9 +64,9 @@
                 <app-global-spinner-button [invalid]="signUpForm.invalid" [buttonText]="'Create Admin'" [isFormSubmitted]="isFormSubmitted"></app-global-spinner-button>
             </ng-container>
             <ng-template #nonAdminCreationButton>
-                <mat-checkbox color="primary" (change)="rememberMe($event.checked)" [checked]="rememberMeSelected">
+                <!-- <mat-checkbox color="primary" (change)="rememberMe($event.checked)" [checked]="rememberMeSelected">
                     Keep me signed in on this device.
-                </mat-checkbox>
+                </mat-checkbox> -->
                 <app-global-spinner-button [invalid]="signUpForm.invalid" [buttonText]="'Create Account'" [isFormSubmitted]="isFormSubmitted"></app-global-spinner-button>
             </ng-template>
         </form>

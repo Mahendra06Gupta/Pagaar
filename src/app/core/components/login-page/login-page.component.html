@@ -22,9 +22,9 @@
         <mat-error class="mt-3" *ngIf="hasError('password', 'required')">please enter password associated with your email address</mat-error>
         <!-- <mat-error class="mt-3" *ngIf="hasError('password', 'minlength')">Password must be a minimun of 8 characters</mat-error> -->
       </mat-form-field>
-      <mat-checkbox color="primary" (change)="rememberMe($event.checked)" [checked]="rememberMeSelected">
+      <!-- <mat-checkbox color="primary" (change)="rememberMe($event.checked)" [checked]="rememberMeSelected">
         Keep me signed in on this device.
-      </mat-checkbox>
+      </mat-checkbox> -->
       <app-global-spinner-button [invalid]="loginForm.invalid" [buttonText]="'Log In'" [isFormSubmitted]="isFormSubmitted"></app-global-spinner-button>
       <!-- <button mat-raised-button [disabled]="loginForm.invalid" class="py-1 px-3 login-button m-0" color="primary">Log In</button> -->
       <div class="position-relative py-sm-3 py-2">
