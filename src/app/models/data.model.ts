@@ -23,6 +23,7 @@ export interface Role {
 }
 
 export enum RoleType {
+    ADMIN = 'Admin',
     EMPLOYEE = 'Employee',
     EMPLOYER = 'Employer'
 }
@@ -37,4 +38,8 @@ export function isLoggedInUserEmployer(): boolean {
 
 export function isLoggedInUserAdmin(): boolean {
     return JSON.parse(localStorage?.getItem('role'))?.includes('ADMIN');
+}
+
+export function isLoggedInUserSuperAdmin(): boolean {
+    return JSON.parse(localStorage?.getItem('role'))?.includes('SUPERADMIN');
 }

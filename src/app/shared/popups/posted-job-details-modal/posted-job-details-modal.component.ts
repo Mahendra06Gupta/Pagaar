@@ -12,6 +12,6 @@ export class PostedJobDetailsModalComponent implements OnInit {
     ) {}
 
     public ngOnInit(): void {
-        this.inputArgs = this.inputArgs.jobs;
+        this.inputArgs = this.inputArgs.jobs || this.inputArgs.res;
     }
 }

@@ -3,6 +3,9 @@ import { Store } from '@ngrx/store';
 
 import { RootState } from '@app/store/models/root-state.model';
 import { JobReuslt, Jobs } from '@app/dashboard/store/models/dashboard-state.model';
+import { GoToApplicationListing } from '@app/job-application-list/job-application-list-routing.actions';
+import { UpdateApplicationId } from '@app/store';
+import { isLoggedInUserSuperAdmin } from '@app/models/data.model';
 
 @Component({
   selector: 'app-job-post-list-expandable-tab',
@@ -16,6 +19,7 @@ export class JobPostListExpandableTabComponent implements OnInit {
   @Output() public postedJobSelected = new EventEmitter<Jobs>();
   public loader = true;
   public isDescendingByDate = true;
+  public isLoggedInUserSuperAdmin = isLoggedInUserSuperAdmin();
 
   constructor(
     public readonly store$: Store<RootState>
@@ -25,8 +29,12 @@ export class JobPostListExpandableTabComponent implements OnInit {
     setTimeout(() => this.loader = false, 200);
   }
 
-  public onPageChange(event): any {
+  public onPageChange(event): void {
     this.pageChange.emit(event);
   }
 
+  public GoToApplicationList(jobId: string): void {
+    this.store$.dispatch(new UpdateApplicationId({updateApplicationId: jobId, mode: 'jobId'}));
+    this.store$.dispatch(new GoToApplicationListing());
+  }
 }

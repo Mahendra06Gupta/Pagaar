@@ -3,7 +3,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { map, tap } from 'rxjs/operators';
 
-import { RootState, fromRouterSelector, GoToLogin, GoToCreateAccount, GoToDashboard } from '@app/store';
+import { RootState, fromRouterSelector, GoToLogin, GoToCreateAccount, GoToDashboard, UpdateApplicationId } from '@app/store';
 import { DeviceScreenSizeService } from '@app/core/services/device-screen-size/device-screen-size.service';
 import * as fromUserDetailsSelector from '@app/store/user-details/user-details.selectors';
 import { DialogService } from '@app/core/services/dialog-service/dialog.service';
@@ -13,6 +13,8 @@ import { GoToActiveAboutMe } from '@app/employee-profile/employee-profile-routin
 import { GoToEmployerActiveAboutMe } from '@app/employer-profile/employer-profile-routing.actions';
 import { GoToJobPosting } from '@app/job-posting/job-posting-routing.actions';
 import { isLoggedInUserAdmin, isLoggedInUserEmployee } from '@app/models/data.model';
+import { EmployeesDetail } from '@app/employee-profile/models/employee-detail.model';
+import { getEmployeeId } from '@app/store/employee-store/employee.selectors';
 
 @Component({
   selector: 'app-navigation-top-menu',
@@ -28,6 +30,7 @@ export class NavigationTopMenuComponent implements OnInit, OnDestroy {
   public isUserLoggedIn$: Observable<boolean> = this.store$.select(fromUserDetailsSelector.isUserLoggedIn);
   public isLoginPage$: Observable<boolean> = this.store$.select(isIamLoginPageORCreateAccountPage);
   public isIamJobPostingPage$: Observable<boolean> = this.store$.select(isIamJobPostingPage);
+  public employeeId$: Observable<string | number> = this.store$.select(getEmployeeId);
   public showActions: boolean;
   public loggedInUserEmail: string;
   public activeRoute: string;
@@ -36,8 +39,8 @@ export class NavigationTopMenuComponent implements OnInit, OnDestroy {
     {tab: 'Profile', icon: 'description'},
     // {tab: 'Account', icon: 'tune'},
   ];
-  public isLoggedInUserEmployee = isLoggedInUserEmployee();
-  public isLoggedInUserAdmin = isLoggedInUserAdmin();
+  public isLoggedInUserEmployee: boolean;
+  public isLoggedInUserAdmin: boolean;
 
   constructor(
     private readonly deviceSizeBreakpointService: DeviceScreenSizeService,
@@ -60,8 +63,11 @@ export class NavigationTopMenuComponent implements OnInit, OnDestroy {
       res => res ? this.activeRoute = res.replace('/', '') : ''
     ));
     this.store$.select(fromUserDetailsSelector.getUserLoggedInEmail).pipe(
-      // first(),
-      tap(email => this.loggedInUserEmail = email)
+      tap(email => {
+        this.loggedInUserEmail = email;
+        this.isLoggedInUserEmployee = isLoggedInUserEmployee();
+        this.isLoggedInUserAdmin = isLoggedInUserAdmin();
+      })
     ).subscribe();
   }
 
@@ -92,5 +98,9 @@ export class NavigationTopMenuComponent implements OnInit, OnDestroy {
       case 'Profile': this.isLoggedInUserEmployee ? this.store$.dispatch(new GoToActiveAboutMe()) : this.store$.dispatch(new GoToEmployerActiveAboutMe());
                       break;
     }
+  }
+
+  public setEmployeeId(employeeId: string): void {
+    this.store$.dispatch(new UpdateApplicationId({updateApplicationId: employeeId, mode: 'employeeId'}));
   }
 }

@@ -5,14 +5,12 @@ import { ToastrService } from 'ngx-toastr';
 
 import { RootState } from '@app/store';
 import { JobPostingApiService } from '@app/job-posting/services/job-posting-api.service';
-import { isLoggedInUserAdmin } from '@app/models/data.model';
+import { isLoggedInUserAdmin, isLoggedInUserSuperAdmin } from '@app/models/data.model';
 import { DialogService } from '@app/core/services';
-import { PostedJobDetailsModalComponent } from '@app/shared/popups';
 import { ActionModalComponent } from '@app/shared/components/action-modal';
 import { ApiService } from '@app/employee-profile/services/api.service';
 import { AddEmployeeDetails } from '@app/store/employee-store/employee.actions';
 import { EmployeesDetail } from '@app/employee-profile/models/employee-detail.model';
-import { dummyData } from '@app/employee-list/models/dummy-data-set-up';
 import { EmployeeDetailsModalComponent } from '@app/shared/popups/employee-details-modal';
 
 @Component({
@@ -30,32 +28,31 @@ export class EmployeeListingComponent implements OnInit {
   constructor(
     private readonly dialogService: DialogService,
     private readonly store$: Store<RootState>,
-    private readonly toastrService: ToastrService,
-    private readonly jobPostingApiService: JobPostingApiService,
     private readonly employeeApiService: ApiService
   ) {}
 
   public ngOnInit(): void {
-    if (isLoggedInUserAdmin()) {
-      this.getEmployerDetails(this.pageSize, this.pageNumber);
-    }
+    this.dialogService.isActionDone.subscribe(res => {
+      if (isLoggedInUserAdmin() || isLoggedInUserSuperAdmin()) {
+        this.getEmployeeDetails(this.pageSize, this.pageNumber);
+      }
+    });
   }
 
-  private getEmployerDetails(pageSize?: number, pageNumber?: number) {
-    this.employeeList = dummyData;
-    this.showSpinner = false;
-    // this.employeeApiService.getAllEmployeedetail().pipe(
-    //   tap((employeeDetail) => {
-    //     this.showSpinner = false;
-    //     this.store$.dispatch(new AddEmployeeDetails(employeeDetail));
-    //   }, () => this.showSpinner = false)
-    // ).subscribe();
+  private getEmployeeDetails(pageSize?: number, pageNumber?: number) {
+    this.employeeApiService.getAllEmployeedetail().pipe(
+      tap((employeeDetail) => {
+        this.showSpinner = false;
+        this.employeeList = employeeDetail;
+        this.store$.dispatch(new AddEmployeeDetails(employeeDetail));
+      }, () => this.showSpinner = false)
+    ).subscribe();
   }
 
   public onPageChange(event) {
     this.pageSize = event.pageSize;
     this.pageNumber = (event.pageIndex + 1);
-    this.getEmployerDetails(this.pageSize, this.pageNumber);
+    this.getEmployeeDetails(this.pageSize, this.pageNumber);
   }
 
   public employeeSelected(employeeDetails: {employee: EmployeesDetail, action: string}): void {
@@ -66,19 +63,14 @@ export class EmployeeListingComponent implements OnInit {
       });
     } else if (employeeDetails.action === 'cancel') {
       this.showSpinner = true;
-      this.deleteEmployerSelected(employeeDetails.employee.id);
+      this.deleteEmployeeSelected(employeeDetails.employee.id);
     }
-    // else if (jobDetails.action === 'edit') {
-    //   this.dialogService.openDialog(JobPostingComponent,
-    //     jobs
-    //   ).subscribe(res => this.getJobDetails());
-    // }
   }
 
-  public deleteEmployerSelected(employeeId: string): void {
+  public deleteEmployeeSelected(employeeId: string): void {
     this.dialogService.openDialog(ActionModalComponent, {
-      warningText: 'Are you sure you want to delete the selected employer?',
-      modelTitle: 'Delete Job',
+      warningText: 'Are you sure you want to delete the selected employee?',
+      modelTitle: 'Delete Employee',
       allowCancel: true,
       warningTextIcon: 'cancel',
       actionText: 'Delete',

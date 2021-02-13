@@ -12,7 +12,6 @@ export class EmployeeDetailsModalComponent implements OnInit {
     ) {}
 
     public ngOnInit(): void {
-        console.log(this.inputArgs);
-        this.inputArgs = this.inputArgs.employeeDetail;
+        this.inputArgs = this.inputArgs.employeeDetail || this.inputArgs.res;
     }
 }

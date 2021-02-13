@@ -28,10 +28,10 @@
             <h5>Popular searches</h5>
         </div>
         <div class="px-4 pb-4" [ngClass.gt-sm]="'text-center popular-search-section popular-line-height'">
-            <div class="popular d-inline-block" *ngFor="let popularSearch1 of popularSearchLine1">
+            <button mat-raised-button (click)="search(popularSearch1)" class="popular d-inline-block" *ngFor="let popularSearch1 of popularSearchLine1">
                 <mat-icon class="position-relative text-center">search</mat-icon>&nbsp;
                 <span>{{popularSearch1}}</span>
-            </div>
+            </button>
         </div>
     </ng-container>
     <ng-template #showJobResult>
@@ -39,8 +39,12 @@
             <p> Jobs</p>
             <div class="w-100 row justify-content-center" ngClass.lt-md="column m-0 p-2">
                 <mat-card ngClass.lt-lg="col-5 m-2" ngClass.gt-md="col-3 m-2" ngClass.lt-md="col-12" *ngFor="let job of jobResult.jobs">
-                    <h6 class="main-text title">{{job.title}}</h6>
-                    <p class="main-text">{{job.employer.companyName}}</p>
+                    <h6 class="main-text title">
+                        <a class="link" (click)="getDetailByAction('job', job.id)">{{job.title}}</a>
+                    </h6>
+                    <p class="main-text">
+                        <a class="link" (click)="getDetailByAction('employer', job.employer.employerId)">{{job.employer.companyName}}</a>
+                    </p>
                     <p fxLayout="row" fxLayoutAlign="start center" class="main-text">{{job.location}} <b class="mx-1">&#x2022;</b> {{job.nature.replace('_', '') | titlecase}}</p>
                     <div fxLayout="row" fxLayoutAlign="space-between">
                         <h6 class="main-text pb-3">{{job.salary.starting | currency : job.salary.currency}} - {{job.salary.upto | currency : job.salary.currency}}</h6>

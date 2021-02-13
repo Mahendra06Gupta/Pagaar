@@ -7,7 +7,7 @@ import { first, map, switchMap, tap } from 'rxjs/operators';
 import { DeviceScreenSizeService } from '@app/core/services';
 import { GoToEmployerActiveAboutMe } from '@app/employer-profile/employer-profile-routing.actions';
 import { EmployerApiService } from '@app/employer-profile/services/employer-api.service';
-import { isLoggedInUserAdmin, isLoggedInUserEmployer } from '@app/models/data.model';
+import { isLoggedInUserAdmin, isLoggedInUserEmployer, isLoggedInUserSuperAdmin } from '@app/models/data.model';
 import { RootState } from '@app/store';
 import { AddEmployerDetails } from '@app/store/employer-store/employer.actions';
 import { isIamJobPostingPageForEmployerAdmin } from '@app/store/router/router.selectors';
@@ -54,7 +54,7 @@ export class JobPostingDashboardComponent implements OnInit, AfterViewInit {
                                 })
                             ) : of(null))
                         );
-                    } else if (isLoggedInUserAdmin()) {
+                    } else if (isLoggedInUserAdmin() || isLoggedInUserSuperAdmin()) {
                         return this.employerApiService.getAllEmployersdetail().pipe(
                             first(),
                             tap((employerDetail) => {

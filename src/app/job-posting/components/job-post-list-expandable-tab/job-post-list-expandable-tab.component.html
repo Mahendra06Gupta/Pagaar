@@ -22,7 +22,9 @@
                 <mat-panel-title class="m-0">
                     <div fxLayout="row" class="expandable-job-history-row">
                         <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="start">{{job.employer.companyName}}</div>
-                        <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="start">{{job.title}}</div>
+                        <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="start">
+                            <a class="link"  (click)="GoToApplicationList(job.id)">{{job.title}}</a>
+                        </div>
                         <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="start">{{job.location}}</div>
                     </div>
                 </mat-panel-title>
@@ -117,8 +119,8 @@
                     &#x2022; {{benefit.split('_').join(' ') | titlecase}}
                 </div>
             </div>
-            <div class="divider"></div>
-            <div class="my-2" fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="my-2" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="isLoggedInUserSuperAdmin">
+                <div class="divider"></div>
                 <button mat-raised-button color="primary" (click)="postedJobSelected.emit({ job: job, action: 'edit' })">
                     Edit
                 </button>

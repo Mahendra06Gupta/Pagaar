@@ -1,13 +1,12 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { UserData } from '@app/models/data.model';
-import { UserDetailsActions, LOAD_USER, USER_LOGIN, LOGIN_SUCCESSFULLY, LOGOUT_SUCCESSFULLY } from './user-details.actions';
+import { UserDetailsActions, LOAD_USER, USER_LOGIN, UPDATE_APPLICATION_ID, LOGIN_SUCCESSFULLY, LOGOUT_SUCCESSFULLY, CREATE_ADMIN_ACCOUNT } from './user-details.actions';
 import { act } from '@ngrx/effects';
 
-// export interface UserDetailsState extends EntityState<UserData> {
-//     loggedIn: boolean;
-//     userLogged: string;
-//     userType: string;
-// }
+export interface UserDetailsState extends EntityState<UserData> {
+    createAdminAccount: boolean;
+    applicationId: {updateApplicationId: string, mode: string};
+}
 
 export interface UserDetailsState extends EntityState<UserData> {}
 
@@ -15,7 +14,13 @@ export const UserDetailsAdapter: EntityAdapter<UserData> = createEntityAdapter<U
     selectId: user => user.email
 });
 
-export const INITIAL_USERDETAILS_STATE: UserDetailsState = UserDetailsAdapter.getInitialState({});
+export const INITIAL_USERDETAILS_STATE: UserDetailsState = UserDetailsAdapter.getInitialState({
+    createAdminAccount: false,
+    applicationId: {
+        updateApplicationId: '',
+        mode: ''
+    }
+});
 
 export function UserDetailsReducer(state: UserDetailsState = INITIAL_USERDETAILS_STATE, action: UserDetailsActions): UserDetailsState {
     switch (action.type) {
@@ -25,6 +30,18 @@ export function UserDetailsReducer(state: UserDetailsState = INITIAL_USERDETAILS
             // });
             localStorage.setItem('role', JSON.stringify(action.payload[0].roles));
             return UserDetailsAdapter.setAll(action.payload, state);
+        }
+        case CREATE_ADMIN_ACCOUNT: {
+            return {
+                ...state,
+                createAdminAccount: action.payload.createAdminAccount
+            };
+        }
+        case UPDATE_APPLICATION_ID: {
+            return {
+                ...state,
+                applicationId: action.payload
+            };
         }
         // case LOGIN_SUCCESSFULLY: {
         //     return {

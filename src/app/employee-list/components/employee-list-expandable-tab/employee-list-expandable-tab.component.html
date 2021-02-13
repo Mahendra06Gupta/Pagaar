@@ -3,13 +3,10 @@
         <mat-expansion-panel-header>
             <mat-panel-title class="header-panel-title" fxLayout="row">
                 <div fxLayout="row" class="expandable-employee-history-row">
-                    <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="start">
+                    <div fxFlex="1 1 50%" fxLayout="row" fxLayoutAlign="start">
                         <strong>Name</strong>
                     </div>
-                    <div fxFlex="1 1 33" fxLayout="row">
-                        <strong>Email</strong>
-                    </div>
-                    <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="end">
+                    <div fxFlex="1 1 50%" fxLayout="row" fxLayoutAlign="end">
                         <strong>Total year of experience</strong>
                     </div>
                 </div>
@@ -21,17 +18,40 @@
             <mat-expansion-panel-header>
                 <mat-panel-title class="m-0">
                     <div fxLayout="row" class="expandable-employee-history-row">
-                        <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="start">{{details.name}}</div>
-                        <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="start">{{details.email}}</div>
-                        <div fxFlex="1 1 33" fxLayout="row" fxLayoutAlign="start">{{details.experience.numberOfYears}}</div>
+                        <div fxFlex="1 1 50%" fxLayout="row" fxLayoutAlign="start">
+                            <a class="link" (click)="GoToApplicationList(details.id)">{{details.name}}</a>
+                        </div>
+                        <div fxFlex="1 1 50%" fxLayout="row" fxLayoutAlign="start"><span>{{details.experience.numberOfYears}}</span></div>
                     </div>
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div>
                 <app-employee-list-expandable-tab-entry
+                    label="Email"
+                    [value]="details.email">
+                </app-employee-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+            <div>
+                <app-employee-list-expandable-tab-entry
                     label="Contact Number"
                     [value]="details.contactNumber">
                 </app-employee-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+            <div class="my-2">
+                <div class="mt-2">Employement Details</div>
+                <div class="border shadow mb-2 pl-2" *ngFor="let employment of details.experience.jobDetails" fxLayout="column" fxLayoutGap="1rem">
+                    <p>Comapny Name: {{employment.companyName | titlecase}}</p>
+                    <p>Destination: {{employment.designation | titlecase}}</p>
+                </div>
+                <div class="divider"></div>
+            </div>
+            <div class="my-2">
+                <div class="pl-2">Benefits</div>
+                <div class="pl-2" *ngFor="let skills of details.skills">
+                    &#x2022; {{skills | titlecase}}
+                </div>
                 <div class="divider"></div>
             </div>
             <div>
@@ -55,11 +75,27 @@
                 </app-employee-list-expandable-tab-entry>
                 <div class="divider"></div>
             </div>
+            <div class="divider"></div>
+            <div class="my-2">
+                <div class="pl-2">Benefits</div>
+                <div class="pl-2" *ngFor="let hobbies of details.hobbies">
+                    &#x2022; {{hobbies | titlecase}}
+                </div>
+            </div>
+            <div *ngIf="!isLoggedInUserAdmin" class="my-2" fxLayout="row" fxLayoutAlign="space-between center">
+                <!-- <button mat-raised-button color="primary" (click)="employeeSelected.emit({ job: job, action: 'edit' })">
+                    Edit
+                </button> -->
+                <button mat-raised-button color="warn" (click)="employeeSelected.emit({ employee: details, action: 'cancel' })">
+                    Delete
+                </button>
+            </div>
         </mat-expansion-panel>
     </ng-container>
 </mat-accordion>
 <mat-paginator class="paginator" *ngIf="!loader"
     [length]="employeeList.length"
     [pageSizeOptions]="[10, 20]"
+    (page)="onPageChange($event)"
     showFirstLastButtons
-></mat-paginator> <!--(page)="onPageChange($event)"-->
+></mat-paginator>

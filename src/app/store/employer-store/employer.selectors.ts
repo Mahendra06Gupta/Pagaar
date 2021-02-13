@@ -21,10 +21,15 @@ export const getEmployerDetails = createSelector(
     (state: EmployerState) => state && state.entities
 );
 
-export const getLoggedInUserData = createSelector(
+export const getLoggedInEmployerData = createSelector(
     getEmployerEntities,
     getUserLoggedInEmail,
     (state: fromEmployersModel.EmployersDetail[], email) => state && fromEmployersModel.getEmployer(state, email)
+);
+
+export const getLoggedInEmployerId = createSelector(
+    getLoggedInEmployerData,
+    (employersDetail: fromEmployersModel.EmployersDetail) => employersDetail?.id
 );
 
 export const getEmployerIds = createSelector(

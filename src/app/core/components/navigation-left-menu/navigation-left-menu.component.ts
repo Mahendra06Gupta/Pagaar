@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, Action } from '@ngrx/store';
-import { RootState, GoToDashboard } from '@app/store';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -8,7 +7,7 @@ import { DeviceScreenSizeService } from '@app/core/services/device-screen-size/d
 import { ActionModalComponent } from '@app/shared/components/action-modal';
 import { DialogService } from '@app/core/services/dialog-service/dialog.service';
 import * as fromUserDetailsSelector from '@app/store/user-details/user-details.selectors';
-import { GoToJobPosting, GoToJobPostingListing } from '@app/job-posting/job-posting-routing.actions';
+import { GoToCreateAdminAccount, GoToJobPosting, GoToJobPostingListing } from '@app/job-posting/job-posting-routing.actions';
 import { isLoggedInUserEmployee } from '@app/models/data.model';
 import { GoToEmployerActiveAboutMe } from '@app/employer-profile/employer-profile-routing.actions';
 import { GoToActiveAboutMe as GoToEmployeeAboutMe } from '@app/employee-profile/employee-profile-routing.actions';
@@ -16,6 +15,7 @@ import { getActiveUrl } from '@app/store/router/router.selectors';
 import { MainRoutes } from '@app/app.route-names';
 import { GoToEmployerListing } from '@app/employer-list/employer-list-routing.actions';
 import { GoToEmployeeListing } from '@app/employee-list/employee-list-routing.actions';
+import { RootState, GoToDashboard, CreateAdminAccount } from '@app/store';
 
 @Component({
   selector: 'app-navigation-left-menu',
@@ -34,18 +34,19 @@ export class NavigationLeftMenuComponent implements OnInit {
   ];
   public sidenavMenuAfterLogin = [
     // tslint:disable-next-line: max-line-length
-    { name: 'Profile', icon: 'info', action: this.isLoggedInUserEmployee ? new GoToEmployeeAboutMe() : new GoToEmployerActiveAboutMe(), url: this.isLoggedInUserEmployee ? MainRoutes.employeeProfile : MainRoutes.employerProfile , actionDescription: 'GoToFindJobs', permissions: ['employer', 'employee'] },
+    { name: 'Profile', icon: 'info', action: this.isLoggedInUserEmployee ? new GoToEmployeeAboutMe() : new GoToEmployerActiveAboutMe(), url: this.isLoggedInUserEmployee ? MainRoutes.employeeProfile : MainRoutes.employerProfile, actionDescription: 'GoToFindJobs', permissions: ['employer', 'employee'] },
     // { name: 'My jobs', icon: 'work_outline', action: new GoToDashboard(), actionDescription: 'GoToFindJobs', permissions: [] },
     // { name: 'Account', icon: 'account_circle', action: new LogOut(), actionDescription: 'Logout', permissions: [] },
     // { name: 'Sign out', icon: 'power_settings_new', action: new LogOut(), actionDescription: 'GoToEmployersSection', permissions: [] }
   ];
   public sideNavMenuForEmployerAndAdmin = [
-    { name: 'Post jobs', icon: 'groups', action: new GoToJobPosting(), actionDescription: 'GoToJobPosting', url: MainRoutes.jobPosting, permissions: [] },
-    { name: 'Job List', icon: 'list', action: new GoToJobPostingListing(), actionDescription: 'GoToJobPostingListing', url: `${MainRoutes.jobPosting}/${MainRoutes.jobPostingListing}`, permissions: ['admin'] },
-    // tslint:disable-next-line: max-line-length
-    { name: 'Employer List', icon: 'view_list', action: new GoToEmployerListing(), actionDescription: 'GoToEmployerListing', url: `${MainRoutes.jobPosting}/${MainRoutes.employerListing}`, permissions: ['admin'] },
-    // tslint:disable-next-line: max-line-length
-    { name: 'Employee List', icon: 'view_list', action: new GoToEmployeeListing(), actionDescription: 'GoToEmployeeListing', url: `${MainRoutes.jobPosting}/${MainRoutes.employeeListing}`, permissions: ['admin', 'employer'] }
+    /* tslint:disable max-line-length */
+    { name: 'Post jobs', icon: 'groups', action: new GoToJobPosting(), actionDescription: 'GoToJobPosting', url: MainRoutes.jobPosting, permissions: ['superadmin', 'employer'] },
+    { name: 'Job List', icon: 'list', action: new GoToJobPostingListing(), actionDescription: 'GoToJobPostingListing', url: `${MainRoutes.jobPosting}/${MainRoutes.jobPostingListing}`, permissions: ['admin', 'employer', 'superadmin'] },
+    { name: 'Employer List', icon: 'view_list', action: new GoToEmployerListing(), actionDescription: 'GoToEmployerListing', url: `${MainRoutes.jobPosting}/${MainRoutes.employerListing}`, permissions: ['admin', 'superadmin'] },
+    { name: 'Employee List', icon: 'view_list', action: new GoToEmployeeListing(), actionDescription: 'GoToEmployeeListing', url: `${MainRoutes.jobPosting}/${MainRoutes.employeeListing}`, permissions: ['admin', 'superadmin'] },
+    { name: 'Create Admin', icon: 'add_circle', action: new GoToCreateAdminAccount(), actionDescription: 'GoToCreateAccount', url: `${MainRoutes.jobPosting}/${MainRoutes.createAdminAccount}`, createAdmin: true , permissions: ['superadmin'] }
+    /* tslint:enable max-line-length */
   ];
 
   constructor(
@@ -60,7 +61,10 @@ export class NavigationLeftMenuComponent implements OnInit {
     );
   }
 
-  public triggerAction(action: Action, actionDescription: string, index: number, afterLogin?: boolean): void {
+  public triggerAction(action: Action, actionDescription: string, index: number, createAdmin?: boolean, afterLogin?: boolean): void {
+    if (createAdmin) {
+      this.store$.dispatch(new CreateAdminAccount({createAdminAccount: true}));
+    }
     actionDescription === 'Logout' ? this.triggerLogoutAction() : this.store$.dispatch(action);
   }
 

@@ -1,0 +1,18 @@
+<div class="h-100" fxLayout="column" fxLayoutGap="20px" class="mx-3">
+    <ng-container>
+        <mat-card class="matCard">
+            <h5 *ngIf="pageTitle === 'employee' else NonEmployeePageTitle">Applied Job Positions</h5>
+            <ng-template #NonEmployeePageTitle>
+                Application list based on {{pageTitle}} name
+            </ng-template>
+            <hr class="mt-3">
+            <div fxHide.lt-md *ngIf="jobApplicationList">
+                <app-job-application-list-tab [jobApplicationList]="jobApplicationList" (applicationSelected)="applicationSelected($event)" (pageChange)="onPageChange($event)"></app-job-application-list-tab>
+            </div>
+            <div fxHide.gt-sm *ngIf="jobApplicationList">
+                <app-job-application-list-expandable-tab [jobApplicationList]="jobApplicationList" (pageChange)="onPageChange($event)"></app-job-application-list-expandable-tab>
+            </div>
+        </mat-card>
+    </ng-container>
+</div>
+<app-global-spinner *ngIf="showSpinner"></app-global-spinner>

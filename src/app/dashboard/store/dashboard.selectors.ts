@@ -13,7 +13,7 @@ export const getSearchKeyword = createSelector(
     dashboardstate => dashboardstate && dashboardstate.dashboardState && dashboardstate.dashboardState.searchKeyword
 );
 
-export const isSearcgInitiated = createSelector(
+export const isSearchInitiated = createSelector(
     getSearchKeyword,
     searchKeyword => searchKeyword && searchKeyword.initiated
 );

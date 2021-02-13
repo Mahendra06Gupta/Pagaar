@@ -9,6 +9,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { RootState } from '@app/store';
 import { DashboardApiService } from '@app/dashboard/services/dashboard-api.service';
 import { InitDashboardSearch, UpdateDashboardSearchResult } from '@app/dashboard/store';
+import { getSearchKeyword } from '@app/dashboard/store/dashboard.selectors';
 
 export const DATE_FORMATS = {
   parse: {
@@ -48,6 +49,12 @@ export class DashboardSearchFormComponent implements OnInit {
 
   public ngOnInit(): void {
     this.initForm();
+    this.store$.select(getSearchKeyword).pipe(
+      tap(search => {
+        this.searchForm.controls.jobTitle.setValue(search?.jobTitle);
+        this.searchForm.controls.location.setValue(search?.location);
+      })
+    ).subscribe();
   }
 
   public isFormValid(): boolean {

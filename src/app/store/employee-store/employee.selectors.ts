@@ -19,7 +19,7 @@ export const getEmployeeDetails = createSelector(
     (state: EmployeeState) => state && state.entities
 );
 
-export const getEmployeeID = createSelector(
+export const getEmployeeId = createSelector(
     getEmployeeDetailsState,
     state => state && state.ids[0]
 );

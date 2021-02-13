@@ -7,7 +7,7 @@
                 <app-employer-list-tab [employerList]="employerList" (employerSelected)="employerSelected($event)" (pageChange)="onPageChange($event)"></app-employer-list-tab>
             </div>
             <div fxHide.gt-sm *ngIf="employerList">
-                <app-employer-list-expandable-tab [employerList]="employerList" (pageChange)="onPageChange($event)"></app-employer-list-expandable-tab>
+                <app-employer-list-expandable-tab [employerList]="employerList" (employerSelected)="employerSelected($event)" (pageChange)="onPageChange($event)"></app-employer-list-expandable-tab>
             </div>
         </mat-card>
     </ng-container>

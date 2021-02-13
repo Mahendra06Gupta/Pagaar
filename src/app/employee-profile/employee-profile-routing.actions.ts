@@ -1,15 +1,15 @@
-import { GoUsingActiveUserId } from '@app/store/router/router.actions';
+import { Go } from '@app/store/router/router.actions';
 import { MainRoutes } from '@app/app.route-names';
 import { EmployeeProfileTab } from './models/employee-profile-routing.path';
 
 const pathSupplier = {
-    aboutMe: (userId: string) => [
-        MainRoutes.employeeProfile, userId, EmployeeProfileTab.EMPLOYEE_PROFILE_ABOUT_ME
+    aboutMe: () => [
+        MainRoutes.employeeProfile, EmployeeProfileTab.EMPLOYEE_PROFILE_ABOUT_ME
     ],
 };
 
-export class GoToActiveAboutMe extends GoUsingActiveUserId {
+export class GoToActiveAboutMe extends Go {
     public constructor() {
-        super({ pathSupplier: pathSupplier.aboutMe });
+        super({ path: pathSupplier.aboutMe() });
     }
 }

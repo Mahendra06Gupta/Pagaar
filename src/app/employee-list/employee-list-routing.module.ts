@@ -21,4 +21,4 @@ const EmployeeListRoutes: Routes = [
   imports: [RouterModule.forChild(EmployeeListRoutes)],
   exports: [RouterModule]
 })
-export class EmployeeListLandingRoutingModule { }
+export class EmployeeListRoutingModule { }

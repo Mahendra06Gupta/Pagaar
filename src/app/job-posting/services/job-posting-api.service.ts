@@ -5,7 +5,7 @@ import { RestService } from '@core/services';
 import { endpoints } from '@shared/endpoints/auth-api-endpoints';
 import { EmployerDetailApiRequestModel, EmployersDetail } from '../models/job-posting-detail.model';
 import { HttpParams } from '@angular/common/http';
-import { JobReuslt } from '@app/dashboard/store/models/dashboard-state.model';
+import { JobReuslt, Jobs } from '@app/dashboard/store/models/dashboard-state.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +36,21 @@ export class JobPostingApiService {
   }
 
   public deleteSelectedJobDetails(jobId: string): Observable<any> {
-    return this.restService.delete(`${endpoints.jobs}/${jobId}`);
+    return this.restService.delete(`${endpoints.jobs}${jobId}`);
+  }
+
+  public getJobDetailsByEmployerId(employerId: string, pageSize?: number, pageNumber?: number): Observable<JobReuslt> {
+    let params: HttpParams = new HttpParams();
+    if (pageNumber) {
+      params = params.append('page', pageNumber.toString());
+    }
+    if (pageSize) {
+      params = params.append('size', pageSize.toString());
+    }
+    return this.restService.get(`${endpoints.jobs}${employerId}?${params}`);
+  }
+
+  public getJobDetailById(userId: string): Observable<Jobs> {
+    return this.restService.get(`${endpoints.jobs}${userId}`);
   }
 }

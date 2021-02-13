@@ -1,0 +1,41 @@
+<div class="modal" aria-labelledby="dialogTitle"></div>
+<div class="modal-content" role="dialog" aria-live="polite" id="transaction-modal" aria-labelledby="dialogTitle">
+        <button mat-icon-button mat-dialog-close>
+                <mat-icon>close</mat-icon>
+        </button>
+        <div fxLayout="row" fxLayoutAlign="start center">
+                <h5 id="dialogTitle">
+                        Employer Details
+                </h5>
+        </div>
+        <div class="job-posted-details-body-top" fxLayout="row">
+                <div class="job-posted-details-body-left" fxFlex="1 0 auto">
+                        <app-employee-details-entry
+                                label="Company Name:"
+                                [value]="inputArgs.companyName">
+                        </app-employee-details-entry>
+                        <app-employee-details-entry
+                                label="Business:"
+                                [value]="inputArgs.businessNature.replace('_', '') | titlecase">
+                        </app-employee-details-entry>
+                        <app-employee-details-entry
+                                label="Email:"
+                                [value]="inputArgs.email">
+                        </app-employee-details-entry>
+                </div>
+                <div fxFlex="1 0 auto">
+                        <app-employee-details-entry
+                                label="Company Size:"
+                                [value]="inputArgs.companySize">
+                        </app-employee-details-entry>
+                        <app-employee-details-entry
+                                label="Country:"
+                                [value]="(inputArgs.country | titlecase) + ' ' + inputArgs.pincode">
+                        </app-employee-details-entry>
+                        <app-employee-details-entry
+                                label="Contact Number:"
+                                [value]="inputArgs.phoneNumber">
+                        </app-employee-details-entry>
+                </div>
+        </div>
+</div>

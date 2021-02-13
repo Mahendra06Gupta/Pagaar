@@ -1,13 +1,13 @@
 <div class="h-100" fxLayout="column" fxLayoutGap="20px" class="mx-3">
     <ng-container>
         <mat-card class="matCard">
-            <h5>Employer-List</h5>
+            <h5>Employee-List</h5>
             <hr class="mt-3">
             <div fxHide.lt-md *ngIf="employeeList">
                 <app-employee-list-tab [employeeList]="employeeList" (employeeSelected)="employeeSelected($event)" (pageChange)="onPageChange($event)"></app-employee-list-tab>
             </div>
             <div fxHide.gt-sm *ngIf="employeeList">
-                <app-employee-list-expandable-tab [employeeList]="employeeList" (pageChange)="onPageChange($event)"></app-employee-list-expandable-tab>
+                <app-employee-list-expandable-tab [employeeList]="employeeList" (employeeSelected)="employeeSelected($event)" (pageChange)="onPageChange($event)"></app-employee-list-expandable-tab>
             </div>
         </mat-card>
     </ng-container>

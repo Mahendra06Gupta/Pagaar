@@ -13,11 +13,14 @@
                     routerLinkActive #dashboardLandingActive="routerLinkActive" [active]="dashboardLandingActive.isActive">
                     <span fxHide.lt-sm="true" class="tab-text">Find jobs</span>
                 </a>
-                <!-- <a mat-tab-link id="dashboard-company-review" class="dashboard-company-review-tab" routerLink="{{dashboardTab.DASHBOARD_COMPANY_REVIEWS}}"
-                    routerLinkActive #dashboardCompanyReviewActive="routerLinkActive" [active]="dashboardCompanyReviewActive.isActive">
-                    <span fxHide.lt-sm="true" class="tab-text">Company Reviews</span>
-                </a>
-                <a mat-tab-link id="dashboard-find-salaries" class="dashboard-find-salaries-tab" routerLink="{{dashboardTab.DASHBOARD_FIND_SALARIES}}"
+                <ng-container *ngIf="employeeId$ | async as employeeId">
+                    <a mat-tab-link id="dashboard-applied-jobs" class="dashboard-applied-jobs-tab" routerLink="{{dashboardTab.DASHBOARD_APPLIED_JOB}}" (click)="setEmployeeId(employeeId)"
+                        routerLinkActive #dashboardAppliedJob="routerLinkActive" [active]="dashboardAppliedJob.isActive">
+                        <span fxHide.lt-sm="true" class="tab-text">Applied jobs</span>
+                    </a>
+                </ng-container>
+
+                <!-- <a mat-tab-link id="dashboard-find-salaries" class="dashboard-find-salaries-tab" routerLink="{{dashboardTab.DASHBOARD_FIND_SALARIES}}"
                     routerLinkActive #dashboardFindSalaries="routerLinkActive" [active]="dashboardFindSalaries.isActive">
                     <span fxHide.lt-sm="true" class="tab-text">Find Salaries</span>
                 </a> -->

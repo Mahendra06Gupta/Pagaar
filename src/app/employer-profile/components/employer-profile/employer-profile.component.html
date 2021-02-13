@@ -1,4 +1,4 @@
-<div class="my-3" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1rem">
+<div class="my-3" [ngClass.lt-md]="{'px-3': inputArgs?.id}" [ngClass.gt-sm]="{'edit': inputArgs?.id}">
     <div class="form-field" fxFlex.gt-sm="1 1 100%">
         <form
             class="form"
@@ -73,7 +73,7 @@
                     </div>
                     <mat-action-row>
                         <button mat-raised-button color="warn" (click)="prevStep()">Previous</button>
-                        <button mat-raised-button color="primary" type="submit" [disabled]="detailForm.invalid" (click)="onSubmit()">Submit</button>
+                        <app-global-spinner-button (click)="onSubmit()" [invalid]="detailForm.invalid" [buttonText]="inputArgs?.id ? 'Update' : 'Submit'" [isFormSubmitted]="isFormSubmitted"></app-global-spinner-button>
                     </mat-action-row>
                 </mat-expansion-panel>
             </mat-accordion>

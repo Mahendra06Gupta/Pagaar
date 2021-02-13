@@ -3,21 +3,24 @@ import { first, map, switchMap, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { DeviceScreenSizeService } from '@app/core/services';
+import { DeviceScreenSizeService, DialogService } from '@app/core/services';
 import { RootState } from '@app/store';
 import { GoToActiveAboutMe } from '@app/employee-profile/employee-profile-routing.actions';
 import { EmployeeProfileTab } from '@app/employee-profile/models/employee-profile-routing.path';
 import * as fromUserDetailsSelector from '@app/store/user-details/user-details.selectors';
-import { getJobResult, getSearchKeyword, isSearcgInitiated } from '@app/dashboard/store/dashboard.selectors';
+import { getJobResult, getSearchKeyword, isSearchInitiated } from '@app/dashboard/store/dashboard.selectors';
 import { JobReuslt } from '@app/dashboard/store/models/dashboard-state.model';
 import { DashboardApiService } from '@app/dashboard/services/dashboard-api.service';
-import { UpdateDashboardSearchResult } from '@app/dashboard/store';
+import { InitDashboardSearch, UpdateDashboardSearchResult } from '@app/dashboard/store';
 import { AddEmployeeDetails } from '@app/store/employee-store/employee.actions';
 import { ApiService } from '@app/employee-profile/services/api.service';
 import { GoToJobPosting } from '@app/job-posting/job-posting-routing.actions';
 import { isLoggedInUserEmployee } from '@app/models/data.model';
-import { getEmployeeID } from '@app/store/employee-store/employee.selectors';
+import { getEmployeeId } from '@app/store/employee-store/employee.selectors';
 import { ToastrService } from 'ngx-toastr';
+import { EmployerDetailsModalComponent, PostedJobDetailsModalComponent } from '@app/shared/popups';
+import { EmployerApiService } from '@app/employer-profile/services/employer-api.service';
+import { JobPostingApiService } from '@app/job-posting/services/job-posting-api.service';
 
 @Component({
   selector: 'app-dashboard-landing',
@@ -33,7 +36,7 @@ export class DashboardLandingComponent implements OnInit {
     map(isSmallDevice => !isSmallDevice)
   );
   public isUserLoggedIn$: Observable<boolean> = this.store$.select(fromUserDetailsSelector.isUserLoggedIn);
-  public isSearchInitiated: Observable<boolean> = this.store$.select(isSearcgInitiated);
+  public isSearchInitiated: Observable<boolean> = this.store$.select(isSearchInitiated);
   public popularSearchLine1 = ['Government', 'Online Typing', 'Work From Home', 'Online Tutoring', 'Bank', 'Delivery Executive', 'Healthcare', 'Software', 'MBA', 'Enginerring'];
   public showSpinner = true;
   public jobResult$: Observable<JobReuslt>;
@@ -49,7 +52,10 @@ export class DashboardLandingComponent implements OnInit {
     private readonly store$: Store<RootState>,
     private readonly apiService: ApiService,
     private readonly dashboardApiService: DashboardApiService,
-    private readonly toastrService: ToastrService
+    private readonly toastrService: ToastrService,
+    private readonly dialogService: DialogService,
+    private readonly employerApiService: EmployerApiService,
+    private readonly jobPostingApiService: JobPostingApiService
   ) { }
 
   public ngOnInit(): void {
@@ -65,6 +71,7 @@ export class DashboardLandingComponent implements OnInit {
         })
       ) : of(null))
     ).subscribe();
+    // this.callPaginationApi(false, 1, true);
   }
 
   public goToAboutMe(): void {
@@ -98,9 +105,8 @@ export class DashboardLandingComponent implements OnInit {
   }
 
   public apply(jobId: string, employerId: string): void {
-    this.store$.select(getEmployeeID).pipe(
+    this.store$.select(getEmployeeId).pipe(
       first(),
-      tap(employeeId => console.log(employeeId)),
       switchMap(employeeId => this.apiService.applyForJob({
         employer: {employerId},
         employee: {employeeId},
@@ -112,7 +118,17 @@ export class DashboardLandingComponent implements OnInit {
     ).subscribe();
   }
 
-  private callPaginationApi(next: boolean, index?: number): void {
+  public search(searchKey: string) {
+    this.store$.dispatch(new InitDashboardSearch({jobTitle: searchKey, location: '', initiated: true, pageNumber: 1, pageSize: 10}));
+    this.dashboardApiService.getJobDetailByTitleAndLocation({jobTitle: searchKey, location: '',  pageNumber: this.currentPage, pageSize: 10}).pipe(
+      first(),
+      tap(search => {
+        this.store$.dispatch(new UpdateDashboardSearchResult(search));
+      })
+    ).subscribe();
+  }
+
+  private callPaginationApi(next: boolean, index?: number, isNotInvokedBySearch?: boolean): void {
     this.currentPage = index ? index : next ? this.currentPage + 1 : this.currentPage - 1;
     if (this.currentPage >= 4) {
       this.startButtonPage = this.currentPage - 3;
@@ -122,12 +138,42 @@ export class DashboardLandingComponent implements OnInit {
       this.startButtonPage = 0;
     }
     this.store$.select(getSearchKeyword).pipe(
-      switchMap(res => this.dashboardApiService.getJobDetailByTitleAndLocation({...res, pageNumber: this.currentPage, pageSize: 10}).pipe(
+      switchMap(res =>
+        // isNotInvokedBySearch
+        // ? this.dashboardApiService.getAllJobDetails(this.currentPage, 10)
+        // :
+        this.dashboardApiService.getJobDetailByTitleAndLocation({...res, pageNumber: this.currentPage, pageSize: 10}).pipe(
         first(),
         tap(search => {
           this.store$.dispatch(new UpdateDashboardSearchResult(search));
         })
       ))
+    ).subscribe();
+  }
+
+  public getDetailByAction(mode: string, id: string) {
+    switch (mode) {
+      case 'employer':
+        this.getDetail(
+          this.employerApiService.getEmployerDetailById(id),
+          EmployerDetailsModalComponent
+        );
+        break;
+      case 'job':
+        this.getDetail(
+          this.jobPostingApiService.getJobDetailById(id),
+          PostedJobDetailsModalComponent
+        );
+        break;
+    }
+  }
+
+  private getDetail(api: Observable<any>, component: any) {
+    api.pipe(
+      first(),
+      tap((res) => res ? this.dialogService.openDialog(component, {
+        res
+      }) : this.toastrService.warning('No Details Found'))
     ).subscribe();
   }
 

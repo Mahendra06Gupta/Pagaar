@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { tap } from 'rxjs/operators';
+import { first, switchMap, tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 
 import { RootState } from '@app/store';
 import { JobPostingApiService } from '@app/job-posting/services/job-posting-api.service';
 import { JobReuslt, Jobs } from '@app/dashboard/store/models/dashboard-state.model';
-import { isLoggedInUserAdmin } from '@app/models/data.model';
+import { isLoggedInUserAdmin, isLoggedInUserEmployer, isLoggedInUserSuperAdmin } from '@app/models/data.model';
 import { DialogService } from '@app/core/services';
 import { PostedJobDetailsModalComponent } from '@app/shared/popups';
 import { ActionModalComponent } from '@app/shared/components/action-modal';
 import { JobPostingComponent } from '../job-posting/job-posting.component';
+import { getLoggedInEmployerId } from '@app/store/employer-store/employer.selectors';
 
 @Component({
   selector: 'app-job-posting-listing',
@@ -32,8 +33,16 @@ export class JobPostingListingComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    if (isLoggedInUserAdmin()) {
+    this.dialogService.isActionDone.subscribe(res => {
+      this.getJobList();
+    });
+  }
+
+  private getJobList(): void {
+    if (isLoggedInUserAdmin() || isLoggedInUserSuperAdmin()) {
       this.getJobDetails(this.pageSize, this.pageNumber);
+    } else if (isLoggedInUserEmployer()) {
+      this.getJobDetailsByEmployerId(this.pageSize, this.pageNumber);
     }
   }
 
@@ -46,6 +55,21 @@ export class JobPostingListingComponent implements OnInit {
         this.showSpinner = false;
         this.toastrService.error('Failed to load Job Details');
       })
+    ).subscribe();
+  }
+
+  private getJobDetailsByEmployerId(pageSize?: number, pageNumber?: number) {
+    this.store$.select(getLoggedInEmployerId).pipe(
+      first(),
+      switchMap(id => this.jobPostingApiService.getJobDetailsByEmployerId(id, pageSize, pageNumber).pipe(
+        tap(res => {
+          this.showSpinner = false;
+          this.jobList = res;
+        }, () => {
+          this.showSpinner = false;
+          this.toastrService.error('Failed to load Job Details');
+        })
+      ))
     ).subscribe();
   }
 
@@ -67,7 +91,7 @@ export class JobPostingListingComponent implements OnInit {
     } else if (jobDetails.action === 'edit') {
       this.dialogService.openDialog(JobPostingComponent,
         jobs
-      ).subscribe(res => this.getJobDetails());
+      ).subscribe(res => this.getJobDetails(this.pageSize, this.pageNumber));
     }
   }
 

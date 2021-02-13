@@ -1,0 +1,25 @@
+.job-posted-details-body-top {
+  border-top: 1px solid gray;
+  padding-top: 1rem;
+}
+
+.job-posted-details-body-left {
+  border-right: 1px solid gray;
+}
+
+.modal-content {
+  position: relative;
+  border: 0;
+
+  h5 {
+    margin-top: 0;
+    margin-bottom: .5rem;
+    font-size: 1.5rem;
+  }
+
+  button {
+    position: absolute;
+    top: .75rem;
+    right: .75rem;
+  }
+}

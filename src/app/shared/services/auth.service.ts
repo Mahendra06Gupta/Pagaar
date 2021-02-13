@@ -29,6 +29,10 @@ export class AuthService {
     return this.restService.post(endpoints.createAccount, payload);
   }
 
+  public createAdminAccount(payload: CreateAccountApiRequestModel): Observable<any>{
+    return this.restService.post(endpoints.createAdminAccount, payload);
+  }
+
   public getAuthInfo(): string {
     this.store$.select(getLoggedUserToken).pipe(
       tap((res) => this.token = res)

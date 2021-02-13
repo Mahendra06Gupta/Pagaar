@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import * as RouterActions from './router.actions';
 import { Go, GoUsingActiveUserId } from './router.actions';
 import { RootState } from '../models/root-state.model';
-import { getUserLoggedInEmail } from '../user-details/user-details.selectors';
+import { getApllicationId, getUserLoggedInEmail } from '../user-details/user-details.selectors';
 
 @Injectable()
 export class RouterEffects {
@@ -30,13 +30,27 @@ export class RouterEffects {
     );
 
     @Effect({ dispatch: false })
-    public navigateUsingActiveAccountId$ = this.actions$.pipe(
+    public navigateUsingActiveUserId$ = this.actions$.pipe(
         ofType(RouterActions.GO_USING_ACTIVE_USER_ID),
         map((action: GoUsingActiveUserId) => action.payload),
         withLatestFrom(
             this.store$.select(getUserLoggedInEmail),
             (actionPayload, activeAccountId) => ({
                 path: actionPayload.pathSupplier(actionPayload.userId || activeAccountId),
+                query: actionPayload.query
+            })
+        ),
+        tap(({ path, query }) => this.navigateTo(path, query))
+    );
+
+    @Effect({ dispatch: false })
+    public navigateUsingActiveApplicationId$ = this.actions$.pipe(
+        ofType(RouterActions.GO_USING_ACTIVE_ID),
+        map((action: GoUsingActiveUserId) => action.payload),
+        withLatestFrom(
+            this.store$.select(getApllicationId),
+            (actionPayload, id) => ({
+                path: actionPayload.pathSupplier(id.updateApplicationId),
                 query: actionPayload.query
             })
         ),

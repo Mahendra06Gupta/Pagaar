@@ -1,6 +1,7 @@
 export const endpoints = {
     login: 'auth/login',
     createAccount: 'auth/register',
+    createAdminAccount: 'v1/users/create-admin',
     updateEmployeeDetail: 'v1/employees/',
     getEmployeeDetail: 'v1/employees/email',
     getEmployerDetail: 'v1/employers/email',

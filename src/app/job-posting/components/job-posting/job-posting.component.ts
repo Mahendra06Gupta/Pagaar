@@ -38,8 +38,7 @@ export class JobPostingComponent implements OnInit {
   public employerDetails$: Observable<EmployersDetail[]> = this.store$.select(getEmployerEntities);
   public jobNature = [
     {value: 'FULL_TIME', label: 'Full time'},
-    {value: 'PART_TIME', label: 'Part time'},
-    // {value: 'REMOTE', label: 'Remote'}
+    {value: 'PART_TIME', label: 'Part time'}
   ];
   public jobType = [
     {value: 'PERMANENT', label: 'Permanent'},

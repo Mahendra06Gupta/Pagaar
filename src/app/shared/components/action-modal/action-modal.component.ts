@@ -37,6 +37,7 @@ export class ActionModalComponent implements OnInit {
   private triggerDeleteJobAction(jobId: string): void {
     this.jobPostingApiService.deleteSelectedJobDetails(jobId).pipe(
       tap(res => {
+        this.dialogService.isActionDone.next(res);
         this.toastrService.success('Select Job deleted Successfully');
       }, () => {
         this.toastrService.error('Unable to delete job, Please try again after some time');
@@ -47,6 +48,7 @@ export class ActionModalComponent implements OnInit {
   private triggerDeleteEmployerAction(employerId: string): void {
     this.employerApiService.deleteEmployerById(employerId).pipe(
       tap(res => {
+        this.dialogService.isActionDone.next(res);
         this.toastrService.success('Select Employer deleted Successfully');
       }, () => {
         this.toastrService.error('Unable to delete employer, Please try again after some time');
@@ -57,6 +59,7 @@ export class ActionModalComponent implements OnInit {
   private triggerDeleteEmployeeAction(employeeId: string): void {
     this.apiService.deleteEmployeeById(employeeId).pipe(
       tap(res => {
+        this.dialogService.isActionDone.next(res);
         this.toastrService.success('Select Employee deleted Successfully');
       }, () => {
         this.toastrService.error('Unable to delete employee, Please try again after some time');

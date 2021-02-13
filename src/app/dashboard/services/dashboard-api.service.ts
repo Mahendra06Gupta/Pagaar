@@ -31,4 +31,15 @@ export class DashboardApiService {
     }
     return this.restService.get(`${endpoints.jobSearch}?${params}`);
   }
+
+  public getAllJobDetails(pageSize?: number, pageNumber?: number): Observable<JobReuslt> {
+    let params: HttpParams = new HttpParams();
+    if (pageNumber) {
+      params = params.append('page', pageNumber.toString());
+    }
+    if (pageSize) {
+      params = params.append('size', pageSize.toString());
+    }
+    return this.restService.get(`${endpoints.jobs}?${params}`);
+  }
 }

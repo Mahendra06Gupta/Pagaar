@@ -6,11 +6,8 @@ import { AuthenticatedGuard } from '@core/guards/authenticated.guard';
 import { MainRoutes } from '@app/app.route-names';
 import { SignUpComponent } from '@core/components/sign-up/sign-up.component';
 import { DashboardComponent } from '@core/components/dashboard/dashboard.component';
-import { EmployeeProfileRoutingPath } from './employee-profile/models/employee-profile-routing.path';
 import { JobPostingDashboardComponent } from './core/components';
-import { isLoggedInUserEmployee } from './models/data.model';
 import { EmployerProfileRoutingPath } from './employer-profile/models/employer-profile-routing.path';
-import { EmployerListingComponent } from './employer-list/components/employer-listing/employer-listing.component';
 
 const routes: Routes = [
   {
@@ -36,6 +33,10 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () => import('./job-posting/job-posting.module').then(m => m.JobPostingModule)
+          },
+          {
+            path: MainRoutes.createAdminAccount,
+            component: SignUpComponent
           },
           {
             path: MainRoutes.employerProfile,
@@ -64,6 +65,15 @@ const routes: Routes = [
               },
             ]
           },
+          {
+            path: `:id/${MainRoutes.jobApplicationListing}`,
+            children: [
+              {
+                path: '',
+                loadChildren: () => import('./job-application-list/job-application-list.module').then(m => m.JobApplicationListModule)
+              },
+            ]
+          },
         ]
       },
       {
@@ -78,7 +88,11 @@ const routes: Routes = [
                 loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
               },
               {
-                path: EmployeeProfileRoutingPath.employeeProfile,
+                path: MainRoutes.appliedJob,
+                loadChildren: () => import('./job-application-list/job-application-list.module').then(m => m.JobApplicationListModule)
+              },
+              {
+                path: MainRoutes.employeeProfile,
                 loadChildren: () => import ('./employee-profile/employee-profile.module').then(m => m.EmployeeProfileModule)
               }
             ]

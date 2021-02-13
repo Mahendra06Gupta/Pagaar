@@ -9,7 +9,7 @@ import { DialogComponent } from '@app/shared/components/dialog/dialog.component'
 })
 export class DialogService {
 
-  public isRoomAdded = new BehaviorSubject([]);
+  public isActionDone = new BehaviorSubject([]);
 
   constructor(public dialog: MatDialog) {}
 
@@ -30,7 +30,7 @@ export class DialogService {
 
     return new Observable(subscriber => {
       dialogRef.afterClosed().subscribe(result => {
-          subscriber.next(result ? result : 'close');
+          subscriber.next(result);
       });
     });
   }

@@ -1,13 +1,11 @@
 <div class="h-100" fxLayout="column" fxLayoutGap="20px" class="mx-3">
     <ng-container>
-        <!-- <div class="mt-2" *ngIf="noOfCancelAndBookedRoom$ | async as noOfCancelAndBookedRoom">
-            <app-page-title [count]="noOfCancelAndBookedRoom" [pageTitle]="pageTitle" [createRoom]="true"></app-page-title>
-        </div> -->
         <mat-card class="matCard">
             <h5>Job-List</h5>
             <hr class="mt-3">
             <div fxHide.lt-md *ngIf="jobList">
-                <app-job-post-list-tab [jobList]="jobList" (postedJobSelected)="postedJobSelected($event)" (pageChange)="onPageChange($event)"></app-job-post-list-tab>
+                <app-job-post-list-tab [jobList]="jobList" (postedJobSelected)="postedJobSelected($event)" (pageChange)="onPageChange($event)">
+                </app-job-post-list-tab>
             </div>
             <div fxHide.gt-sm *ngIf="jobList">
                 <app-job-post-list-expandable-tab [jobList]="jobList" (postedJobSelected)="postedJobSelected($event)" (pageChange)="onPageChange($event)"></app-job-post-list-expandable-tab>

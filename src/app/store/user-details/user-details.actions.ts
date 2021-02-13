@@ -5,6 +5,8 @@ export const LOAD_USER = '[USER_DETAILS] LOAD_USER_DETAILS';
 export const USER_LOGIN = '[USER_DETAILS] USER_LOGIN';
 export const LOGIN_SUCCESSFULLY = '[USER_DETAILS] LOGIN_SUCCESSFULLY';
 export const LOGOUT_SUCCESSFULLY = '[USER_DETAILS] LOGOUT_SUCCESSFULLY';
+export const CREATE_ADMIN_ACCOUNT = '[USER_DETAILS] CREATE_ADMIN_ACCOUNT';
+export const UPDATE_APPLICATION_ID = '[USER_DETAILS] UPDATE_APPLICATION_ID';
 
 // export class LoadUserRegistered implements Action {
 //     public readonly type = LOAD_USER;
@@ -34,8 +36,24 @@ export class LoggedOutSuccessfully implements Action {
     }
 }
 
+export class CreateAdminAccount implements Action {
+    public readonly type = CREATE_ADMIN_ACCOUNT;
+
+    constructor(public readonly payload: {createAdminAccount: boolean}) {
+    }
+}
+
+export class UpdateApplicationId implements Action {
+    public readonly type = UPDATE_APPLICATION_ID;
+
+    constructor(public readonly payload: {updateApplicationId: string, mode: string}) {
+    }
+}
+
 export type UserDetailsActions =
     // LoadUserRegistered |
     UserLogged |
     LoggedInSuccessfully |
-    LoggedOutSuccessfully;
+    LoggedOutSuccessfully |
+    CreateAdminAccount |
+    UpdateApplicationId;

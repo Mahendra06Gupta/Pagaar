@@ -16,6 +16,11 @@ const {
 
 export const getUserEntities = selectAll;
 
+export const isCreateAdminAccount = createSelector(
+    getUserDetailsState,
+    (state: UserDetailsState) => state && state.createAdminAccount
+);
+
 export const getUserDetails = createSelector(
     getUserDetailsState,
     (state: UserDetailsState) => state && state.entities
@@ -49,6 +54,11 @@ export const getUserLoggedInId = createSelector(
 export const getUserLoggedInEmail = createSelector(
     getLoggedInUserData,
     (state: fromUserModel.UserData) => state && state.email
+);
+
+export const getApllicationId = createSelector(
+    getUserDetailsState,
+    (state: UserDetailsState) => state && state.applicationId
 );
 
 export const getLoggedUserToken = createSelector(

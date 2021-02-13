@@ -6,7 +6,7 @@ export enum EmployerProfileTab {
 }
 
 export const EmployerProfileRoutingPath = {
-    employerProfile: ':userId',
-    aboutMe: `job-posting/${MainRoutes.employerProfile}/:userId/${EmployerProfileTab.EMPLOYER_PROFILE_ABOUT_ME}`,
-    resume: `job-posting/${MainRoutes.employerProfile}/:userId/${EmployerProfileTab.EMPLOYER_PROFILE_RESUME}`
+    employerProfile: '',
+    aboutMe: `job-posting/${MainRoutes.employerProfile}/${EmployerProfileTab.EMPLOYER_PROFILE_ABOUT_ME}`,
+    resume: `job-posting/${MainRoutes.employerProfile}/${EmployerProfileTab.EMPLOYER_PROFILE_RESUME}`
 };

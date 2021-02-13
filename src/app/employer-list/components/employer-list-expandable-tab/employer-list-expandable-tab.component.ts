@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 
 import { RootState } from '@app/store/models/root-state.model';
 import { EmployersDetail } from '@app/employer-profile/models/employer-detail.model';
+import { isLoggedInUserAdmin } from '@app/models/data.model';
 
 @Component({
   selector: 'app-employer-list-expandable-tab',
@@ -12,7 +13,9 @@ import { EmployersDetail } from '@app/employer-profile/models/employer-detail.mo
 export class EmployerListExpandableTabComponent implements OnInit {
 
   @Input() public employerList: EmployersDetail[];
+  @Output() public employerSelected = new EventEmitter<EmployersDetail>();
   @Output() public pageChange = new EventEmitter<any>();
+  public isLoggedInUserAdmin = isLoggedInUserAdmin();
   public loader = true;
   public isDescendingByDate = true;
 

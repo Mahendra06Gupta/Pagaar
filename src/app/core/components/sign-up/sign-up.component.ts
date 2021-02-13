@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { first, tap } from 'rxjs/operators';
 
 import { RememberMeService } from '@app/core/services';
 import { GoToLogin, RootState } from '@app/store';
 import { Role, RoleType } from '@app/models/data.model';
 import { AuthService } from '@app/shared/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { isCreateAdminAccount } from '@app/store/user-details/user-details.selectors';
+import { GoToJobPosting, GoToJobPostingListing } from '@app/job-posting/job-posting-routing.actions';
 
 @Component({
   selector: 'app-sign-up',
@@ -19,9 +22,13 @@ export class SignUpComponent implements OnInit {
   public hide = true;
   public rememberMeSelected = true;
   public isFormSubmitted = false;
+  public isCreateAdminAccount: boolean;
   public roles: Role[] = [
     { roleId: RoleType.EMPLOYEE, name: RoleType.EMPLOYEE },
-    { roleId: RoleType.EMPLOYER, name: RoleType.EMPLOYER }
+    { roleId: RoleType.EMPLOYER, name: RoleType.EMPLOYER },
+  ];
+  public rolesAdmin: Role[] = [
+    { roleId: RoleType.ADMIN, name: RoleType.ADMIN }
   ];
 
   constructor(
@@ -33,9 +40,14 @@ export class SignUpComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.initForm();
+    this.store$.select(isCreateAdminAccount).pipe(
+      first(),
+      tap(isAdminAccountCreation => {
+        this.isCreateAdminAccount = isAdminAccountCreation;
+        this.initForm();
+      })
+    ).subscribe();
     const remembereduserinfo = this.rememberMeService.get('rememberme');
-
     if (remembereduserinfo) {
       this.signUpForm.get('emailId').setValue(remembereduserinfo.email);
       this.rememberMeSelected = true;
@@ -66,13 +78,15 @@ export class SignUpComponent implements OnInit {
       name: `${this.signUpForm.value.firstName} ${this.signUpForm.value.lastName}`,
       roles: [this.signUpForm.value.roles]
     };
+    delete payload.firstName;
     delete payload.lastName;
     this.isFormSubmitted = true;
-    this.authService.createAccount(payload).subscribe(
+    const apiToHit = this.isCreateAdminAccount ? this.authService.createAdminAccount(payload) : this.authService.createAccount(payload);
+    apiToHit.subscribe(
       (res) => {
         this.isFormSubmitted = false;
-        this.toastrService.success(res.message);
-        this.goToLogin();
+        this.isCreateAdminAccount ? this.toastrService.success('Admin created successfully') : this.toastrService.success(res.message);
+        this.isCreateAdminAccount ? this.store$.dispatch(new GoToJobPostingListing()) : this.goToLogin();
       }, () => this.isFormSubmitted = false
     );
   }
@@ -87,7 +101,7 @@ export class SignUpComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9.() ]{3,50}$')]],
       email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      roles: ['', Validators.required]
+      roles: [this.isCreateAdminAccount ? this.rolesAdmin[0].roleId.toUpperCase() : this.roles[0].roleId.toUpperCase(), Validators.required]
     });
   }
 

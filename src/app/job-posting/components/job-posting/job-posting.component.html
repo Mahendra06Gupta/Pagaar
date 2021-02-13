@@ -120,7 +120,7 @@
                             </div>
                         </div>
                         <div ngClass.gt-sm="d-flex justify-content-center">
-                            <app-global-spinner-button [invalid]="jobPostingForm.invalid" [buttonText]="'Post Job'" [isFormSubmitted]="isFormSubmitted"></app-global-spinner-button>
+                            <app-global-spinner-button [invalid]="jobPostingForm.invalid" [buttonText]="inputArgs?.id ? 'Update Job' : 'Post Job'" [isFormSubmitted]="isFormSubmitted"></app-global-spinner-button>
                         </div>
                     </form>
                 </div>

@@ -18,8 +18,8 @@ export class ApiService {
     return this.restService.get(endpoints.updateEmployeeDetail);
   }
 
-  public getEmployeeDetailByUserId(userId: string): Observable<EmployeeDetailApiReuestModel> {
-    return this.restService.get(`${endpoints.updateEmployeeDetail}/${userId}`);
+  public getEmployeeDetailById(userId: string): Observable<EmployeeDetailApiReuestModel> {
+    return this.restService.get(`${endpoints.updateEmployeeDetail}${userId}`);
   }
 
   public getEmployeeDetailByEmail(email: string): Observable<any> {
@@ -31,11 +31,11 @@ export class ApiService {
   }
 
   public deleteEmployeeById(userId: string): Observable<any> {
-    return this.restService.delete(`${endpoints.updateEmployeeDetail}/${userId}`);
+    return this.restService.delete(`${endpoints.updateEmployeeDetail}${userId}`);
   }
 
   public updateEmployeeById(userId: string, payload: any): Observable<any> {
-    return this.restService.put(`${endpoints.updateEmployeeDetail}/${userId}`, payload);
+    return this.restService.put(`${endpoints.updateEmployeeDetail}${userId}`, payload);
   }
 
   public applyForJob(payload: any): Observable<any> {

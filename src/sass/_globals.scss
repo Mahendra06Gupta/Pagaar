@@ -18,7 +18,6 @@ body {
     font-weight: 300;
     -webkit-print-color-adjust: exact;
     height: 100%;
-    overflow: hidden;
 }
 
 a {
@@ -184,4 +183,8 @@ mat-paginator.paginator.mat-paginator {
             margin: 0;
         }
     }
+}
+
+a.link {
+    color: #007bff;
 }

@@ -1,0 +1,47 @@
+<mat-accordion displayMode="flat" id="app-job-application-list-expanable-tab">
+    <mat-expansion-panel disabled="true" class="header-panel">
+        <mat-expansion-panel-header>
+            <mat-panel-title class="header-panel-title" fxLayout="row">
+                <div fxLayout="row" class="expandable-job-application-history-row">
+                    <div fxFlex="1 1 50%" fxLayout="row" fxLayoutAlign="start">
+                        <strong>Company</strong>
+                    </div>
+                    <div fxFlex="1 1 50%" fxLayout="row" fxLayoutAlign="end">
+                        <strong>Employee Name</strong>
+                    </div>
+                </div>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <ng-container *ngFor="let details of jobApplicationList; let i =index">
+        <mat-expansion-panel class="expandable-job-application-history-body" expanded="{{i === 0}}">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="m-0">
+                    <div fxLayout="row" class="expandable-job-application-history-row">
+                        <div fxFlex="1 1 50%" fxLayout="row" fxLayoutAlign="start"><span>{{details.employer.companyName}}</span></div>
+                        <div fxFlex="1 1 50%" fxLayout="row" fxLayoutAlign="start"><span>{{details.employee.name}}</span></div>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+                <app-job-application-list-expandable-tab-entry
+                    label="Job Title"
+                    [value]="details.job.title">
+                </app-job-application-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+            <div>
+                <app-job-application-list-expandable-tab-entry
+                    label="Application"
+                    [value]="details.applicationDate">
+                </app-job-application-list-expandable-tab-entry>
+                <div class="divider"></div>
+            </div>
+        </mat-expansion-panel>
+    </ng-container>
+</mat-accordion>
+<mat-paginator class="paginator" *ngIf="!loader"
+    [length]="jobApplicationList.length"
+    [pageSizeOptions]="[10, 20]"
+    showFirstLastButtons
+></mat-paginator> <!--(page)="onPageChange($event)"-->

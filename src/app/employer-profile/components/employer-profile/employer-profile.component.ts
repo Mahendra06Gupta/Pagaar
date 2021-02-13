@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { tap } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 import { RootState } from '@app/store';
 import { getUserLoggedInEmail } from '@app/store/user-details/user-details.selectors';
 import { EmployerApiService } from '@app/employer-profile/services/employer-api.service';
-import { ToastrService } from 'ngx-toastr';
 import { GoToJobPosting } from '@app/job-posting/job-posting-routing.actions';
+import { EmployersDetail } from '@app/employer-profile/models/employer-detail.model';
+import { DialogService } from '@app/core/services';
 
 @Component({
   selector: 'app-employer-profile',
@@ -16,8 +18,10 @@ import { GoToJobPosting } from '@app/job-posting/job-posting-routing.actions';
 })
 export class EmployerProfileComponent implements OnInit {
 
+  public inputArgs: EmployersDetail;
   public detailForm: FormGroup;
   public userLoggedEmailId: string;
+  public isFormSubmitted = false;
   public businessName = [
     {value: 'EXTRACTIVE_INDUSTRY', label: 'Extractive Industry'},
     {value: 'GENETIC_INDUSTRY', label: 'Genetic Industry'},
@@ -37,16 +41,21 @@ export class EmployerProfileComponent implements OnInit {
     private readonly fb: FormBuilder,
     private readonly store$: Store<RootState>,
     private readonly employerApiService: EmployerApiService,
-    private readonly toastrService: ToastrService
+    private readonly toastrService: ToastrService,
+    private readonly dialogService: DialogService
   ) {}
 
   public ngOnInit(): void {
-    this.store$.select(getUserLoggedInEmail).pipe(
-      tap((email) => {
-        this.userLoggedEmailId = email,
-        this.initForm();
-      })
-    ).subscribe();
+    if (!this?.inputArgs?.id) {
+      this.store$.select(getUserLoggedInEmail).pipe(
+        tap((email) => {
+          this.userLoggedEmailId = email,
+          this.initForm();
+        })
+      ).subscribe();
+    } else {
+      this.initForm();
+    }
   }
 
   public hasError(controlName: string, errorName: string): boolean {
@@ -70,11 +79,20 @@ export class EmployerProfileComponent implements OnInit {
       return;
     } else {
       if (this.detailForm.value) {
-        this.employerApiService.addEmployerDetail(this.detailForm.value).pipe(
+        const payload = {
+          ...this.detailForm.value,
+          ...this.inputArgs?.id && {id: this.inputArgs.id}
+        };
+        const apiToHit = this?.inputArgs ? this.employerApiService.updateEmployerById(payload) : this.employerApiService.addEmployerDetail(payload);
+        apiToHit.pipe(
           tap(res => {
-            this.toastrService.success('Detail Added Successfully');
-            this.store$.dispatch(new GoToJobPosting());
-          })
+            this?.inputArgs ? this.toastrService.success('Detail Updated Successfully') : this.toastrService.success('Detail Added Successfully');
+            if (this?.inputArgs) {
+              this.dialogService.closeAllDialogs();
+            } else {
+              this.store$.dispatch(new GoToJobPosting());
+            }
+          }, () => this.isFormSubmitted = false)
         ).subscribe();
       }
     }
@@ -84,13 +102,13 @@ export class EmployerProfileComponent implements OnInit {
 
   private initForm(): void {
     this.detailForm = this.fb.group({
-      email: [this.userLoggedEmailId, [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')]],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-      country: ['', [Validators.required, Validators.maxLength(32)]],
-      pincode: ['', [Validators.required, Validators.pattern('^[0-9]{6}$')]],
-      companyName: ['', [Validators.required, Validators.maxLength(32)]],
-      companySize: ['', [Validators.required, Validators.maxLength(32)]],
-      businessNature: ['', [Validators.required]],
+      email: [this?.inputArgs?.email ? this?.inputArgs?.email : this.userLoggedEmailId, [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')]],
+      phoneNumber: [this?.inputArgs?.phoneNumber ? this?.inputArgs?.phoneNumber : '', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      country: [this?.inputArgs?.country ? this?.inputArgs?.country : '', [Validators.required, Validators.maxLength(32)]],
+      pincode: [this?.inputArgs?.pincode ? this?.inputArgs?.pincode : '', [Validators.required, Validators.pattern('^[0-9]{6}$')]],
+      companyName: [this?.inputArgs?.companyName ? this?.inputArgs?.companyName : '', [Validators.required, Validators.maxLength(32)]],
+      companySize: [this?.inputArgs?.companySize ? this?.inputArgs?.companySize : '', [Validators.required, Validators.maxLength(32)]],
+      businessNature: [this?.inputArgs?.businessNature ? this?.inputArgs?.businessNature : '', [Validators.required]],
     });
   }
 

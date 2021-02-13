@@ -4,6 +4,7 @@ import { MainRoutes } from '@app/app.route-names';
 
 export const GO = '[Router] Go';
 export const GO_USING_ACTIVE_USER_ID = '[Router] GO_USING_ACTIVE_USER_ID';
+export const GO_USING_ACTIVE_ID = '[Router] GO_USING_ACTIVE_ID';
 
 export class Go implements Action {
     public readonly type = GO;
@@ -24,9 +25,22 @@ export class GoUsingActiveUserId implements Action {
     }
 }
 
+export class GoUsingActiveId implements Action {
+    public readonly type = GO_USING_ACTIVE_ID;
+
+    public constructor(public payload: GoUsingActiveIdNavigationDetails) {
+    }
+}
+
 export interface GoUsingActiveUserIdNavigationDetails {
     pathSupplier: (userId: string) => string[];
     userId?: string;
+    query?: object;
+}
+
+export interface GoUsingActiveIdNavigationDetails {
+    pathSupplier: (id: string) => string[];
+    id?: string;
     query?: object;
 }
 
